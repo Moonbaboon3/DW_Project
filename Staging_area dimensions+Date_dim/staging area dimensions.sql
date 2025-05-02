@@ -11,7 +11,8 @@ CREATE TABLE Customer_STG (
     Phone NVARCHAR(24) NULL,
     Fax NVARCHAR(24) NULL,
     Email NVARCHAR(60) NOT NULL,
-    SupportRepId INT NULL
+    SupportRepId INT NULL,
+    Created_date datetime.
 );
 create table config(Name varchar(120),last_extract datetime) 
 create table artist_STG(ArtistId int primary key,Name varchar(120),created_date datetime)
