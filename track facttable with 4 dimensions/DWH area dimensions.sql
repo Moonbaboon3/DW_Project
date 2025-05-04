@@ -31,5 +31,6 @@ genreid int references genre_DWH(GenreKey),
 datekey int references Date_Dim(DateKey),
 customerkey int references Customer_DWH(customerKey),
 artistkey int references artist_DWH(ArtistKey),
-unitprice int )
+unitprice int
+invoicedate datetime)
 
