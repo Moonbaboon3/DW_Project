@@ -1,0 +1,2102 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/3/2025 7:17:14 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-DC973M5"
+  DTS:CreatorName="DESKTOP-DC973M5\Mustafa_ammar"
+  DTS:DTSID="{1222E9B4-5CC2-40AE-81CD-7B2BD737A2EF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package2"
+  DTS:PackageType="5"
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{DD94192B-942B-46A1-A099-512EF02B992D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9288D11B-CCE2-4DE9-91C5-A33ABD19C9F5}"
+      DTS:ObjectName="localhost.Chinook">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package2-{9288D11B-CCE2-4DE9-91C5-A33ABD19C9F5}localhost.Chinook;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+      DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package2-{7BF58242-DE4A-4FFC-B382-DA366D633178}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{54AFA13A-2CDB-4BB4-86C4-ABE6CA79BB43}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="last_extract">
+      <DTS:VariableValue
+        DTS:DataType="7">5/3/2025 8:17:08 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Last Extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{54c3e3c1-ba63-4ff1-9bbe-af90582a2285}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Last Extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:SqlStatementSource="select last_extract from config where name ='genre'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::last_extract" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into genre_DWH"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7a4eb97a-3c37-4d65-a927-62efb2f1c011}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into genre_DWH"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into genre_DWH\genre_DWH"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="genre_DWH"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[genre_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\genre_DWH.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].Columns[created_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_date"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
+                      dataType="i4"
+                      name="GenreKey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      dataType="i4"
+                      name="src_id" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      dataType="dbTimeStamp"
+                      name="start_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[end_date]"
+                      dataType="dbTimeStamp"
+                      name="end_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input].ExternalColumns[isactive]"
+                      dataType="i2"
+                      name="isactive" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\genre_DWH.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\genre_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\genre_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_DWH\genre_STG"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="genre_STG"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[genre_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\genre_STG.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="120"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[created_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[created_date]"
+                      name="created_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
+                      dataType="dbTimeStamp"
+                      name="created_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[created_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[created_date]"
+                      name="created_date" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_DWH\insert updated record into dwh"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="insert updated record into dwh"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">insert into genre_DWH(src_id,Name,start_date,end_date) values(?,?,GETDATE(),null)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\insert updated record into dwh.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\insert updated record into dwh.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_DWH\look for updated or inserted records"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="look for updated or inserted records"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[genre_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[genre_DWH]) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_STR" length="120" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\look for updated or inserted records.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_DWH\look for updated records"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="look for updated records"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[genre_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[genre_DWH]) [refTable]
+where [refTable].[Name] = ? and [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_STR" length="120" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]};#{Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\look for updated records.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Name</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_DWH\update old records and is active"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="update old records and is active"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">update  genre_DWH
+set end_date =GETDATE(),isactive=0
+where src_id !=? or Name!=?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_DWH\update old records and is active.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into genre_DWH.Paths[Lookup Match Output]"
+              endId="Package\Insert into genre_DWH\look for updated records.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into genre_DWH.Paths[Lookup No Match Output]"
+              endId="Package\Insert into genre_DWH\update old records and is active.Inputs[OLE DB Command Input]"
+              name="Lookup No Match Output"
+              startId="Package\Insert into genre_DWH\look for updated records.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Insert into genre_DWH.Paths[Lookup No Match Output1]"
+              endId="Package\Insert into genre_DWH\genre_DWH.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Insert into genre_DWH\look for updated or inserted records.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Insert into genre_DWH.Paths[OLE DB Command Output]"
+              endId="Package\Insert into genre_DWH\insert updated record into dwh.Inputs[OLE DB Command Input]"
+              name="OLE DB Command Output"
+              startId="Package\Insert into genre_DWH\update old records and is active.Outputs[OLE DB Command Output]" />
+            <path
+              refId="Package\Insert into genre_DWH.Paths[OLE DB Source Output]"
+              endId="Package\Insert into genre_DWH\look for updated or inserted records.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into genre_DWH\genre_STG.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into genre_STG"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{fe14eefc-d940-470c-9d52-d929a04d7880}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into genre_STG"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into genre_STG\add created_date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="add created_date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_STG\add created_date.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Insert into genre_STG\add created_date.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output].Columns[created_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output].Columns[created_date]"
+                      name="created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::last_extract]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::last_extract]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Insert into genre_STG\add created_date.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_STG\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input].Columns[created_date]"
+                      cachedDataType="date"
+                      cachedName="created_date"
+                      lineageId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output].Columns[created_date]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="120"
+                      cachedName="Name"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]"
+                      name="Copy of created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output].Columns[created_date]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="120"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Name]"
+                      name="Copy of Name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_STG\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[genre_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_STG\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of created_date]"
+                      cachedDataType="date"
+                      cachedName="Copy of created_date"
+                      externalMetadataColumnId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreId]"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Copy of Name"
+                      externalMetadataColumnId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      dataType="dbTimeStamp"
+                      name="created_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into genre_STG\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Genre]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into genre_STG\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="120"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into genre_STG.Paths[Data Conversion Output]"
+              endId="Package\Insert into genre_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Insert into genre_STG\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Insert into genre_STG.Paths[Derived Column Output]"
+              endId="Package\Insert into genre_STG\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Insert into genre_STG\add created_date.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Insert into genre_STG.Paths[OLE DB Source Output]"
+              endId="Package\Insert into genre_STG\add created_date.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into genre_STG\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table genre_STG"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{48269710-3a0b-474f-94ec-167e5611789a}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table genre_STG"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:SqlStatementSource="truncate table genre_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{54aacc32-d791-44d5-86af-877ae6ea059f}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='genre'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{cc9c2386-ea3d-42a8-80c1-0e7ea0882523}"
+      DTS:From="Package\Truncate Table genre_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Get Last Extract" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1089833e-24cd-40ed-b524-d5216c83539e}"
+      DTS:From="Package\Get Last Extract"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert into genre_STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1d8e9d8a-cb59-4e87-a99c-173ab2db7047}"
+      DTS:From="Package\Insert into genre_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert into genre_DWH" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{83bbecb2-e33c-4fee-931c-00a570535b87}"
+      DTS:From="Package\Insert into genre_DWH"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Update last extract" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Get Last Extract"
+          TopLeft="71,143.416666252331" />
+        <NodeLayout
+          Size="185.5,42"
+          Id="Package\Insert into genre_DWH"
+          TopLeft="60,320.62499873278" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Insert into genre_STG"
+          TopLeft="99,219.249999208997" />
+        <NodeLayout
+          Size="206.5,42"
+          Id="Package\Truncate Table genre_STG"
+          TopLeft="60.5,60" />
+        <NodeLayout
+          Size="166.5,42"
+          Id="Package\Update last extract"
+          TopLeft="133,429.708331544159" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="163.75,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.75,41.416666252331"
+              Start="0,0"
+              End="-15.75,33.916666252331">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.7083331261655" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.7083331261655"
+                    Point2="0,20.7083331261655"
+                    Point3="-4,20.7083331261655" />
+                  <mssgle:LineSegment
+                    End="-11.75,20.7083331261655" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.75,20.7083331261655"
+                    Point2="-15.75,20.7083331261655"
+                    Point3="-15.75,24.7083331261655" />
+                  <mssgle:LineSegment
+                    End="-15.75,33.916666252331" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="148,185.416666252331">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42,33.833332956666"
+              Start="0,0"
+              End="42,26.333332956666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.916666478333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.916666478333"
+                    Point2="0,16.916666478333"
+                    Point3="4,16.916666478333" />
+                  <mssgle:LineSegment
+                    End="38,16.916666478333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38,16.916666478333"
+                    Point2="42,16.916666478333"
+                    Point3="42,20.916666478333" />
+                  <mssgle:LineSegment
+                    End="42,26.333332956666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="190,261.249999208997">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.25,59.374999523783"
+              Start="0,0"
+              End="-37.25,51.874999523783">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6874997618915" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.6874997618915"
+                    Point2="0,29.6874997618915"
+                    Point3="-4,29.6874997618915" />
+                  <mssgle:LineSegment
+                    End="-33.25,29.6874997618915" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.25,29.6874997618915"
+                    Point2="-37.25,29.6874997618915"
+                    Point3="-37.25,33.6874997618915" />
+                  <mssgle:LineSegment
+                    End="-37.25,51.874999523783" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="152.75,362.62499873278">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63.5,67.083332811379"
+              Start="0,0"
+              End="63.5,59.583332811379">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5416664056895" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5416664056895"
+                    Point2="0,33.5416664056895"
+                    Point3="4,33.5416664056895" />
+                  <mssgle:LineSegment
+                    End="59.5,33.5416664056895" />
+                  <mssgle:CubicBezierSegment
+                    Point1="59.5,33.5416664056895"
+                    Point2="63.5,33.5416664056895"
+                    Point3="63.5,37.5416664056895" />
+                  <mssgle:LineSegment
+                    End="63.5,59.583332811379" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert into genre_DWH">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="227,42"
+          Id="Package\Insert into genre_DWH\update old records and is active"
+          TopLeft="473.230769230769,301.333333333333" />
+        <NodeLayout
+          Size="133,42"
+          Id="Package\Insert into genre_DWH\genre_STG"
+          TopLeft="271,14" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Insert into genre_DWH\look for updated records"
+          TopLeft="503.384615384615,185.333333333333" />
+        <NodeLayout
+          Size="136.5,42"
+          Id="Package\Insert into genre_DWH\genre_DWH"
+          TopLeft="333.333333333333,402" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Insert into genre_DWH\insert updated record into dwh"
+          TopLeft="558.666666666667,395.333333333333" />
+        <NodeLayout
+          Size="244,42"
+          Id="Package\Insert into genre_DWH\look for updated or inserted records"
+          TopLeft="334.666666666667,120" />
+        <EdgeLayout
+          Id="Package\Insert into genre_DWH.Paths[Lookup No Match Output1]"
+          TopLeft="417.333333333333,162">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.7499999999999,240"
+              Start="0,0"
+              End="-15.7499999999999,232.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,92.9381107491856" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,92.9381107491856"
+                    Point2="0,96.9381107491856"
+                    Point3="-4,96.9381107491856" />
+                  <mssgle:LineSegment
+                    End="-11.7499999999999,96.9381107491856" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.7499999999999,96.9381107491856"
+                    Point2="-15.7499999999999,96.9381107491856"
+                    Point3="-15.7499999999999,100.938110749186" />
+                  <mssgle:LineSegment
+                    End="-15.7499999999999,232.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-63.6813867187499,101.938110749186,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_DWH.Paths[Lookup No Match Output]"
+          TopLeft="599.384615384615,227.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.6538461538461,74"
+              Start="0,0"
+              End="-12.6538461538461,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33"
+                    Point2="0,37"
+                    Point3="-4,37" />
+                  <mssgle:LineSegment
+                    End="-8.65384615384608,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.65384615384608,37"
+                    Point2="-12.6538461538461,37"
+                    Point3="-12.6538461538461,41" />
+                  <mssgle:LineSegment
+                    End="-12.6538461538461,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-62.133309795673,42,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_DWH.Paths[Lookup Match Output]"
+          TopLeft="496,162">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="103.384615384615,23.333333333333"
+              Start="0,0"
+              End="103.384615384615,15.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,5.42453854505958" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,5.42453854505958"
+                    Point2="0,9.42453854505958"
+                    Point3="4,9.42453854505958" />
+                  <mssgle:LineSegment
+                    End="99.384615384615,9.42453854505958" />
+                  <mssgle:CubicBezierSegment
+                    Point1="99.384615384615,9.42453854505958"
+                    Point2="103.384615384615,9.42453854505958"
+                    Point3="103.384615384615,13.4245385450596" />
+                  <mssgle:LineSegment
+                    End="103.384615384615,15.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.50092097355751,14.4245385450596,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_DWH.Paths[OLE DB Source Output]"
+          TopLeft="337.5,56">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="119.166666666667,64"
+              Start="0,0"
+              End="119.166666666667,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28"
+                    Point2="0,32"
+                    Point3="4,32" />
+                  <mssgle:LineSegment
+                    End="115.166666666667,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="115.166666666667,32"
+                    Point2="119.166666666667,32"
+                    Point3="119.166666666667,36" />
+                  <mssgle:LineSegment
+                    End="119.166666666667,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_DWH.Paths[OLE DB Command Output]"
+          TopLeft="586.730769230769,343.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="81.9358974358977,52"
+              Start="0,0"
+              End="81.9358974358977,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="4,26" />
+                  <mssgle:LineSegment
+                    End="77.9358974358977,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="77.9358974358977,26"
+                    Point2="81.9358974358977,26"
+                    Point3="81.9358974358977,30" />
+                  <mssgle:LineSegment
+                    End="81.9358974358977,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_DWH\genre_STG">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_DWH\look for updated records">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[genre_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_DWH\genre_DWH">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_DWH\look for updated or inserted records">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[genre_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Insert into genre_STG">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\Insert into genre_STG\OLE DB Source"
+          TopLeft="317.5,37.333333182666" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Insert into genre_STG\Data Conversion"
+          TopLeft="344.5,270.83333198809" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into genre_STG\OLE DB Destination"
+          TopLeft="293,393.666664783325" />
+        <NodeLayout
+          Size="160.5,42"
+          Id="Package\Insert into genre_STG\add created_date"
+          TopLeft="299,164.124999184782" />
+        <EdgeLayout
+          Id="Package\Insert into genre_STG.Paths[Data Conversion Output]"
+          TopLeft="423,312.83333198809">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.5,80.8333327952358"
+              Start="0,0"
+              End="-43.5,73.3333327952358">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.4166663976179"
+                    Point2="0,40.4166663976179"
+                    Point3="-4,40.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-39.5,40.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.5,40.4166663976179"
+                    Point2="-43.5,40.4166663976179"
+                    Point3="-43.5,44.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-43.5,73.3333327952358" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_STG.Paths[OLE DB Source Output]"
+          TopLeft="394.25,79.333333182666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15,84.791666002116"
+              Start="0,0"
+              End="-15,77.291666002116">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.395833001058" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.395833001058"
+                    Point2="0,42.395833001058"
+                    Point3="-4,42.395833001058" />
+                  <mssgle:LineSegment
+                    End="-11,42.395833001058" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11,42.395833001058"
+                    Point2="-15,42.395833001058"
+                    Point3="-15,46.395833001058" />
+                  <mssgle:LineSegment
+                    End="-15,77.291666002116" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into genre_STG.Paths[Derived Column Output]"
+          TopLeft="379.25,206.124999184782">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.75,64.708332803308"
+              Start="0,0"
+              End="43.75,57.208332803308">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.354166401654" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.354166401654"
+                    Point2="0,32.354166401654"
+                    Point3="4,32.354166401654" />
+                  <mssgle:LineSegment
+                    End="39.75,32.354166401654" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.75,32.354166401654"
+                    Point2="43.75,32.354166401654"
+                    Point3="43.75,36.354166401654" />
+                  <mssgle:LineSegment
+                    End="43.75,57.208332803308" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_STG\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into genre_STG\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

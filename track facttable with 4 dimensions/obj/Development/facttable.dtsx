@@ -1,0 +1,3206 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/3/2025 8:29:30 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-DC973M5"
+  DTS:CreatorName="DESKTOP-DC973M5\Mustafa_ammar"
+  DTS:DTSID="{ACA9B9F7-1726-4B85-BA08-B52DC8417560}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="facttable"
+  DTS:PackageType="5"
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{36E2A258-00CB-40D2-A5F9-368F18AA13B6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}"
+      DTS:ObjectName="localhost.Chinook">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}localhost.Chinook;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+      DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D37D167F-4029-44D6-A26A-C12F633D6856}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="last_extract">
+      <DTS:VariableValue
+        DTS:DataType="7">5/3/2025 8:32:01 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Last Extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d518ba8b-7bc4-4648-960f-48896c6bdb7c}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Last Extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:SqlStatementSource="select last_extract from config where name ='tracks'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::last_extract" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into track_DWH"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{e3baf2d8-3ac5-4b99-847c-619a0702324b}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into track_DWH"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into track_DWH\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input].Columns[invoicedate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="invoicedate"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]"
+                      name="Copy of invoicedate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\lookup in artist dim"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="lookup in artist dim"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[artist_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[artist_DWH]) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ArtistKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_STR" length="120" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\lookup in artist dim.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input].Columns[ArtistId]"
+                      cachedDataType="i4"
+                      cachedName="ArtistId"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output].Columns[ArtistKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output].Columns[ArtistKey]"
+                      name="ArtistKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ArtistKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\lookup in customer dim"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="lookup in customer dim"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Customer_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Customer_DWH]) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="customerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstName" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastName" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Company" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Address" dataType="DT_WSTR" length="70" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="City" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="State" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Country" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PostalCode" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Phone" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Fax" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Email" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupportRepId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[customerId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\lookup in customer dim.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input].Columns[customerId]"
+                      cachedDataType="i4"
+                      cachedName="customerId"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[customerId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output].Columns[customerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output].Columns[customerKey]"
+                      name="customerKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">customerKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\lookup in date dim"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="lookup in date dim"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Date_Dim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Date_Dim]) [refTable]
+where [refTable].[Date] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Day" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DaySuffix" dataType="DT_STR" length="2" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Weekday" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="WeekDayName" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="WeekDayName_Short" dataType="DT_STR" length="3" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="WeekDayName_FirstLetter" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="DOWInMonth" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DayOfYear" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="WeekOfMonth" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="WeekOfYear" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Month" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MonthName" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="MonthName_Short" dataType="DT_STR" length="3" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="MonthName_FirstLetter" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Quarter" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="QuarterName" dataType="DT_STR" length="6" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Year" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MMYYYY" dataType="DT_STR" length="6" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="MonthYear" dataType="DT_STR" length="7" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="IsWeekend" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IsHoliday" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HolidayName" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="SpecialDays" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="FinancialYear" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FinancialQuater" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FinancialMonth" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstDateofYear" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastDateofYear" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstDateofQuater" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastDateofQuater" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstDateofMonth" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastDateofMonth" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstDateofWeek" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastDateofWeek" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CurrentYear" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CurrentQuater" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CurrentMonth" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CurrentWeek" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CurrentDay" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\lookup in date dim.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input].Columns[Copy of invoicedate]"
+                      cachedDataType="dbDate"
+                      cachedName="Copy of invoicedate"
+                      lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Date</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DateKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\lookup in genre dim"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="lookup in genre dim"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[genre_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[genre_DWH]) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_STR" length="120" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\lookup in genre dim.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output].Columns[GenreKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output].Columns[GenreKey]"
+                      name="GenreKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">GenreKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[track_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[unitprice]"
+                      cachedDataType="i4"
+                      cachedName="unitprice"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[unitprice]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[unitprice]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[invoicedate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="invoicedate"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[quantity]"
+                      cachedDataType="i4"
+                      cachedName="quantity"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TrackId]"
+                      cachedDataType="i4"
+                      cachedName="TrackId"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[trackid]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genrekey]"
+                      lineageId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output].Columns[GenreKey]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customerKey]"
+                      cachedDataType="i4"
+                      cachedName="customerKey"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerkey]"
+                      lineageId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output].Columns[customerKey]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ArtistKey]"
+                      cachedDataType="i4"
+                      cachedName="ArtistKey"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[artistkey]"
+                      lineageId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output].Columns[ArtistKey]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[datekey]"
+                      lineageId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output].Columns[DateKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[trackid]"
+                      dataType="i4"
+                      name="trackid" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genrekey]"
+                      dataType="i4"
+                      name="genrekey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[datekey]"
+                      dataType="i4"
+                      name="datekey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerkey]"
+                      dataType="i4"
+                      name="customerkey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[artistkey]"
+                      dataType="i4"
+                      name="artistkey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[unitprice]"
+                      dataType="i4"
+                      name="unitprice" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
+                      dataType="dbTimeStamp"
+                      name="invoicedate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into track_DWH\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[tracks_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into track_DWH\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[unitprice]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[unitprice]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[unitprice]"
+                      name="unitprice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[invoicedate]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]"
+                      name="invoicedate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
+                      name="quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TrackId]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]"
+                      name="TrackId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AlbumId]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]"
+                      name="AlbumId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ArtistId]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]"
+                      name="ArtistId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[customerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customerId]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[customerId]"
+                      name="customerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_date]"
+                      name="created_date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[unitprice]"
+                      dataType="i4"
+                      name="unitprice" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[invoicedate]"
+                      dataType="dbTimeStamp"
+                      name="invoicedate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TrackId]"
+                      dataType="i4"
+                      name="TrackId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AlbumId]"
+                      dataType="i4"
+                      name="AlbumId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ArtistId]"
+                      dataType="i4"
+                      name="ArtistId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customerId]"
+                      dataType="i4"
+                      name="customerId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
+                      dataType="dbTimeStamp"
+                      name="created_date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TrackId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TrackId]"
+                      name="TrackId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AlbumId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AlbumId]"
+                      name="AlbumId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ArtistId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ArtistId]"
+                      name="ArtistId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customerId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customerId]"
+                      name="customerId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[unitprice]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[unitprice]"
+                      name="unitprice" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[invoicedate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[invoicedate]"
+                      name="invoicedate" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_date]"
+                      name="created_date" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
+                      name="quantity" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into track_DWH.Paths[Data Conversion Output]"
+              endId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[Lookup Match Output]"
+              endId="Package\Insert into track_DWH\lookup in customer dim.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[Lookup Match Output1]"
+              endId="Package\Insert into track_DWH\lookup in artist dim.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
+              endId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
+              endId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
+              endId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into track_STG"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B2251491-FB9D-424D-8934-7BA355B9C16E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into track_STG"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\insert into track_STG\asd"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="asd"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Album]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Album]) [refTable]
+where [refTable].[AlbumId] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="AlbumId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Title" dataType="DT_WSTR" length="160" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ArtistId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\insert into track_STG\260:invalid};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\insert into track_STG\asd.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\insert into track_STG\asd.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\insert into track_STG\asd.Inputs[Lookup Input].Columns[AlbumId]"
+                      cachedDataType="i4"
+                      cachedName="AlbumId"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">AlbumId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\asd.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\insert into track_STG\asd.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\asd.Outputs[Lookup Match Output].Columns[ArtistId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\insert into track_STG\asd.Outputs[Lookup Match Output].Columns[ArtistId]"
+                      name="ArtistId"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ArtistId</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\asd.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\insert into track_STG\asd.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\asd.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\insert into track_STG\asd.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\asd.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\asd.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\asd.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\asd.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\insert into track_STG\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\insert into track_STG\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\insert into track_STG\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]"
+                      name="created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::last_extract]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::last_extract]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\insert into track_STG\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\insert into track_STG\idk why"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="idk why"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Invoice]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Invoice]) [refTable]
+where [refTable].[InvoiceId] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="InvoiceId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="InvoiceDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BillingAddress" dataType="DT_WSTR" length="70" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BillingCity" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BillingState" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BillingCountry" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BillingPostalCode" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Total" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[InvoiceId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\insert into track_STG\idk why.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\insert into track_STG\idk why.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\insert into track_STG\idk why.Inputs[Lookup Input].Columns[InvoiceId]"
+                      cachedDataType="i4"
+                      cachedName="InvoiceId"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[InvoiceId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">InvoiceId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\insert into track_STG\idk why.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[CustomerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[CustomerId]"
+                      name="CustomerId"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CustomerId</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[InvoiceDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[InvoiceDate]"
+                      name="InvoiceDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">InvoiceDate</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\idk why.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\insert into track_STG\idk why.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\idk why.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\insert into track_STG\idk why.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\idk why.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\idk why.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\insert into track_STG\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[tracks_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\insert into track_STG\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TrackId]"
+                      cachedDataType="i4"
+                      cachedName="TrackId"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TrackId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AlbumId]"
+                      cachedDataType="i4"
+                      cachedName="AlbumId"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AlbumId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UnitPrice]"
+                      cachedDataType="numeric"
+                      cachedName="UnitPrice"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[unitprice]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quantity]"
+                      cachedDataType="i4"
+                      cachedName="Quantity"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[Quantity]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerId]"
+                      cachedDataType="i4"
+                      cachedName="CustomerId"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerId]"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[CustomerId]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InvoiceDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InvoiceDate"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
+                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[InvoiceDate]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ArtistId]"
+                      cachedDataType="i4"
+                      cachedName="ArtistId"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
+                      lineageId="Package\insert into track_STG\asd.Outputs[Lookup Match Output].Columns[ArtistId]" />
+                    <inputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[created_date]"
+                      cachedDataType="date"
+                      cachedName="created_date"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      lineageId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TrackId]"
+                      dataType="i4"
+                      name="TrackId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AlbumId]"
+                      dataType="i4"
+                      name="AlbumId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
+                      dataType="i4"
+                      name="ArtistId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerId]"
+                      dataType="i4"
+                      name="customerId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[unitprice]"
+                      dataType="i4"
+                      name="unitprice" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
+                      dataType="dbTimeStamp"
+                      name="invoicedate" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      dataType="dbTimeStamp"
+                      name="created_date" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\insert into track_STG\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Track]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\insert into track_STG\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TrackId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]"
+                      name="TrackId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="200"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AlbumId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]"
+                      name="AlbumId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[MediaTypeId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MediaTypeId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[MediaTypeId]"
+                      name="MediaTypeId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Composer]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Composer]"
+                      length="220"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Composer]"
+                      name="Composer"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Milliseconds]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Milliseconds]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Milliseconds]"
+                      name="Milliseconds"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bytes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bytes]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bytes]"
+                      name="Bytes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TrackId]"
+                      dataType="i4"
+                      name="TrackId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="200"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AlbumId]"
+                      dataType="i4"
+                      name="AlbumId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MediaTypeId]"
+                      dataType="i4"
+                      name="MediaTypeId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Composer]"
+                      dataType="wstr"
+                      length="220"
+                      name="Composer" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Milliseconds]"
+                      dataType="i4"
+                      name="Milliseconds" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bytes]"
+                      dataType="i4"
+                      name="Bytes" />
+                    <externalMetadataColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TrackId]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TrackId]"
+                      name="TrackId" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AlbumId]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AlbumId]"
+                      name="AlbumId" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MediaTypeId]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MediaTypeId]"
+                      name="MediaTypeId" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Composer]"
+                      dataType="wstr"
+                      length="220"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Composer]"
+                      name="Composer" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Milliseconds]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Milliseconds]"
+                      name="Milliseconds" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bytes]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bytes]"
+                      name="Bytes" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\insert into track_STG\test"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="test"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[InvoiceLine]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[InvoiceLine]) [refTable]
+where [refTable].[TrackId] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="InvoiceLineId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="InvoiceId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TrackId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UnitPrice" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="Quantity" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\insert into track_STG\test.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\insert into track_STG\test.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\insert into track_STG\test.Inputs[Lookup Input].Columns[TrackId]"
+                      cachedDataType="i4"
+                      cachedName="TrackId"
+                      lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">TrackId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\insert into track_STG\test.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\insert into track_STG\test.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[InvoiceId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[InvoiceId]"
+                      name="InvoiceId"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">InvoiceId</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[Quantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Quantity</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\test.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\insert into track_STG\test.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\insert into track_STG\test.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\insert into track_STG\test.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\insert into track_STG\test.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\insert into track_STG\test.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\insert into track_STG.Paths[Derived Column Output]"
+              endId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\insert into track_STG.Paths[Lookup Match Output]"
+              endId="Package\insert into track_STG\asd.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\insert into track_STG.Paths[Lookup Match Output1]"
+              endId="Package\insert into track_STG\Derived Column.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\insert into track_STG\asd.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\insert into track_STG.Paths[Lookup Match Output2]"
+              endId="Package\insert into track_STG\idk why.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\insert into track_STG\test.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\insert into track_STG.Paths[OLE DB Source Output]"
+              endId="Package\insert into track_STG\test.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table tracks_STG"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8f2b9c35-a974-4178-b048-3b2dc2ef7d4b}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table tracks_STG"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:SqlStatementSource="truncate table tracks_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{b87094b9-b385-44df-939a-4d4617dca95e}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='tracks'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{b3d1e00b-c87e-4726-8f84-34227f56073c}"
+      DTS:From="Package\Truncate Table tracks_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Get Last Extract" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E0DD3C7-9814-4A8E-AFA1-9591E0CEBADA}"
+      DTS:From="Package\Get Last Extract"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\insert into track_STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{44105830-3832-4214-BCC3-758CDAE8A3FB}"
+      DTS:From="Package\insert into track_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert into track_DWH" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{d7a7fd73-ab1b-4f61-82cb-f490dee9ccd0}"
+      DTS:From="Package\Insert into track_DWH"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Update last extract" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Get Last Extract"
+          TopLeft="67.5,143.416666252331" />
+        <NodeLayout
+          Size="181.5,42"
+          Id="Package\Insert into track_DWH"
+          TopLeft="56.5,320.62499873278" />
+        <NodeLayout
+          Size="177.5,42"
+          Id="Package\insert into track_STG"
+          TopLeft="107.5,222.666665687329" />
+        <NodeLayout
+          Size="207.5,42"
+          Id="Package\Truncate Table tracks_STG"
+          TopLeft="57,60" />
+        <NodeLayout
+          Size="166.5,42"
+          Id="Package\Update last extract"
+          TopLeft="129.5,429.708331544159" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="160.75,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.25,41.416666252331"
+              Start="0,0"
+              End="-16.25,33.916666252331">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.7083331261655" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.7083331261655"
+                    Point2="0,20.7083331261655"
+                    Point3="-4,20.7083331261655" />
+                  <mssgle:LineSegment
+                    End="-12.25,20.7083331261655" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.25,20.7083331261655"
+                    Point2="-16.25,20.7083331261655"
+                    Point3="-16.25,24.7083331261655" />
+                  <mssgle:LineSegment
+                    End="-16.25,33.916666252331" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="144.5,185.416666252331">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="51.75,37.249999434998"
+              Start="0,0"
+              End="51.75,29.749999434998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.624999717499" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.624999717499"
+                    Point2="0,18.624999717499"
+                    Point3="4,18.624999717499" />
+                  <mssgle:LineSegment
+                    End="47.75,18.624999717499" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.75,18.624999717499"
+                    Point2="51.75,18.624999717499"
+                    Point3="51.75,22.624999717499" />
+                  <mssgle:LineSegment
+                    End="51.75,29.749999434998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="196.25,264.666665687329">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-49,55.958333045451"
+              Start="0,0"
+              End="-49,48.458333045451">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.9791665227255" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.9791665227255"
+                    Point2="0,27.9791665227255"
+                    Point3="-4,27.9791665227255" />
+                  <mssgle:LineSegment
+                    End="-45,27.9791665227255" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-45,27.9791665227255"
+                    Point2="-49,27.9791665227255"
+                    Point3="-49,31.9791665227255" />
+                  <mssgle:LineSegment
+                    End="-49,48.458333045451" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="147.25,362.62499873278">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.5,67.083332811379"
+              Start="0,0"
+              End="65.5,59.583332811379">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5416664056895" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5416664056895"
+                    Point2="0,33.5416664056895"
+                    Point3="4,33.5416664056895" />
+                  <mssgle:LineSegment
+                    End="61.5,33.5416664056895" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.5,33.5416664056895"
+                    Point2="65.5,33.5416664056895"
+                    Point3="65.5,37.5416664056895" />
+                  <mssgle:LineSegment
+                    End="65.5,59.583332811379" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert into track_DWH">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="166.5,42"
+          Id="Package\Insert into track_DWH\lookup in artist dim"
+          TopLeft="430.142857142857,368.952379165897" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Insert into track_DWH\lookup in date dim"
+          TopLeft="486.928571428571,568.559522523471" />
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\Insert into track_DWH\OLE DB Source"
+          TopLeft="414.384615384615,61" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Insert into track_DWH\lookup in customer dim"
+          TopLeft="398.642857142857,288.327379141683" />
+        <NodeLayout
+          Size="170.5,42"
+          Id="Package\Insert into track_DWH\lookup in genre dim"
+          TopLeft="413.5,213.54761767009" />
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output1]"
+          TopLeft="492.142857142857,330.327379141683">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.2499999999999,38.625000024214"
+              Start="0,0"
+              End="21.2499999999999,31.125000024214">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.312500012107" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.312500012107"
+                    Point2="0,19.312500012107"
+                    Point3="4,19.312500012107" />
+                  <mssgle:LineSegment
+                    End="17.2499999999999,19.312500012107" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.2499999999999,19.312500012107"
+                    Point2="21.2499999999999,19.312500012107"
+                    Point3="21.2499999999999,23.312500012107" />
+                  <mssgle:LineSegment
+                    End="21.2499999999999,31.125000024214" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-37.56638671875,24.312500012107,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output]"
+          TopLeft="495.446428571429,255.54761767009">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.7797614715934"
+              Start="0,0"
+              End="0,25.2797614715934">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.2797614715934" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,6.83519323579671,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
+          TopLeft="494.942307692308,103">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,110.54761767009"
+              Start="0,0"
+              End="0,103.04761767009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,103.04761767009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Insert into track_DWH\Data Conversion"
+          TopLeft="442.857142857143,472.857142857143" />
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
+          TopLeft="517.375,410.952379165897">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,61.9047636912455"
+              Start="0,0"
+              End="0,54.4047636912455">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,54.4047636912455" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,21.3976943456227,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Data Conversion Output]"
+          TopLeft="521.357142857143,514.857142857143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.5714285714284,53.7023796663284"
+              Start="0,0"
+              End="47.5714285714284,46.2023796663284">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.8511898331642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.8511898331642"
+                    Point2="0,26.8511898331642"
+                    Point3="4,26.8511898331642" />
+                  <mssgle:LineSegment
+                    End="43.5714285714284,26.8511898331642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43.5714285714284,26.8511898331642"
+                    Point2="47.5714285714284,26.8511898331642"
+                    Point3="47.5714285714284,30.8511898331642" />
+                  <mssgle:LineSegment
+                    End="47.5714285714284,46.2023796663284" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into track_DWH\OLE DB Destination"
+          TopLeft="503.571428571429,641.071428571429" />
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
+          TopLeft="568.928571428571,610.559522523471">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.1428571428572,30.5119060479573"
+              Start="0,0"
+              End="21.1428571428572,23.0119060479573">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.2559530239786" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.2559530239786"
+                    Point2="0,15.2559530239786"
+                    Point3="4,15.2559530239786" />
+                  <mssgle:LineSegment
+                    End="17.1428571428572,15.2559530239786" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.1428571428572,15.2559530239786"
+                    Point2="21.1428571428572,15.2559530239786"
+                    Point3="21.1428571428572,19.2559530239786" />
+                  <mssgle:LineSegment
+                    End="21.1428571428572,23.0119060479573" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-37.6199581473214,20.2559530239786,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\lookup in artist dim">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[artist_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\lookup in date dim">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Date_Dim]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\lookup in customer dim">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Customer_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\lookup in genre dim">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[genre_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\insert into track_STG">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="96,42"
+          Id="Package\insert into track_STG\asd"
+          TopLeft="366.5,372.666664815611" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\insert into track_STG\OLE DB Destination"
+          TopLeft="278.5,555.083331552231" />
+        <NodeLayout
+          Size="154.5,42"
+          Id="Package\insert into track_STG\Derived Column"
+          TopLeft="331.5,483.083331423087" />
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\insert into track_STG\OLE DB Source"
+          TopLeft="390,52.2083331584517" />
+        <NodeLayout
+          Size="96,42"
+          Id="Package\insert into track_STG\test"
+          TopLeft="321,171.708332480449" />
+        <NodeLayout
+          Size="114,42"
+          Id="Package\insert into track_STG\idk why"
+          TopLeft="338.5,277.333331955804" />
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Lookup Match Output]"
+          TopLeft="395.5,319.333331955804">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19,53.333332859807"
+              Start="0,0"
+              End="19,45.833332859807">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.6666664299035" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.6666664299035"
+                    Point2="0,26.6666664299035"
+                    Point3="4,26.6666664299035" />
+                  <mssgle:LineSegment
+                    End="15,26.6666664299035" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15,26.6666664299035"
+                    Point2="19,26.6666664299035"
+                    Point3="19,30.6666664299035" />
+                  <mssgle:LineSegment
+                    End="19,45.833332859807" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-38.69138671875,31.6666664299035,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Derived Column Output]"
+          TopLeft="408.75,525.083331423087">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.75,30.0000001291437"
+              Start="0,0"
+              End="-43.75,22.5000001291437">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.0000000645719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.0000000645719"
+                    Point2="0,15.0000000645719"
+                    Point3="-4,15.0000000645719" />
+                  <mssgle:LineSegment
+                    End="-39.75,15.0000000645719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.75,15.0000000645719"
+                    Point2="-43.75,15.0000000645719"
+                    Point3="-43.75,19.0000000645719" />
+                  <mssgle:LineSegment
+                    End="-43.75,22.5000001291437" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[OLE DB Source Output]"
+          TopLeft="466.75,94.2083331584517">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-97.75,77.4999993219974"
+              Start="0,0"
+              End="-97.75,69.9999993219974">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.7499996609987" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.7499996609987"
+                    Point2="0,38.7499996609987"
+                    Point3="-4,38.7499996609987" />
+                  <mssgle:LineSegment
+                    End="-93.75,38.7499996609987" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-93.75,38.7499996609987"
+                    Point2="-97.75,38.7499996609987"
+                    Point3="-97.75,42.7499996609987" />
+                  <mssgle:LineSegment
+                    End="-97.75,69.9999993219974" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Lookup Match Output1]"
+          TopLeft="411.625,414.666664815611">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68.416666607476"
+              Start="0,0"
+              End="0,60.916666607476">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.916666607476" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,24.653645803738,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Lookup Match Output2]"
+          TopLeft="369,213.708332480449">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.5,63.624999475355"
+              Start="0,0"
+              End="26.5,56.124999475355">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8124997376775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.8124997376775"
+                    Point2="0,31.8124997376775"
+                    Point3="4,31.8124997376775" />
+                  <mssgle:LineSegment
+                    End="22.5,31.8124997376775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5,31.8124997376775"
+                    Point2="26.5,31.8124997376775"
+                    Point3="26.5,35.8124997376775" />
+                  <mssgle:LineSegment
+                    End="26.5,56.124999475355" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-34.94138671875,36.8124997376775,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\asd">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Album]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\test">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[InvoiceLine]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\idk why">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Invoice]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

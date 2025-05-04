@@ -1,0 +1,2726 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/3/2025 6:40:08 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-DC973M5"
+  DTS:CreatorName="DESKTOP-DC973M5\Mustafa_ammar"
+  DTS:DTSID="{8E57EEA6-D215-42B4-B73D-8C3488A2C174}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{C7F5482D-DC8B-4C33-9378-B67305153CA0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0053E853-0033-4D08-921C-CFF2B8095C44}"
+      DTS:ObjectName="localhost.Chinook">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{0053E853-0033-4D08-921C-CFF2B8095C44}localhost.Chinook;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}"
+      DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA977718-6B1B-466F-BA99-D9BD37D3136E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="last_extract">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Last Extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4381bec2-09ea-4bba-960d-6d36f53d1d84}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Last Extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}"
+          SQLTask:SqlStatementSource="select last_extract from config where name ='artist'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::last_extract" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into Customer_DWH"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{09a58679-8bc7-4c50-81f3-5ada93c89474}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into Customer_DWH"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Insert new rows into Customer_DWH"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">
+INSERT INTO Customer_DWH (
+    src_id, FirstName, LastName, Company, Address, City, State, Country,
+    PostalCode, Phone, Fax, Email, SupportRepId, start_date, end_date, isactive
+) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),NULL,1);</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[CustomerId]"
+                      cachedDataType="i4"
+                      cachedName="CustomerId"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Company]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Company"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Address]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="Address"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_6]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_7]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[PostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalCode"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_8]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Phone]"
+                      cachedDataType="wstr"
+                      cachedLength="24"
+                      cachedName="Phone"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_9]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Fax]"
+                      cachedDataType="wstr"
+                      cachedLength="24"
+                      cachedName="Fax"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_10]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fax]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_11]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].Columns[SupportRepId]"
+                      cachedDataType="i4"
+                      cachedName="SupportRepId"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_12]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[SupportRepId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="wstr"
+                      length="20"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="wstr"
+                      length="80"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="wstr"
+                      length="70"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_6]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_6">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_7]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_7">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_8]"
+                      dataType="wstr"
+                      length="10"
+                      name="Param_8">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_9]"
+                      dataType="wstr"
+                      length="24"
+                      name="Param_9">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_10]"
+                      dataType="wstr"
+                      length="24"
+                      name="Param_10">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_11]"
+                      dataType="wstr"
+                      length="60"
+                      name="Param_11">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input].ExternalColumns[Param_12]"
+                      dataType="i4"
+                      name="Param_12">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_DWH\Lookup 1"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Customer_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Customer_DWH]) [refTable]
+where [refTable].[Company] = ? and [refTable].[Address] = ? and [refTable].[City] = ? and [refTable].[State] = ? and [refTable].[PostalCode] = ? and [refTable].[Phone] = ? and [refTable].[Email] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="customerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstName" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastName" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Company" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Address" dataType="DT_WSTR" length="70" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="City" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="State" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Country" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PostalCode" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Phone" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Fax" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Email" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupportRepId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]};#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\Lookup 1.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[Company]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Company"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Company</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[Address]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="Address"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Address</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="City"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">City</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="State"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">State</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[PostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalCode"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PostalCode</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[Phone]"
+                      cachedDataType="wstr"
+                      cachedLength="24"
+                      cachedName="Phone"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Phone</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="Email"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Email</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_DWH\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Customer_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Company]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Company"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="Address"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalCode"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Phone]"
+                      cachedDataType="wstr"
+                      cachedLength="24"
+                      cachedName="Phone"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Fax]"
+                      cachedDataType="wstr"
+                      cachedLength="24"
+                      cachedName="Fax"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Fax]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fax]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Email]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SupportRepId]"
+                      cachedDataType="i4"
+                      cachedName="SupportRepId"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SupportRepId]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[SupportRepId]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerId]"
+                      cachedDataType="i4"
+                      cachedName="CustomerId"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Created_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Created_date"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerKey]"
+                      dataType="i4"
+                      name="customerKey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      dataType="i4"
+                      name="src_id" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="40"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="20"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company]"
+                      dataType="wstr"
+                      length="80"
+                      name="Company" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                      dataType="wstr"
+                      length="70"
+                      name="Address" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="40"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="40"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="40"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="24"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Fax]"
+                      dataType="wstr"
+                      length="24"
+                      name="Fax" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="60"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SupportRepId]"
+                      dataType="i4"
+                      name="SupportRepId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      dataType="dbTimeStamp"
+                      name="start_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_date]"
+                      dataType="dbTimeStamp"
+                      name="end_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[isactive]"
+                      dataType="i2"
+                      name="isactive" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_DWH\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Customer_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                      name="CustomerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      length="20"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Company]"
+                      length="80"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]"
+                      name="Company"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address]"
+                      length="70"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]"
+                      name="Address"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                      name="Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
+                      length="10"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]"
+                      name="PostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                      length="24"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fax]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fax]"
+                      length="24"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fax]"
+                      name="Fax"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Email]"
+                      length="60"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]"
+                      name="Email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[SupportRepId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SupportRepId]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[SupportRepId]"
+                      name="SupportRepId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Created_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Created_date]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Created_date]"
+                      name="Created_date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                      dataType="i4"
+                      name="CustomerId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="40"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="20"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Company]"
+                      dataType="wstr"
+                      length="80"
+                      name="Company" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address]"
+                      dataType="wstr"
+                      length="70"
+                      name="Address" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="40"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="40"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="40"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="24"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fax]"
+                      dataType="wstr"
+                      length="24"
+                      name="Fax" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="60"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SupportRepId]"
+                      dataType="i4"
+                      name="SupportRepId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Created_date]"
+                      dataType="dbTimeStamp"
+                      name="Created_date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                      name="CustomerId" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Company]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Company]"
+                      name="Company" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address]"
+                      name="Address" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[State]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[State]"
+                      name="State" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                      name="Country" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
+                      name="PostalCode" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                      dataType="wstr"
+                      length="24"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fax]"
+                      dataType="wstr"
+                      length="24"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fax]"
+                      name="Fax" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Email]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Email]"
+                      name="Email" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SupportRepId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SupportRepId]"
+                      name="SupportRepId" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Created_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Created_date]"
+                      name="Created_date" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_DWH\Search for customer if exists"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Search for customer if exists"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Customer_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Customer_DWH]) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="customerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FirstName" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastName" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Company" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Address" dataType="DT_WSTR" length="70" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="City" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="State" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Country" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PostalCode" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Phone" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Fax" dataType="DT_WSTR" length="24" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Email" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupportRepId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_date" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="isactive" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\Search for customer if exists.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input].Columns[CustomerId]"
+                      cachedDataType="i4"
+                      cachedName="CustomerId"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_DWH\set end date and isactive for old records"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="set end date and isactive for old records"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">update  Customer_DWH
+set end_date =GETDATE(),isactive=0
+where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=? or PostalCode!=?
+</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Connections[OleDbConnection]"
+                  connectionManagerID="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  connectionManagerRefId="{A573F042-F44A-481D-87B1-29E052FC0613}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[CustomerId]"
+                      cachedDataType="i4"
+                      cachedName="CustomerId"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[Address]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="Address"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[Company]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Company"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Company]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].Columns[PostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalCode"
+                      externalMetadataColumnId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_6]"
+                      lineageId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostalCode]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="wstr"
+                      length="70"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="wstr"
+                      length="60"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="wstr"
+                      length="40"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      dataType="wstr"
+                      length="80"
+                      name="Param_5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input].ExternalColumns[Param_6]"
+                      dataType="wstr"
+                      length="10"
+                      name="Param_6">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into Customer_DWH.Paths[Lookup Match Output]"
+              endId="Package\Insert into Customer_DWH\Lookup 1.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into Customer_DWH.Paths[Lookup No Match Output]"
+              endId="Package\Insert into Customer_DWH\set end date and isactive for old records.Inputs[OLE DB Command Input]"
+              name="Lookup No Match Output"
+              startId="Package\Insert into Customer_DWH\Lookup 1.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Insert into Customer_DWH.Paths[Lookup No Match Output1]"
+              endId="Package\Insert into Customer_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Insert into Customer_DWH\Search for customer if exists.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Insert into Customer_DWH.Paths[OLE DB Command Output]"
+              endId="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH.Inputs[OLE DB Command Input]"
+              name="OLE DB Command Output"
+              startId="Package\Insert into Customer_DWH\set end date and isactive for old records.Outputs[OLE DB Command Output]" />
+            <path
+              refId="Package\Insert into Customer_DWH.Paths[OLE DB Source Output]"
+              endId="Package\Insert into Customer_DWH\Search for customer if exists.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into Customer_DWH\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into Customer_STG"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{bfcebe0a-b96c-495e-a330-6a4564fbb7c3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into Customer_STG"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into Customer_STG\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_STG\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_STG\Data Conversion.Inputs[Data Conversion Input].Columns[created_date]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="created_date"
+                      lineageId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Insert into Customer_STG\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]"
+                      name="Copy of created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Insert into Customer_STG\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_STG\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_STG\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Insert into Customer_STG\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]"
+                      name="created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::last_extract]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::last_extract]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Insert into Customer_STG\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_STG\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[artist_STG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_STG\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ArtistId]"
+                      cachedDataType="i4"
+                      cachedName="ArtistId"
+                      externalMetadataColumnId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of created_date]"
+                      cachedDataType="date"
+                      cachedName="Copy of created_date"
+                      externalMetadataColumnId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      lineageId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
+                      dataType="i4"
+                      name="ArtistId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
+                      dataType="dbTimeStamp"
+                      name="created_date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Customer_STG\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Artist]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Customer_STG\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ArtistId]"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[ArtistId]"
+                      name="ArtistId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="120"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ArtistId]"
+                      dataType="i4"
+                      name="ArtistId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="120"
+                      name="Name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ArtistId]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ArtistId]"
+                      name="ArtistId" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into Customer_STG.Paths[Data Conversion Output]"
+              endId="Package\Insert into Customer_STG\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Insert into Customer_STG\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Insert into Customer_STG.Paths[Derived Column Output]"
+              endId="Package\Insert into Customer_STG\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Insert into Customer_STG\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Insert into Customer_STG.Paths[OLE DB Source Output]"
+              endId="Package\Insert into Customer_STG\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into Customer_STG\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table Customer_STG"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6eca1f0b-4866-4de5-9b7e-386601b78db8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table Customer_STG"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}"
+          SQLTask:SqlStatementSource="truncate table artist_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last extract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{14884f0b-768d-4b45-8bdf-62989216f1c3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last extract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A573F042-F44A-481D-87B1-29E052FC0613}"
+          SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='customer'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{607eea10-1e43-4696-b0c4-f2e65d1a8c4f}"
+      DTS:From="Package\Truncate Table Customer_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Get Last Extract" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{b18fe927-8994-4e9f-b946-f26d4e96c7f9}"
+      DTS:From="Package\Get Last Extract"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert into Customer_STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{37810615-3523-4c9d-a579-b2d237019b08}"
+      DTS:From="Package\Insert into Customer_STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert into Customer_DWH" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{5e1fc688-fc62-4744-98c5-f54798639ca3}"
+      DTS:From="Package\Insert into Customer_DWH"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Update last extract" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="200.5,42"
+          Id="Package\Insert into Customer_STG"
+          TopLeft="247,297.374998522923" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Get Last Extract"
+          TopLeft="219,221.541665566257" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\Truncate Table Customer_STG"
+          TopLeft="208.5,138.124999313926" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Insert into Customer_DWH"
+          TopLeft="208,398.749998046706" />
+        <NodeLayout
+          Size="166.5,42"
+          Id="Package\Update last extract"
+          TopLeft="281,507.833330858085" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="321,180.124999313926">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-25,41.4166662523311"
+              Start="0,0"
+              End="-25,33.9166662523311">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.7083331261656" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.7083331261656"
+                    Point2="0,20.7083331261656"
+                    Point3="-4,20.7083331261656" />
+                  <mssgle:LineSegment
+                    End="-21,20.7083331261656" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-21,20.7083331261656"
+                    Point2="-25,20.7083331261656"
+                    Point3="-25,24.7083331261656" />
+                  <mssgle:LineSegment
+                    End="-25,33.9166662523311" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="296,263.541665566257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="51.25,33.833332956666"
+              Start="0,0"
+              End="51.25,26.333332956666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.916666478333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.916666478333"
+                    Point2="0,16.916666478333"
+                    Point3="4,16.916666478333" />
+                  <mssgle:LineSegment
+                    End="47.25,16.916666478333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.25,16.916666478333"
+                    Point2="51.25,16.916666478333"
+                    Point3="51.25,20.916666478333" />
+                  <mssgle:LineSegment
+                    End="51.25,26.333332956666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="347.25,339.374998522923">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.25,59.3749995237832"
+              Start="0,0"
+              End="-37.25,51.8749995237832">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6874997618916" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.6874997618916"
+                    Point2="0,29.6874997618916"
+                    Point3="-4,29.6874997618916" />
+                  <mssgle:LineSegment
+                    End="-33.25,29.6874997618916" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.25,29.6874997618916"
+                    Point2="-37.25,29.6874997618916"
+                    Point3="-37.25,33.6874997618916" />
+                  <mssgle:LineSegment
+                    End="-37.25,51.8749995237832" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="310,440.749998046706">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="54.25,67.0833328113788"
+              Start="0,0"
+              End="54.25,59.5833328113788">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5416664056894" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5416664056894"
+                    Point2="0,33.5416664056894"
+                    Point3="4,33.5416664056894" />
+                  <mssgle:LineSegment
+                    End="50.25,33.5416664056894" />
+                  <mssgle:CubicBezierSegment
+                    Point1="50.25,33.5416664056894"
+                    Point2="54.25,33.5416664056894"
+                    Point3="54.25,37.5416664056894" />
+                  <mssgle:LineSegment
+                    End="54.25,59.5833328113788" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert into Customer_STG">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Insert into Customer_STG\Data Conversion"
+          TopLeft="344.5,270.83333198809" />
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\Insert into Customer_STG\OLE DB Source"
+          TopLeft="303.5,42.249999790142" />
+        <NodeLayout
+          Size="154.5,42"
+          Id="Package\Insert into Customer_STG\Derived Column"
+          TopLeft="299,164.124999184782" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into Customer_STG\OLE DB Destination"
+          TopLeft="293,393.666664783325" />
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[Derived Column Output]"
+          TopLeft="376.25,206.124999184782">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46.75,64.7083328033073"
+              Start="0,0"
+              End="46.75,57.2083328033073">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.3541664016537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.3541664016537"
+                    Point2="0,32.3541664016537"
+                    Point3="4,32.3541664016537" />
+                  <mssgle:LineSegment
+                    End="42.75,32.3541664016537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.75,32.3541664016537"
+                    Point2="46.75,32.3541664016537"
+                    Point3="46.75,36.3541664016537" />
+                  <mssgle:LineSegment
+                    End="46.75,57.2083328033073" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[OLE DB Source Output]"
+          TopLeft="378.25,84.249999790142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.87499939464"
+              Start="0,0"
+              End="0,72.37499939464">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.37499939464" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[Data Conversion Output]"
+          TopLeft="423,312.83333198809">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.5,80.8333327952358"
+              Start="0,0"
+              End="-43.5,73.3333327952358">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.4166663976179"
+                    Point2="0,40.4166663976179"
+                    Point3="-4,40.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-39.5,40.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.5,40.4166663976179"
+                    Point2="-43.5,40.4166663976179"
+                    Point3="-43.5,44.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-43.5,73.3333327952358" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Customer_STG\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Customer_STG\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Insert into Customer_DWH">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="259.5,42"
+          Id="Package\Insert into Customer_DWH\Lookup 1"
+          TopLeft="429.5,261.5" />
+        <NodeLayout
+          Size="251,42"
+          Id="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH"
+          TopLeft="432,472.5" />
+        <NodeLayout
+          Size="264.5,42"
+          Id="Package\Insert into Customer_DWH\set end date and isactive for old records"
+          TopLeft="419,358.75" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\Insert into Customer_DWH\Search for customer if exists"
+          TopLeft="307,128.5" />
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\Insert into Customer_DWH\OLE DB Source"
+          TopLeft="302.5,51" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into Customer_DWH\OLE DB Destination"
+          TopLeft="278,706.5" />
+        <EdgeLayout
+          Id="Package\Insert into Customer_DWH.Paths[Lookup Match Output]"
+          TopLeft="446.333333333333,170.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="112.916666666667,91"
+              Start="0,0"
+              End="112.916666666667,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.8109125117592" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.8109125117592"
+                    Point2="0,36.8109125117592"
+                    Point3="4,36.8109125117592" />
+                  <mssgle:LineSegment
+                    End="108.916666666667,36.8109125117592" />
+                  <mssgle:CubicBezierSegment
+                    Point1="108.916666666667,36.8109125117592"
+                    Point2="112.916666666667,36.8109125117592"
+                    Point3="112.916666666667,40.8109125117592" />
+                  <mssgle:LineSegment
+                    End="112.916666666667,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="8.26694661458334,41.8109125117592,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_DWH.Paths[OLE DB Command Output]"
+          TopLeft="554.375,400.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71.75"
+              Start="0,0"
+              End="0,64.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_DWH.Paths[Lookup No Match Output1]"
+          TopLeft="378.666666666667,170.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.1666666666666,536"
+              Start="0,0"
+              End="-14.1666666666666,528.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,212.820319849483" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,212.820319849483"
+                    Point2="0,216.820319849483"
+                    Point3="-4,216.820319849483" />
+                  <mssgle:LineSegment
+                    End="-10.1666666666666,216.820319849483" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.1666666666666,216.820319849483"
+                    Point2="-14.1666666666666,216.820319849483"
+                    Point3="-14.1666666666666,220.820319849483" />
+                  <mssgle:LineSegment
+                    End="-14.1666666666666,528.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-62.8897200520833,221.820319849483,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_DWH.Paths[OLE DB Source Output]"
+          TopLeft="379.25,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.25,35.5"
+              Start="0,0"
+              End="33.25,28">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.75"
+                    Point2="0,17.75"
+                    Point3="4,17.75" />
+                  <mssgle:LineSegment
+                    End="29.25,17.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.25,17.75"
+                    Point2="33.25,17.75"
+                    Point3="33.25,21.75" />
+                  <mssgle:LineSegment
+                    End="33.25,28" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Customer_DWH.Paths[Lookup No Match Output]"
+          TopLeft="559.25,303.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,55.25"
+              Start="0,0"
+              End="-8,47.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.625" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.625"
+                    Point2="0,27.625"
+                    Point3="-4,27.625" />
+                  <mssgle:LineSegment
+                    End="-4,27.625" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,27.625"
+                    Point2="-8,27.625"
+                    Point3="-8,31.625" />
+                  <mssgle:LineSegment
+                    End="-8,47.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-59.80638671875,32.625,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
