@@ -1,5 +1,5 @@
 CREATE TABLE Date_Dim (
-   [DateKey] INT NOT NULL PRIMARY KEY,
+   [DateKey] INT NOT NULL,
    [Date] DATE NOT NULL,
    [Day] TINYINT NOT NULL,
    [DaySuffix] CHAR(2) NOT NULL,
@@ -27,7 +27,8 @@ CREATE TABLE Date_Dim (
 
    SET NOCOUNT ON
 
-TRUNCATE TABLE DIM_Date
+TRUNCATE TABLE Date_Dim
+
 
 DECLARE @CurrentDate DATE = '2016-01-01'
 DECLARE @EndDate DATE = '2020-12-31'
