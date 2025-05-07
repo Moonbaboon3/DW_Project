@@ -11,8 +11,8 @@
   DTS:LocaleID="8192"
   DTS:ObjectName="Customer_dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="27"
-  DTS:VersionGUID="{39EE2FD2-182B-4D92-B4BD-95E2FEFA104F}">
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{5DCB96F8-6581-4771-A11A-AD209D8283C9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{92C6C5EE-AE80-4641-B738-B78EACF3A637}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{92C6C5EE-AE80-4641-B738-B78EACF3A637}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,11 +35,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{A573F042-F44A-481D-87B1-29E052FC0613}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{A573F042-F44A-481D-87B1-29E052FC0613}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -2581,17 +2585,25 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="200.5,42"
-          Id="Package\Insert into Customer_STG"
-          TopLeft="338.5,246.458332109162" />
-        <NodeLayout
-          Size="154,42"
+          Size="153.6,41.6"
           Id="Package\Get Last Extract"
           TopLeft="310.5,170.624999152496" />
         <NodeLayout
-          Size="225,42"
+          Size="204,41.6"
+          Id="Package\Insert into Customer_DWH"
+          TopLeft="299.5,347.833331632945" />
+        <NodeLayout
+          Size="200.8,41.6"
+          Id="Package\Insert into Customer_STG"
+          TopLeft="338.5,246.458332109162" />
+        <NodeLayout
+          Size="224.8,41.6"
           Id="Package\Truncate Table Customer_STG"
           TopLeft="300,87.2083329001649" />
+        <NodeLayout
+          Size="166.4,41.6"
+          Id="Package\Update last extract"
+          TopLeft="372.5,456.916664444324" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="412.5,129.208332900165">
@@ -2660,10 +2672,6 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="204,42"
-          Id="Package\Insert into Customer_DWH"
-          TopLeft="299.5,347.833331632945" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="438.75,288.458332109162">
@@ -2698,10 +2706,6 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="166.5,42"
-          Id="Package\Update last extract"
-          TopLeft="372.5,456.916664444324" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="401.5,389.833331632945">
@@ -2739,146 +2743,6 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
       </GraphLayout>
     </LayoutInfo>
   </Package>
-  <TaskHost
-    design-time-name="Package\Insert into Customer_STG">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="153.5,42"
-          Id="Package\Insert into Customer_STG\OLE DB Source"
-          TopLeft="303.5,34.6666664944755" />
-        <NodeLayout
-          Size="154.5,42"
-          Id="Package\Insert into Customer_STG\Derived Column"
-          TopLeft="299,164.124999184782" />
-        <EdgeLayout
-          Id="Package\Insert into Customer_STG.Paths[OLE DB Source Output]"
-          TopLeft="378.25,76.6666664944755">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,87.4583326903068"
-              Start="0,0"
-              End="0,79.9583326903068">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,79.9583326903068" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="157,42"
-          Id="Package\Insert into Customer_STG\Data Conversion"
-          TopLeft="344.5,270.83333198809" />
-        <EdgeLayout
-          Id="Package\Insert into Customer_STG.Paths[Derived Column Output]"
-          TopLeft="376.25,206.124999184782">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="46.75,64.7083328033073"
-              Start="0,0"
-              End="46.75,57.2083328033073">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.3541664016537" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,28.3541664016537"
-                    Point2="0,32.3541664016537"
-                    Point3="4,32.3541664016537" />
-                  <mssgle:LineSegment
-                    End="42.75,32.3541664016537" />
-                  <mssgle:CubicBezierSegment
-                    Point1="42.75,32.3541664016537"
-                    Point2="46.75,32.3541664016537"
-                    Point3="46.75,36.3541664016537" />
-                  <mssgle:LineSegment
-                    End="46.75,57.2083328033073" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="173,42"
-          Id="Package\Insert into Customer_STG\OLE DB Destination"
-          TopLeft="293,393.666664783325" />
-        <EdgeLayout
-          Id="Package\Insert into Customer_STG.Paths[Data Conversion Output]"
-          TopLeft="423,312.83333198809">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-43.5,80.8333327952358"
-              Start="0,0"
-              End="-43.5,73.3333327952358">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.4166663976179" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,36.4166663976179"
-                    Point2="0,40.4166663976179"
-                    Point3="-4,40.4166663976179" />
-                  <mssgle:LineSegment
-                    End="-39.5,40.4166663976179" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-39.5,40.4166663976179"
-                    Point2="-43.5,40.4166663976179"
-                    Point3="-43.5,44.4166663976179" />
-                  <mssgle:LineSegment
-                    End="-43.5,73.3333327952358" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into Customer_STG\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into Customer_STG\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Insert into Customer_DWH">
     <LayoutInfo>
@@ -3076,6 +2940,42 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+    design-time-name="Package\Insert into Customer_DWH\Search for customer if exists">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Customer_DWH]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Customer_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Insert into Customer_DWH\OLE DB Source">
     <Properties>
       <Property>
@@ -3089,35 +2989,12 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert into Customer_DWH\Search for customer if exists">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[Customer_DWH]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Insert into Customer_DWH\Lookup 1">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3127,15 +3004,142 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Insert into Customer_STG">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153.5,42"
+          Id="Package\Insert into Customer_STG\OLE DB Source"
+          TopLeft="303.5,34.6666664944755" />
+        <NodeLayout
+          Size="154.5,42"
+          Id="Package\Insert into Customer_STG\Derived Column"
+          TopLeft="299,164.124999184782" />
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[OLE DB Source Output]"
+          TopLeft="378.25,76.6666664944755">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,87.4583326903068"
+              Start="0,0"
+              End="0,79.9583326903068">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.9583326903068" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Insert into Customer_STG\Data Conversion"
+          TopLeft="344.5,270.83333198809" />
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[Derived Column Output]"
+          TopLeft="376.25,206.124999184782">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46.75,64.7083328033073"
+              Start="0,0"
+              End="46.75,57.2083328033073">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.3541664016537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.3541664016537"
+                    Point2="0,32.3541664016537"
+                    Point3="4,32.3541664016537" />
+                  <mssgle:LineSegment
+                    End="42.75,32.3541664016537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.75,32.3541664016537"
+                    Point2="46.75,32.3541664016537"
+                    Point3="46.75,36.3541664016537" />
+                  <mssgle:LineSegment
+                    End="46.75,57.2083328033073" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into Customer_STG\OLE DB Destination"
+          TopLeft="293,393.666664783325" />
+        <EdgeLayout
+          Id="Package\Insert into Customer_STG.Paths[Data Conversion Output]"
+          TopLeft="423,312.83333198809">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.5,80.8333327952358"
+              Start="0,0"
+              End="-43.5,73.3333327952358">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.4166663976179"
+                    Point2="0,40.4166663976179"
+                    Point3="-4,40.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-39.5,40.4166663976179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.5,40.4166663976179"
+                    Point2="-43.5,40.4166663976179"
+                    Point3="-43.5,44.4166663976179" />
+                  <mssgle:LineSegment
+                    End="-43.5,73.3333327952358" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert into Customer_DWH\OLE DB Destination">
+    design-time-name="Package\Insert into Customer_STG\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Customer_STG\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
