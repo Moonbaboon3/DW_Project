@@ -2,33 +2,33 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>Data Warehousing project</Name>
-    <LastWriteTime>2025-05-03T23:54:49.1322395Z</LastWriteTime>
+    <LastWriteTime>2025-05-07T22:11:58.8481353Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>Customer_dimension.dtsx</Name>
-      <LastWriteTime>2025-05-03T18:17:25.73172Z</LastWriteTime>
+      <LastWriteTime>2025-05-07T22:11:58.8112325Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>artist dimension.dtsx</Name>
-      <LastWriteTime>2025-05-03T19:10:58.0979165Z</LastWriteTime>
+      <LastWriteTime>2025-05-07T22:11:58.7914436Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>genre_dimension.dtsx</Name>
-      <LastWriteTime>2025-05-03T19:29:21.4233988Z</LastWriteTime>
+      <LastWriteTime>2025-05-07T22:11:58.7844631Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>facttable.dtsx</Name>
-      <LastWriteTime>2025-05-04T12:43:12.3165653Z</LastWriteTime>
+      <LastWriteTime>2025-05-07T22:11:58.8032534Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>run_all.dtsx</Name>
-      <LastWriteTime>2025-05-04T12:50:36.8842922Z</LastWriteTime>
+      <LastWriteTime>2025-05-05T17:10:35.6299182Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
