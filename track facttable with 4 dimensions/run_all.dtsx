@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="7"
-  DTS:VersionGUID="{716DC4CA-CAFC-4FD9-BEBD-E214933CB760}">
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{F027AA46-CD35-4E71-A417-B967B3259D66}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{A8288CBD-7BBA-4CE8-B690-21AD894366C1}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{A8288CBD-7BBA-4CE8-B690-21AD894366C1}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -153,19 +155,19 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="140.5,42"
+          Size="140.8,41.6"
           Id="Package\load into dwh"
           TopLeft="655,212.166666074759" />
         <NodeLayout
-          Size="186,42"
+          Size="185.6,41.6"
           Id="Package\Sequence Container\Execute Package Task"
           TopLeft="105,151.916665057755" />
         <NodeLayout
-          Size="190.5,42"
+          Size="190.4,41.6"
           Id="Package\Sequence Container\get customer dimension"
           TopLeft="87.5,10.5416657599724" />
         <NodeLayout
-          Size="174,42"
+          Size="174.4,41.6"
           Id="Package\Sequence Container\get genre dimension"
           TopLeft="70,83.6666653967566" />
         <EdgeLayout
@@ -239,8 +241,8 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="313.5,249"
-          Size="313.5,292"
+          PanelSize="313.6,248.8"
+          Size="313.6,292"
           Id="Package\Sequence Container"
           TopLeft="263,75.166666591333" />
         <EdgeLayout
