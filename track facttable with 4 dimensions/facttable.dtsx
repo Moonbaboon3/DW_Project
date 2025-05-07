@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="facttable"
   DTS:PackageType="5"
-  DTS:VersionBuild="55"
-  DTS:VersionGUID="{36E2A258-00CB-40D2-A5F9-368F18AA13B6}">
+  DTS:VersionBuild="56"
+  DTS:VersionGUID="{1C504FB9-D9B8-4ADF-AC7F-CEBC90194E80}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,11 +35,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -105,7 +109,7 @@
                       refId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input].Columns[invoicedate]"
                       cachedDataType="dbTimeStamp"
                       cachedName="invoicedate"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]" />
+                      lineageId="Package\Insert into track_DWH\158:invalid" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -130,7 +134,7 @@
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]}</property>
+                          name="SourceInputColumnLineageID">#{Package\Insert into track_DWH\158:invalid}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -879,25 +883,13 @@ where [refTable].[src_id] = ?</property>
                       cachedDataType="dbTimeStamp"
                       cachedName="invoicedate"
                       externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]" />
-                    <inputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[quantity]"
-                      cachedDataType="i4"
-                      cachedName="quantity"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]" />
+                      lineageId="Package\Insert into track_DWH\158:invalid" />
                     <inputColumn
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TrackId]"
                       cachedDataType="i4"
                       cachedName="TrackId"
                       externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[trackid]"
                       lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]" />
-                    <inputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreKey]"
-                      cachedDataType="i4"
-                      cachedName="GenreKey"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genrekey]"
-                      lineageId="Package\Insert into track_DWH\lookup in genre dim.Outputs[Lookup Match Output].Columns[GenreKey]" />
                     <inputColumn
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customerKey]"
                       cachedDataType="i4"
@@ -924,10 +916,6 @@ where [refTable].[src_id] = ?</property>
                       dataType="i4"
                       name="trackid" />
                     <externalMetadataColumn
-                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genrekey]"
-                      dataType="i4"
-                      name="genrekey" />
-                    <externalMetadataColumn
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[datekey]"
                       dataType="i4"
                       name="datekey" />
@@ -948,9 +936,9 @@ where [refTable].[src_id] = ?</property>
                       dataType="dbTimeStamp"
                       name="invoicedate" />
                     <externalMetadataColumn
-                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genreid]"
                       dataType="i4"
-                      name="quantity" />
+                      name="genreid" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1050,24 +1038,6 @@ where [refTable].[src_id] = ?</property>
                       name="unitprice"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]"
-                      dataType="dbTimeStamp"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[invoicedate]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[invoicedate]"
-                      name="invoicedate"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
-                      name="quantity"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[TrackId]"
                       dataType="i4"
                       errorOrTruncationOperation="Conversion"
@@ -1113,13 +1083,13 @@ where [refTable].[src_id] = ?</property>
                       name="customerId"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_date]"
-                      dataType="dbTimeStamp"
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Track_invoiceline]"
+                      dataType="i4"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_date]"
-                      name="created_date"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Track_invoiceline]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[Track_invoiceline]"
+                      name="Track_invoiceline"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -1128,14 +1098,6 @@ where [refTable].[src_id] = ?</property>
                       refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[unitprice]"
                       dataType="i4"
                       name="unitprice" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[invoicedate]"
-                      dataType="dbTimeStamp"
-                      name="invoicedate" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
-                      dataType="i4"
-                      name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TrackId]"
                       dataType="i4"
@@ -1157,9 +1119,9 @@ where [refTable].[src_id] = ?</property>
                       dataType="i4"
                       name="customerId" />
                     <externalMetadataColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_date]"
-                      dataType="dbTimeStamp"
-                      name="created_date" />
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Track_invoiceline]"
+                      dataType="i4"
+                      name="Track_invoiceline" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1172,6 +1134,11 @@ where [refTable].[src_id] = ?</property>
                       dataType="i4"
                       lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TrackId]"
                       name="TrackId" />
+                    <outputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Track_invoiceline]"
+                      dataType="i4"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Track_invoiceline]"
+                      name="Track_invoiceline" />
                     <outputColumn
                       refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
                       dataType="i4"
@@ -1197,21 +1164,6 @@ where [refTable].[src_id] = ?</property>
                       dataType="i4"
                       lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[unitprice]"
                       name="unitprice" />
-                    <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[invoicedate]"
-                      dataType="dbTimeStamp"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[invoicedate]"
-                      name="invoicedate" />
-                    <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_date]"
-                      dataType="dbTimeStamp"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_date]"
-                      name="created_date" />
-                    <outputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
-                      dataType="i4"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
-                      name="quantity" />
                     <outputColumn
                       refId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -1336,7 +1288,7 @@ where [refTable].[AlbumId] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\insert into track_STG\191:invalid};</property>
+                  name="ParameterMap">#{Package\insert into track_STG\193:invalid};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1781,35 +1733,17 @@ where [refTable].[InvoiceId] = ?</property>
                       externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[unitprice]"
                       lineageId="Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]" />
                     <inputColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quantity]"
-                      cachedDataType="i4"
-                      cachedName="Quantity"
-                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
-                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[Quantity]" />
-                    <inputColumn
                       refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerId]"
                       cachedDataType="i4"
                       cachedName="CustomerId"
                       externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customerId]"
                       lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[CustomerId]" />
                     <inputColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InvoiceDate]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="InvoiceDate"
-                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
-                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[InvoiceDate]" />
-                    <inputColumn
                       refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ArtistId]"
                       cachedDataType="i4"
                       cachedName="ArtistId"
                       externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
                       lineageId="Package\insert into track_STG\asd.Outputs[Lookup Match Output].Columns[ArtistId]" />
-                    <inputColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[created_date]"
-                      cachedDataType="date"
-                      cachedName="created_date"
-                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
-                      lineageId="Package\insert into track_STG\Derived Column.Outputs[Derived Column Output].Columns[created_date]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1838,17 +1772,9 @@ where [refTable].[InvoiceId] = ?</property>
                       dataType="i4"
                       name="unitprice" />
                     <externalMetadataColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
-                      dataType="dbTimeStamp"
-                      name="invoicedate" />
-                    <externalMetadataColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[created_date]"
-                      dataType="dbTimeStamp"
-                      name="created_date" />
-                    <externalMetadataColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Track_invoiceline]"
                       dataType="i4"
-                      name="quantity" />
+                      name="Track_invoiceline" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2423,23 +2349,23 @@ where [refTable].[TrackId] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="154,42"
+          Size="153.6,41.6"
           Id="Package\Get Last Extract"
           TopLeft="67.5,143.416666252331" />
         <NodeLayout
-          Size="181.5,42"
+          Size="181.6,41.6"
           Id="Package\Insert into track_DWH"
           TopLeft="56.5,320.62499873278" />
         <NodeLayout
-          Size="177.5,42"
+          Size="177.6,41.6"
           Id="Package\insert into track_STG"
           TopLeft="107.5,222.666665687329" />
         <NodeLayout
-          Size="207.5,42"
+          Size="207.2,41.6"
           Id="Package\Truncate Table tracks_STG"
           TopLeft="57,60" />
         <NodeLayout
-          Size="166.5,42"
+          Size="166.4,41.6"
           Id="Package\Update last extract"
           TopLeft="129.5,429.708331544159" />
         <EdgeLayout
@@ -2822,7 +2748,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2832,10 +2758,23 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -2853,7 +2792,7 @@ where [refTable].[TrackId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert into track_DWH\lookup in customer dim">
+    design-time-name="Package\Insert into track_DWH\lookup in genre dim">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -2863,7 +2802,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[Customer_DWH]</Value>
+          type="q3:string">[dbo].[genre_DWH]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -2876,7 +2815,7 @@ where [refTable].[TrackId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert into track_DWH\lookup in genre dim">
+    design-time-name="Package\Insert into track_DWH\lookup in customer dim">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -2886,7 +2825,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[genre_DWH]</Value>
+          type="q3:string">[dbo].[Customer_DWH]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -3149,7 +3088,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3186,19 +3125,6 @@ where [refTable].[TrackId] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into track_DWH\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
