@@ -17,3 +17,13 @@ CREATE TABLE Customer_STG (
 create table config(Name varchar(120),last_extract datetime) 
 create table artist_STG(ArtistId int primary key,Name varchar(120),created_date datetime)
 create table genre_STG(GenreId int primary key,Name varchar(120),created_date datetime)
+
+CREATE TABLE Employee_STG(
+	EmployeeId INT Primary Key ,
+	Name VARCHAR(100),
+	Title VARCHAR(100),
+	ManagerId INT Null,
+	Foreign Key (ManagerId) References employees(employeeId),
+	HireDate datetime,
+	Created_date datetime
+);
