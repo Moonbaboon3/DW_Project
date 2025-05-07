@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="artist dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{F3CF9700-FDA2-431A-AC37-F3B145A43802}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{D0611BA3-91E6-4FA2-A298-CDAD30545A10}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{0053E853-0033-4D08-921C-CFF2B8095C44}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{0053E853-0033-4D08-921C-CFF2B8095C44}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,11 +35,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -1508,23 +1512,23 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="154,42"
+          Size="153.6,41.6"
           Id="Package\Get Last Extract"
           TopLeft="222.5,221.541665566257" />
         <NodeLayout
-          Size="181.5,42"
+          Size="181.6,41.6"
           Id="Package\Insert into artist_DWH"
           TopLeft="211.5,398.749998046706" />
         <NodeLayout
-          Size="178,42"
+          Size="177.6,41.6"
           Id="Package\Insert into artist_STG"
           TopLeft="250.5,297.374998522923" />
         <NodeLayout
-          Size="202.5,42"
+          Size="202.4,41.6"
           Id="Package\Truncate Table artist_STG"
           TopLeft="212,138.124999313926" />
         <NodeLayout
-          Size="166.5,42"
+          Size="166.4,41.6"
           Id="Package\Update last extract"
           TopLeft="284.5,507.833330858085" />
         <EdgeLayout
