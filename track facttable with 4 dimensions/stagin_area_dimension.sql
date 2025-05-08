@@ -1,3 +1,9 @@
+/*
+use [DW_Project]
+GO
+CREATE SCHEMA STG
+GO
+*/
 CREATE TABLE Customer_STG (
     CustomerId INT NOT NULL,
     FirstName NVARCHAR(40) NOT NULL,
@@ -18,4 +24,21 @@ create table config(Name varchar(120),last_extract datetime)
 create table artist_STG(ArtistId int primary key,Name varchar(120),created_date datetime)
 create table genre_STG(GenreId int primary key,Name varchar(120),created_date datetime)
 create table tracks_STG(TrackId int,Track_invoiceline int,GenreId int,AlbumId int,ArtistId int,customerId int,unitprice int)
-insert into config values ('customer','1950/1/1'),('genre','1950/1/1'),('artist','1950/1/1'),('tracks','1950/1/1')
+insert into config values ('customer','1950/1/1'),('genre','1950/1/1'),('artist','1950/1/1'),('tracks','1950/1/1'),('Employee','1950/1/1')
+
+create table Employee_STG(
+	EmployeeID int Not NUll,
+	ManagerId int null,
+	FirstName NVARCHAR(40) NOT NULL,
+	LastName NVARCHAR(20) NOT NULL,
+	Title NVaRCHAR(100) NOT NULL,
+	HireDate datetime,
+	Created_date datetime
+);
+
+create table Fact_Customer_Acquisition_STG (
+	CustomerId INT NOT NULL,
+	InvoiceDate DATETIME,
+	SupportRepId INT,
+	 Created_date datetime
+);

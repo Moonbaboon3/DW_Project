@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="genre_dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{F1F0E540-7350-4D17-A1D2-F7EEAE0157C2}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{3F576B9E-96F6-455D-9D54-276C4D5F75C9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{9288D11B-CCE2-4DE9-91C5-A33ABD19C9F5}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package2-{9288D11B-CCE2-4DE9-91C5-A33ABD19C9F5}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,11 +35,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package2-{7BF58242-DE4A-4FFC-B382-DA366D633178}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -49,7 +53,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="last_extract">
       <DTS:VariableValue
-        DTS:DataType="7">5/3/2025 8:17:08 PM</DTS:VariableValue>
+        DTS:DataType="7">5/3/2025 8:17:00 PM</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
@@ -1508,23 +1512,23 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="154,42"
+          Size="153.6,41.6"
           Id="Package\Get Last Extract"
           TopLeft="71,143.416666252331" />
         <NodeLayout
-          Size="185.5,42"
+          Size="185.6,41.6"
           Id="Package\Insert into genre_DWH"
           TopLeft="60,320.62499873278" />
         <NodeLayout
-          Size="182,42"
+          Size="182.4,41.6"
           Id="Package\Insert into genre_STG"
           TopLeft="99,219.249999208997" />
         <NodeLayout
-          Size="206.5,42"
+          Size="206.4,41.6"
           Id="Package\Truncate Table genre_STG"
           TopLeft="60.5,60" />
         <NodeLayout
-          Size="166.5,42"
+          Size="166.4,41.6"
           Id="Package\Update last extract"
           TopLeft="133,429.708331544159" />
         <EdgeLayout
@@ -1672,27 +1676,27 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="227,42"
+          Size="227.2,41.6"
           Id="Package\Insert into genre_DWH\update old records and is active"
           TopLeft="473.230769230769,301.333333333333" />
         <NodeLayout
-          Size="133,42"
+          Size="132.8,41.6"
           Id="Package\Insert into genre_DWH\genre_STG"
           TopLeft="271,14" />
         <NodeLayout
-          Size="192,42"
+          Size="192,41.6"
           Id="Package\Insert into genre_DWH\look for updated records"
           TopLeft="503.384615384615,185.333333333333" />
         <NodeLayout
-          Size="136.5,42"
+          Size="136.8,41.6"
           Id="Package\Insert into genre_DWH\genre_DWH"
           TopLeft="333.333333333333,402" />
         <NodeLayout
-          Size="220,42"
+          Size="220,41.6"
           Id="Package\Insert into genre_DWH\insert updated record into dwh"
           TopLeft="558.666666666667,395.333333333333" />
         <NodeLayout
-          Size="244,42"
+          Size="244,41.6"
           Id="Package\Insert into genre_DWH\look for updated or inserted records"
           TopLeft="334.666666666667,120" />
         <EdgeLayout
@@ -1952,19 +1956,19 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="153.5,42"
+          Size="153.6,41.6"
           Id="Package\Insert into genre_STG\OLE DB Source"
           TopLeft="317.5,37.333333182666" />
         <NodeLayout
-          Size="157,42"
+          Size="156.8,41.6"
           Id="Package\Insert into genre_STG\Data Conversion"
           TopLeft="344.5,270.83333198809" />
         <NodeLayout
-          Size="173,42"
+          Size="172.8,41.6"
           Id="Package\Insert into genre_STG\OLE DB Destination"
           TopLeft="293,393.666664783325" />
         <NodeLayout
-          Size="160.5,42"
+          Size="160.8,41.6"
           Id="Package\Insert into genre_STG\add created_date"
           TopLeft="299,164.124999184782" />
         <EdgeLayout

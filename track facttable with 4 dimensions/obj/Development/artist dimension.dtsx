@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="artist dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{F3CF9700-FDA2-431A-AC37-F3B145A43802}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{30C563DE-FB09-46A2-A776-B6CFFE1A5CA9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{0053E853-0033-4D08-921C-CFF2B8095C44}"
       DTS:ObjectName="localhost.Chinook">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{0053E853-0033-4D08-921C-CFF2B8095C44}localhost.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,11 +35,13 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{85C226E6-05AF-4CEC-9E70-C4F7E35962FF}localhost.Chinook_STG_DWH;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -89,155 +93,6 @@
         <pipeline
           version="1">
           <components>
-            <component
-              refId="Package\Insert into artist_DWH\artist_DWH"
-              componentClassID="Microsoft.OLEDBDestination"
-              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
-              description="OLE DB Destination"
-              name="artist_DWH"
-              usesDispositions="true"
-              version="4">
-              <properties>
-                <property
-                  dataType="System.Int32"
-                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
-                  name="CommandTimeout">0</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[artist_DWH]</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the variable that contains the name of the database object used to open a rowset."
-                  name="OpenRowsetVariable"></property>
-                <property
-                  dataType="System.String"
-                  description="The SQL command to be executed."
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the column code page to use when code page information is unavailable from the data source."
-                  name="DefaultCodePage">1252</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Forces the use of the DefaultCodePage property value when describing character data."
-                  name="AlwaysUseDefaultCodePage">false</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the mode used to access the database."
-                  name="AccessMode"
-                  typeConverter="AccessMode">0</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepIdentity">false</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">2147483647</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\Insert into artist_DWH\artist_DWH.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  description="The OLE DB runtime connection used to access the database."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input]"
-                  errorOrTruncationOperation="Insert"
-                  errorRowDisposition="FailComponent"
-                  hasSideEffects="true"
-                  name="OLE DB Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].Columns[Name]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="120"
-                      cachedName="Name"
-                      externalMetadataColumnId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
-                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[Name]" />
-                    <inputColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].Columns[ArtistId]"
-                      cachedDataType="i4"
-                      cachedName="ArtistId"
-                      externalMetadataColumnId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
-                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[ArtistId]" />
-                    <inputColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].Columns[created_date]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="created_date"
-                      externalMetadataColumnId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
-                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[created_date]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[ArtistKey]"
-                      dataType="i4"
-                      name="ArtistKey" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
-                      dataType="i4"
-                      name="src_id" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
-                      codePage="1252"
-                      dataType="str"
-                      length="120"
-                      name="Name" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
-                      dataType="dbTimeStamp"
-                      name="start_date" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[end_date]"
-                      dataType="dbTimeStamp"
-                      name="end_date" />
-                    <externalMetadataColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input].ExternalColumns[isactive]"
-                      dataType="i2"
-                      name="isactive" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Insert into artist_DWH\artist_DWH.Outputs[OLE DB Destination Error Output]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Insert into artist_DWH\artist_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Insert into artist_DWH\artist_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Insert into artist_DWH\artist_DWH.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
             <component
               refId="Package\Insert into artist_DWH\artist_STG"
               componentClassID="Microsoft.OLEDBSource"
@@ -803,6 +658,155 @@ where [refTable].[src_id] = ? and [refTable].[Name] = ?</property>
               </outputs>
             </component>
             <component
+              refId="Package\Insert into artist_DWH\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[artist_DWH]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into artist_DWH\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ArtistId]"
+                      cachedDataType="i4"
+                      cachedName="ArtistId"
+                      externalMetadataColumnId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[ArtistId]" />
+                    <inputColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[created_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_date"
+                      externalMetadataColumnId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      lineageId="Package\Insert into artist_DWH\artist_STG.Outputs[OLE DB Source Output].Columns[created_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistKey]"
+                      dataType="i4"
+                      name="ArtistKey" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[src_id]"
+                      dataType="i4"
+                      name="src_id" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
+                      dataType="dbTimeStamp"
+                      name="start_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_date]"
+                      dataType="dbTimeStamp"
+                      name="end_date" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[isactive]"
+                      dataType="i2"
+                      name="isactive" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into artist_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into artist_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into artist_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into artist_DWH\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Insert into artist_DWH\set enddate and active for old records"
               componentClassID="Microsoft.OLEDBCommand"
               contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
@@ -934,7 +938,7 @@ where src_id !=? or Name!=?</property>
               startId="Package\Insert into artist_DWH\look for updated records.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\Insert into artist_DWH.Paths[Lookup No Match Output1]"
-              endId="Package\Insert into artist_DWH\artist_DWH.Inputs[OLE DB Destination Input]"
+              endId="Package\Insert into artist_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Insert into artist_DWH\look for new or updated records.Outputs[Lookup No Match Output]" />
             <path
@@ -1508,23 +1512,23 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="154,42"
+          Size="153.6,41.6"
           Id="Package\Get Last Extract"
           TopLeft="222.5,221.541665566257" />
         <NodeLayout
-          Size="181.5,42"
+          Size="181.6,41.6"
           Id="Package\Insert into artist_DWH"
           TopLeft="211.5,398.749998046706" />
         <NodeLayout
-          Size="178,42"
+          Size="177.6,41.6"
           Id="Package\Insert into artist_STG"
           TopLeft="250.5,297.374998522923" />
         <NodeLayout
-          Size="202.5,42"
+          Size="202.4,41.6"
           Id="Package\Truncate Table artist_STG"
           TopLeft="212,138.124999313926" />
         <NodeLayout
-          Size="166.5,42"
+          Size="166.4,41.6"
           Id="Package\Update last extract"
           TopLeft="284.5,507.833330858085" />
         <EdgeLayout
@@ -1672,63 +1676,91 @@ where src_id !=? or Name!=?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="254,42"
-          Id="Package\Insert into artist_DWH\set enddate and active for old records"
-          TopLeft="461,295" />
-        <NodeLayout
-          Size="129,42"
-          Id="Package\Insert into artist_DWH\artist_STG"
-          TopLeft="271,14" />
-        <NodeLayout
-          Size="192,42"
+          Size="192,41.6"
           Id="Package\Insert into artist_DWH\look for updated records"
           TopLeft="460,197" />
         <NodeLayout
-          Size="132.5,42"
-          Id="Package\Insert into artist_DWH\artist_DWH"
-          TopLeft="251,360.5" />
-        <NodeLayout
-          Size="198.5,42"
+          Size="198.4,41.6"
           Id="Package\Insert into artist_DWH\insert updated row in dwh"
           TopLeft="461,364.5" />
         <NodeLayout
-          Size="226,42"
+          Size="225.6,41.6"
           Id="Package\Insert into artist_DWH\look for new or updated records"
-          TopLeft="344.5,107" />
+          TopLeft="335.333333834178,116.53333326704" />
+        <NodeLayout
+          Size="254.4,41.6"
+          Id="Package\Insert into artist_DWH\set enddate and active for old records"
+          TopLeft="461,295" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Insert into artist_DWH\artist_STG"
+          TopLeft="271,14" />
         <EdgeLayout
-          Id="Package\Insert into artist_DWH.Paths[Lookup No Match Output1]"
-          TopLeft="421.166666666667,149">
+          Id="Package\Insert into artist_DWH.Paths[OLE DB Source Output]"
+          TopLeft="335.4,55.6">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-103.916666666667,211.5"
+              EndConnector="112.733333834178,60.9333332670397"
               Start="0,0"
-              End="-103.916666666667,204">
+              End="112.733333834178,53.4333332670397">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,81.4920913884007" />
+                    End="0,26.4666666335199" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,81.4920913884007"
-                    Point2="0,85.4920913884007"
-                    Point3="-4,85.4920913884007" />
+                    Point1="0,26.4666666335199"
+                    Point2="0,30.4666666335199"
+                    Point3="4,30.4666666335199" />
                   <mssgle:LineSegment
-                    End="-99.9166666666666,85.4920913884007" />
+                    End="108.733333834178,30.4666666335199" />
                   <mssgle:CubicBezierSegment
-                    Point1="-99.9166666666666,85.4920913884007"
-                    Point2="-103.916666666667,85.4920913884007"
-                    Point3="-103.916666666667,89.4920913884007" />
+                    Point1="108.733333834178,30.4666666335199"
+                    Point2="112.733333834178,30.4666666335199"
+                    Point3="112.733333834178,34.4666666335199" />
                   <mssgle:LineSegment
-                    End="-103.916666666667,204" />
+                    End="112.733333834178,53.4333332670397" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-107.764720052083,90.4920913884007,111.6127734375,11.609375"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into artist_DWH.Paths[OLE DB Command Output]"
+          TopLeft="588,337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-27.75,27.5"
+              Start="0,0"
+              End="-27.75,20">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.75"
+                    Point2="0,13.75"
+                    Point3="-4,13.75" />
+                  <mssgle:LineSegment
+                    End="-23.75,13.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23.75,13.75"
+                    Point2="-27.75,13.75"
+                    Point3="-27.75,17.75" />
+                  <mssgle:LineSegment
+                    End="-27.75,20" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1769,128 +1801,83 @@ where src_id !=? or Name!=?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert into artist_DWH.Paths[Lookup Match Output]"
-          TopLeft="493.833333333333,149">
+          TopLeft="448.133333834178,158.13333326704">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="62.1666666666667,48"
+              EndConnector="107.866666165822,38.8666667329603"
               Start="0,0"
-              End="62.1666666666667,40.5">
+              End="107.866666165822,31.3666667329603">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.402460456942" />
+                    End="0,15.4333333664801" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15.402460456942"
-                    Point2="0,19.402460456942"
-                    Point3="4,19.402460456942" />
+                    Point1="0,15.4333333664801"
+                    Point2="0,19.4333333664801"
+                    Point3="4,19.4333333664801" />
                   <mssgle:LineSegment
-                    End="58.1666666666667,19.402460456942" />
+                    End="103.866666165822,19.4333333664801" />
                   <mssgle:CubicBezierSegment
-                    Point1="58.1666666666667,19.402460456942"
-                    Point2="62.1666666666667,19.402460456942"
-                    Point3="62.1666666666667,23.402460456942" />
+                    Point1="103.866666165822,19.4333333664801"
+                    Point2="107.866666165822,19.4333333664801"
+                    Point3="107.866666165822,23.4333333664801" />
                   <mssgle:LineSegment
-                    End="62.1666666666667,40.5" />
+                    End="107.866666165822,31.3666667329603" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-17.1080533854167,24.402460456942,96.3827734375,11.609375"
+              BoundingBox="5.74194636416104,24.4333333664801,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Insert into artist_DWH\OLE DB Destination"
+          TopLeft="146.666658653154,273.333332417276" />
         <EdgeLayout
-          Id="Package\Insert into artist_DWH.Paths[OLE DB Source Output]"
-          TopLeft="335.5,56">
+          Id="Package\Insert into artist_DWH.Paths[Lookup No Match Output1]"
+          TopLeft="411.866667167511,158.13333326704">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="122,51"
+              EndConnector="-179.600008514358,115.199999150236"
               Start="0,0"
-              End="122,43.5">
+              End="-179.600008514358,107.699999150236">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.5" />
+                    End="0,42.5667602198841" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,21.5"
-                    Point2="0,25.5"
-                    Point3="4,25.5" />
+                    Point1="0,42.5667602198841"
+                    Point2="0,46.5667602198841"
+                    Point3="-4,46.5667602198841" />
                   <mssgle:LineSegment
-                    End="118,25.5" />
+                    End="-175.600008514358,46.5667602198841" />
                   <mssgle:CubicBezierSegment
-                    Point1="118,25.5"
-                    Point2="122,25.5"
-                    Point3="122,29.5" />
+                    Point1="-175.600008514358,46.5667602198841"
+                    Point2="-179.600008514358,46.5667602198841"
+                    Point3="-179.600008514358,50.5667602198841" />
                   <mssgle:LineSegment
-                    End="122,43.5" />
+                    End="-179.600008514358,107.699999150236" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert into artist_DWH.Paths[OLE DB Command Output]"
-          TopLeft="588,337">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-27.75,27.5"
-              Start="0,0"
-              End="-27.75,20">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,9.75" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,9.75"
-                    Point2="0,13.75"
-                    Point3="-4,13.75" />
-                  <mssgle:LineSegment
-                    End="-23.75,13.75" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-23.75,13.75"
-                    Point2="-27.75,13.75"
-                    Point3="-27.75,17.75" />
-                  <mssgle:LineSegment
-                    End="-27.75,20" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
+              BoundingBox="-145.606390975929,51.5667602198841,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into artist_DWH\artist_STG">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into artist_DWH\look for updated records">
     <Properties>
@@ -1911,19 +1898,6 @@ where src_id !=? or Name!=?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into artist_DWH\artist_DWH">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -1950,25 +1924,51 @@ where src_id !=? or Name!=?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into artist_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into artist_DWH\artist_STG">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Insert into artist_STG">
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="153.5,42"
+          Size="153.6,41.6"
           Id="Package\Insert into artist_STG\OLE DB Source"
           TopLeft="317.5,37.333333182666" />
         <NodeLayout
-          Size="173,42"
+          Size="172.8,41.6"
           Id="Package\Insert into artist_STG\OLE DB Destination"
           TopLeft="293,393.666664783325" />
         <NodeLayout
-          Size="154.5,42"
+          Size="154.4,41.6"
           Id="Package\Insert into artist_STG\Derived Column"
           TopLeft="299,164.124999184782" />
         <NodeLayout
-          Size="157,42"
+          Size="156.8,41.6"
           Id="Package\Insert into artist_STG\Data Conversion"
           TopLeft="344.5,270.83333198809" />
         <EdgeLayout
