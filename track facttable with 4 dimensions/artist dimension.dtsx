@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="artist dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="19"
-  DTS:VersionGUID="{60DBB6F6-5E29-475A-94EF-B0441A5545E6}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{30C563DE-FB09-46A2-A776-B6CFFE1A5CA9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1902,19 +1902,6 @@ where src_id !=? or Name!=?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert into artist_DWH\artist_STG">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Insert into artist_DWH\look for new or updated records">
     <Properties>
       <Property>
@@ -1937,25 +1924,51 @@ where src_id !=? or Name!=?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into artist_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into artist_DWH\artist_STG">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Insert into artist_STG">
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="153.5,42"
+          Size="153.6,41.6"
           Id="Package\Insert into artist_STG\OLE DB Source"
           TopLeft="317.5,37.333333182666" />
         <NodeLayout
-          Size="173,42"
+          Size="172.8,41.6"
           Id="Package\Insert into artist_STG\OLE DB Destination"
           TopLeft="293,393.666664783325" />
         <NodeLayout
-          Size="154.5,42"
+          Size="154.4,41.6"
           Id="Package\Insert into artist_STG\Derived Column"
           TopLeft="299,164.124999184782" />
         <NodeLayout
-          Size="157,42"
+          Size="156.8,41.6"
           Id="Package\Insert into artist_STG\Data Conversion"
           TopLeft="344.5,270.83333198809" />
         <EdgeLayout
@@ -2078,19 +2091,6 @@ where src_id !=? or Name!=?</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into artist_STG\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into artist_DWH\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
