@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="8"
-  DTS:VersionGUID="{F027AA46-CD35-4E71-A417-B967B3259D66}">
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{FCFA7E5D-1E80-4DA5-A600-EE3C77D68351}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>

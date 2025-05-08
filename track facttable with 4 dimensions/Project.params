@@ -16,7 +16,7 @@
       <SSIS:Property
         SSIS:Name="Sensitive">0</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;</SSIS:Property>
+        SSIS:Name="Value">Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;</SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
@@ -37,7 +37,7 @@
       <SSIS:Property
         SSIS:Name="Sensitive">0</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;</SSIS:Property>
+        SSIS:Name="Value">Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;</SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
