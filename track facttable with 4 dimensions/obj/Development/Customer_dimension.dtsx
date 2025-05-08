@@ -11,8 +11,8 @@
   DTS:LocaleID="8192"
   DTS:ObjectName="Customer_dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="29"
-  DTS:VersionGUID="{5DCB96F8-6581-4771-A11A-AD209D8283C9}">
+  DTS:VersionBuild="36"
+  DTS:VersionGUID="{0957907D-531C-444F-8831-087E44132FA3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -41,7 +41,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -2749,39 +2749,43 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="153.5,42"
+          Size="264.8,41.6"
+          Id="Package\Insert into Customer_DWH\set end date and isactive for old records"
+          TopLeft="419,358.75" />
+        <NodeLayout
+          Size="211.2,41.6"
+          Id="Package\Insert into Customer_DWH\Search for customer if exists"
+          TopLeft="307,128.5" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Insert into Customer_DWH\OLE DB Destination"
+          TopLeft="278,706.5" />
+        <NodeLayout
+          Size="153.6,41.6"
           Id="Package\Insert into Customer_DWH\OLE DB Source"
           TopLeft="302.5,51" />
         <NodeLayout
-          Size="211,42"
-          Id="Package\Insert into Customer_DWH\Search for customer if exists"
-          TopLeft="307,128.5" />
+          Size="251.2,41.6"
+          Id="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH"
+          TopLeft="432,472.5" />
+        <NodeLayout
+          Size="259.2,41.6"
+          Id="Package\Insert into Customer_DWH\Lookup 1"
+          TopLeft="429.5,261.5" />
         <EdgeLayout
-          Id="Package\Insert into Customer_DWH.Paths[OLE DB Source Output]"
-          TopLeft="379.25,93">
+          Id="Package\Insert into Customer_DWH.Paths[OLE DB Command Output]"
+          TopLeft="554.375,400.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="33.25,35.5"
+              EndConnector="0,71.75"
               Start="0,0"
-              End="33.25,28">
+              End="0,64.25">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,13.75" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13.75"
-                    Point2="0,17.75"
-                    Point3="4,17.75" />
-                  <mssgle:LineSegment
-                    End="29.25,17.75" />
-                  <mssgle:CubicBezierSegment
-                    Point1="29.25,17.75"
-                    Point2="33.25,17.75"
-                    Point3="33.25,21.75" />
-                  <mssgle:LineSegment
-                    End="33.25,28" />
+                    End="0,64.25" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2790,47 +2794,39 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="259.5,42"
-          Id="Package\Insert into Customer_DWH\Lookup 1"
-          TopLeft="429.5,261.5" />
-        <NodeLayout
-          Size="264.5,42"
-          Id="Package\Insert into Customer_DWH\set end date and isactive for old records"
-          TopLeft="419,358.75" />
         <EdgeLayout
-          Id="Package\Insert into Customer_DWH.Paths[Lookup Match Output]"
-          TopLeft="446.333333333333,170.5">
+          Id="Package\Insert into Customer_DWH.Paths[Lookup No Match Output1]"
+          TopLeft="378.666666666667,170.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="112.916666666667,91"
+              EndConnector="-14.1666666666666,536"
               Start="0,0"
-              End="112.916666666667,83.5">
+              End="-14.1666666666666,528.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.8109125117592" />
+                    End="0,212.820319849483" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,32.8109125117592"
-                    Point2="0,36.8109125117592"
-                    Point3="4,36.8109125117592" />
+                    Point1="0,212.820319849483"
+                    Point2="0,216.820319849483"
+                    Point3="-4,216.820319849483" />
                   <mssgle:LineSegment
-                    End="108.916666666667,36.8109125117592" />
+                    End="-10.1666666666666,216.820319849483" />
                   <mssgle:CubicBezierSegment
-                    Point1="108.916666666667,36.8109125117592"
-                    Point2="112.916666666667,36.8109125117592"
-                    Point3="112.916666666667,40.8109125117592" />
+                    Point1="-10.1666666666666,216.820319849483"
+                    Point2="-14.1666666666666,216.820319849483"
+                    Point3="-14.1666666666666,220.820319849483" />
                   <mssgle:LineSegment
-                    End="112.916666666667,83.5" />
+                    End="-14.1666666666666,528.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="8.26694661458334,41.8109125117592,96.3827734375,11.609375"
+              BoundingBox="-55.80638671875,258.21197916968,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2870,24 +2866,32 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="251,42"
-          Id="Package\Insert into Customer_DWH\Insert new rows into Customer_DWH"
-          TopLeft="432,472.5" />
         <EdgeLayout
-          Id="Package\Insert into Customer_DWH.Paths[OLE DB Command Output]"
-          TopLeft="554.375,400.75">
+          Id="Package\Insert into Customer_DWH.Paths[OLE DB Source Output]"
+          TopLeft="379.25,93">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,71.75"
+              EndConnector="33.25,35.5"
               Start="0,0"
-              End="0,64.25">
+              End="33.25,28">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,64.25" />
+                    End="0,13.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.75"
+                    Point2="0,17.75"
+                    Point3="4,17.75" />
+                  <mssgle:LineSegment
+                    End="29.25,17.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.25,17.75"
+                    Point2="33.25,17.75"
+                    Point3="33.25,21.75" />
+                  <mssgle:LineSegment
+                    End="33.25,28" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2896,43 +2900,39 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="173,42"
-          Id="Package\Insert into Customer_DWH\OLE DB Destination"
-          TopLeft="278,706.5" />
         <EdgeLayout
-          Id="Package\Insert into Customer_DWH.Paths[Lookup No Match Output1]"
-          TopLeft="378.666666666667,170.5">
+          Id="Package\Insert into Customer_DWH.Paths[Lookup Match Output]"
+          TopLeft="446.333333333333,170.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-14.1666666666666,536"
+              EndConnector="112.916666666667,91"
               Start="0,0"
-              End="-14.1666666666666,528.5">
+              End="112.916666666667,83.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,212.820319849483" />
+                    End="0,32.8109125117592" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,212.820319849483"
-                    Point2="0,216.820319849483"
-                    Point3="-4,216.820319849483" />
+                    Point1="0,32.8109125117592"
+                    Point2="0,36.8109125117592"
+                    Point3="4,36.8109125117592" />
                   <mssgle:LineSegment
-                    End="-10.1666666666666,216.820319849483" />
+                    End="108.916666666667,36.8109125117592" />
                   <mssgle:CubicBezierSegment
-                    Point1="-10.1666666666666,216.820319849483"
-                    Point2="-14.1666666666666,216.820319849483"
-                    Point3="-14.1666666666666,220.820319849483" />
+                    Point1="108.916666666667,36.8109125117592"
+                    Point2="112.916666666667,36.8109125117592"
+                    Point3="112.916666666667,40.8109125117592" />
                   <mssgle:LineSegment
-                    End="-14.1666666666666,528.5" />
+                    End="112.916666666667,83.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-62.8897200520833,221.820319849483,111.6127734375,11.609375"
+              BoundingBox="11.5752797885571,41.6248484872866,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -3017,13 +3017,21 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="153.5,42"
+          Size="154.4,41.6"
+          Id="Package\Insert into Customer_STG\Derived Column"
+          TopLeft="299,164.124999184782" />
+        <NodeLayout
+          Size="153.6,41.6"
           Id="Package\Insert into Customer_STG\OLE DB Source"
           TopLeft="303.5,34.6666664944755" />
         <NodeLayout
-          Size="154.5,42"
-          Id="Package\Insert into Customer_STG\Derived Column"
-          TopLeft="299,164.124999184782" />
+          Size="156.8,41.6"
+          Id="Package\Insert into Customer_STG\Data Conversion"
+          TopLeft="344.5,270.83333198809" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Insert into Customer_STG\OLE DB Destination"
+          TopLeft="293,393.666664783325" />
         <EdgeLayout
           Id="Package\Insert into Customer_STG.Paths[OLE DB Source Output]"
           TopLeft="378.25,76.6666664944755">
@@ -3046,10 +3054,6 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="157,42"
-          Id="Package\Insert into Customer_STG\Data Conversion"
-          TopLeft="344.5,270.83333198809" />
         <EdgeLayout
           Id="Package\Insert into Customer_STG.Paths[Derived Column Output]"
           TopLeft="376.25,206.124999184782">
@@ -3084,10 +3088,6 @@ where src_id =? and City !=? or Address!=? or Email !=? or State!=? or Company!=
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="173,42"
-          Id="Package\Insert into Customer_STG\OLE DB Destination"
-          TopLeft="293,393.666664783325" />
         <EdgeLayout
           Id="Package\Insert into Customer_STG.Paths[Data Conversion Output]"
           TopLeft="423,312.83333198809">

@@ -169,7 +169,7 @@ create table Employee_DWH(
 	isactive smallint
 );
 --Fact table
-CREATE TABLE DWH.Fact_Customer_Acquisition (
+CREATE TABLE Fact_Customer_Acquisition_DWH (
 	CustomerKey INT  references  Customer_DWH(customerKey),
     EmployeeKey INT references  Employee_DWH(EmployeeKey),           
 	DateKey  int references Date_Dim(DateKey),         

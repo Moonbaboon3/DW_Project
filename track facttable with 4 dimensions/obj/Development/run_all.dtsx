@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{FCFA7E5D-1E80-4DA5-A600-EE3C77D68351}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{618106AE-6079-48D0-8E90-AF52475D395D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -33,6 +33,23 @@
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Employee Dimension"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{1671D4AC-6BCF-41B9-B87C-4445E0E3B9E7}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Employee Dimension"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Employee Dimension.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\load into dwh"
       DTS:CreationName="Microsoft.ExecutePackageTask"
@@ -153,11 +170,15 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196,41.6"
+          Id="Package\Get Employee Dimension"
+          TopLeft="26.6666652096643,171.333332453436" />
         <NodeLayout
           Size="140.8,41.6"
           Id="Package\load into dwh"
-          TopLeft="655,212.166666074759" />
+          TopLeft="659.999999726812,212.166666074759" />
         <NodeLayout
           Size="185.6,41.6"
           Id="Package\Sequence Container\Execute Package Task"
@@ -241,36 +262,36 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="313.6,248.8"
-          Size="313.6,292"
+          PanelSize="313.6,350.4"
+          Size="313.6,393.6"
           Id="Package\Sequence Container"
-          TopLeft="263,75.166666591333" />
+          TopLeft="267.999999726812,75.166666591333" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="576.5,221.166666591333">
+          TopLeft="581.599999726812,271.966666591333">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="78.5,11.9999994834263"
+              EndConnector="78.4,-39.000000516574"
               Start="0,0"
-              End="71,11.9999994834263">
+              End="70.9,-39.000000516574">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="35.25,0" />
+                    End="35.2,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="35.25,0"
-                    Point2="39.25,0"
-                    Point3="39.25,4" />
+                    Point1="35.2,0"
+                    Point2="39.2,0"
+                    Point3="39.2,-4" />
                   <mssgle:LineSegment
-                    End="39.25,7.99999948342631" />
+                    End="39.2,-35.000000516574" />
                   <mssgle:CubicBezierSegment
-                    Point1="39.25,7.99999948342631"
-                    Point2="39.25,11.9999994834263"
-                    Point3="43.25,11.9999994834263" />
+                    Point1="39.2,-35.000000516574"
+                    Point2="39.2,-39.000000516574"
+                    Point3="43.2,-39.000000516574" />
                   <mssgle:LineSegment
-                    End="71,11.9999994834263" />
+                    End="70.9,-39.000000516574" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
