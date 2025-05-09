@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">MSI</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA7NIZr+sbO0W+sDPLppliZgAAAAACAAAAAAAQZgAAAAEAACAAAAAucpGPBeiCJUuoKnHNjjPzVRDMLnVkmsGIiYAPqYFRGwAAAAAOgAAAAAIAACAAAAAOwKeK4Ool2tFWZWjbOglHR0h4leC30xp+s9oz4VO//JAAAABiKfOGE49lHhDoJuipNe1HGl+ttUkTO4jJ/4eOsQRmeKYZ50uXLZ8B2VcnxqqAI5ouZPGAMkQzdpnSASdORgPVc733S315ktccrwU/Ht1+409NQoiZAxx+8jjMY4kJXjxvEDjYYdLDVvdMRiAl5Y+VJn+C4JjKx/VQNdre4Bk1Yg5dgG06f1h0AJbaOA/3ksFAAAAAWogqdO3nBOkNVZ2VoKJHFLlxHplj/VV4JEnTVcCoEmpxn1Y+i0Pk28OJklV+8ojhoO3EzhV+UCZE60IGh8ugxQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA7NIZr+sbO0W+sDPLppliZgAAAAACAAAAAAAQZgAAAAEAACAAAAALP9E4fLf7qDQSlGooaY3DxwtSQ9UxZa8qoCRjRO83wAAAAAAOgAAAAAIAACAAAAAI9KtZRYvcLNCTfpIoE8M/Znwcc0nvSB9TLlv2n6Pa/pAAAABfriu3hrTBVa+zBGdolHUt8RigalYfhwYQJPQm/xymMEnfL2p4FaoAXSDOvhH7M1iWU0r06XLfHHVkGBlQorNDnqLYaDNcgdnGerlb+QyqM8/NhsL8I0qFguQBMWde1xaZz7uG6Big4O4D9u6LKIf8/hiE8E9/AcKZxIej537+x/y+jY0wt14nkjBEyJqh+1ZAAAAAPbLqTP36aQ0JtZWgy7lWRYgzdNnRu4g5OLaAGpa5hPbKBXuiqW7Jor7gm/2mI7yuUkcnkXC4NJfMkUCnVqTlmw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -1025,7 +1025,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">LAPTOP-N0V8QQPA</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">(localdb)\MSSQLLocalDB</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -1114,7 +1114,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">DW_Project</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Chinook_STG_DWH</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -1158,7 +1158,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">LAPTOP-N0V8QQPA</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">(localdb)\MSSQLLocalDB</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -1619,10 +1619,10 @@
                 <SSIS:Property SSIS:Name="Name">Customer Acquisition</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">43</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">44</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{2F2761C3-5C99-4882-9D8E-150D45C51DC0}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{A8F45CEB-0B16-49B4-8C49-054A91D519AB}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -1744,7 +1744,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">LAPTOP-N0V8QQPA</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">(localdb)\MSSQLLocalDB</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -1833,7 +1833,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">DW_Project</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Chinook_STG_DWH</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -1877,7 +1877,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">LAPTOP-N0V8QQPA</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">(localdb)\MSSQLLocalDB</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
