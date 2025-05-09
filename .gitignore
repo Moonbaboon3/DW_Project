@@ -4,3 +4,46 @@
 
 /track facttable with 4 dimensions/.vs/Data Warehousing project/FileContentIndex/d9cc64ce-09a0-4902-b21d-07dfc8aebcaf.vsidx
 /track facttable with 4 dimensions/.vs/Data Warehousing project/v17/.suo
+# Ignore user-specific and local config files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+
+
+.wsuo
+# Ignore local SSIS project parameter values
+*.params
+
+# Ignore SSIS bin and obj folders
+**/bin/
+**/obj/
+
+# Ignore deployment and debug output
+*.dtproj.user
+*.deployment
+*.manifest
+*.log
+*.mdf
+*.ldf
+
+# Ignore backup and temp files
+*.bak
+*.tmp
+~$*
+
+# VS Code workspace files
+.vscode/
+
+# GitHub Copilot or other IDE plugin cache files (optional)
+.idea/
+*.iml
+
+# SSIS packages generated artifacts
+*.dtsx.sql
+
+# Optional: ignore Excel files used in dev
+*.xlsx
+*.xls
+
