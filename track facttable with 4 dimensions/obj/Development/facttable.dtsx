@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="facttable"
   DTS:PackageType="5"
-  DTS:VersionBuild="56"
-  DTS:VersionGUID="{1C504FB9-D9B8-4ADF-AC7F-CEBC90194E80}">
+  DTS:VersionBuild="72"
+  DTS:VersionGUID="{50F6B62E-D41B-494C-A37E-84661636B61C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -41,7 +41,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -109,7 +109,7 @@
                       refId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input].Columns[invoicedate]"
                       cachedDataType="dbTimeStamp"
                       cachedName="invoicedate"
-                      lineageId="Package\Insert into track_DWH\256:invalid" />
+                      lineageId="Package\Insert into track_DWH\263:invalid" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -123,9 +123,10 @@
                   <outputColumns>
                     <outputColumn
                       refId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]"
-                      dataType="dbDate"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
+                      length="50"
                       lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]"
                       name="Copy of invoicedate"
                       truncationRowDisposition="FailComponent">
@@ -134,7 +135,7 @@
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\Insert into track_DWH\256:invalid}</property>
+                          name="SourceInputColumnLineageID">#{Package\Insert into track_DWH\263:invalid}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -566,7 +567,8 @@ where [refTable].[Date] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Insert into track_DWH\lookup in date dim.Inputs[Lookup Input].Columns[Copy of invoicedate]"
-                      cachedDataType="dbDate"
+                      cachedDataType="wstr"
+                      cachedLength="50"
                       cachedName="Copy of invoicedate"
                       lineageId="Package\Insert into track_DWH\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of invoicedate]">
                       <properties>
@@ -883,7 +885,7 @@ where [refTable].[src_id] = ?</property>
                       cachedDataType="dbTimeStamp"
                       cachedName="invoicedate"
                       externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
-                      lineageId="Package\Insert into track_DWH\256:invalid" />
+                      lineageId="Package\Insert into track_DWH\263:invalid" />
                     <inputColumn
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TrackId]"
                       cachedDataType="i4"
@@ -1200,14 +1202,14 @@ where [refTable].[src_id] = ?</property>
               startId="Package\Insert into track_DWH\lookup in customer dim.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
-              endId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]"
-              name="Lookup Match Output"
-              startId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
               endId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input]"
               name="Lookup Match Output"
               startId="Package\Insert into track_DWH\lookup in date dim.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
+              endId="Package\Insert into track_DWH\Data Conversion.Inputs[Data Conversion Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert into track_DWH\lookup in artist dim.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
               endId="Package\Insert into track_DWH\lookup in genre dim.Inputs[Lookup Input]"
@@ -1288,7 +1290,7 @@ where [refTable].[AlbumId] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\insert into track_STG\257:invalid};</property>
+                  name="ParameterMap">#{Package\insert into track_STG\264:invalid};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -2351,11 +2353,11 @@ where [refTable].[TrackId] = ?</property>
         <NodeLayout
           Size="153.6,41.6"
           Id="Package\Get Last Extract"
-          TopLeft="67.5,143.416666252331" />
+          TopLeft="69.166666575604,144.283332912971" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Insert into track_DWH"
-          TopLeft="56.5,320.62499873278" />
+          TopLeft="55.666666712198,319.75833207214" />
         <NodeLayout
           Size="177.6,41.6"
           Id="Package\insert into track_STG"
@@ -2370,30 +2372,30 @@ where [refTable].[TrackId] = ?</property>
           TopLeft="129.5,429.708331544159" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="160.75,102">
+          TopLeft="160.6,101.6">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-16.25,41.416666252331"
+              EndConnector="-14.633333424396,42.683332912971"
               Start="0,0"
-              End="-16.25,33.916666252331">
+              End="-14.633333424396,35.183332912971">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.7083331261655" />
+                    End="0,17.3416664564855" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,16.7083331261655"
-                    Point2="0,20.7083331261655"
-                    Point3="-4,20.7083331261655" />
+                    Point1="0,17.3416664564855"
+                    Point2="0,21.3416664564855"
+                    Point3="-4,21.3416664564855" />
                   <mssgle:LineSegment
-                    End="-12.25,20.7083331261655" />
+                    End="-10.633333424396,21.3416664564855" />
                   <mssgle:CubicBezierSegment
-                    Point1="-12.25,20.7083331261655"
-                    Point2="-16.25,20.7083331261655"
-                    Point3="-16.25,24.7083331261655" />
+                    Point1="-10.633333424396,21.3416664564855"
+                    Point2="-14.633333424396,21.3416664564855"
+                    Point3="-14.633333424396,25.3416664564855" />
                   <mssgle:LineSegment
-                    End="-16.25,33.916666252331" />
+                    End="-14.633333424396,35.183332912971" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2404,30 +2406,30 @@ where [refTable].[TrackId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="144.5,185.416666252331">
+          TopLeft="145.966666575604,185.883332912971">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="51.75,37.249999434998"
+              EndConnector="50.333333424396,36.783332774358"
               Start="0,0"
-              End="51.75,29.749999434998">
+              End="50.333333424396,29.283332774358">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,14.624999717499" />
+                    End="0,14.391666387179" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,14.624999717499"
-                    Point2="0,18.624999717499"
-                    Point3="4,18.624999717499" />
+                    Point1="0,14.391666387179"
+                    Point2="0,18.391666387179"
+                    Point3="4,18.391666387179" />
                   <mssgle:LineSegment
-                    End="47.75,18.624999717499" />
+                    End="46.333333424396,18.391666387179" />
                   <mssgle:CubicBezierSegment
-                    Point1="47.75,18.624999717499"
-                    Point2="51.75,18.624999717499"
-                    Point3="51.75,22.624999717499" />
+                    Point1="46.333333424396,18.391666387179"
+                    Point2="50.333333424396,18.391666387179"
+                    Point3="50.333333424396,22.391666387179" />
                   <mssgle:LineSegment
-                    End="51.75,29.749999434998" />
+                    End="50.333333424396,29.283332774358" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2438,30 +2440,30 @@ where [refTable].[TrackId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="196.25,264.666665687329">
+          TopLeft="196.3,264.266665687329">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-49,55.958333045451"
+              EndConnector="-49.833333287802,55.491666384811"
               Start="0,0"
-              End="-49,48.458333045451">
+              End="-49.833333287802,47.991666384811">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,23.9791665227255" />
+                    End="0,23.7458331924055" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,23.9791665227255"
-                    Point2="0,27.9791665227255"
-                    Point3="-4,27.9791665227255" />
+                    Point1="0,23.7458331924055"
+                    Point2="0,27.7458331924055"
+                    Point3="-4,27.7458331924055" />
                   <mssgle:LineSegment
-                    End="-45,27.9791665227255" />
+                    End="-45.833333287802,27.7458331924055" />
                   <mssgle:CubicBezierSegment
-                    Point1="-45,27.9791665227255"
-                    Point2="-49,27.9791665227255"
-                    Point3="-49,31.9791665227255" />
+                    Point1="-45.833333287802,27.7458331924055"
+                    Point2="-49.833333287802,27.7458331924055"
+                    Point3="-49.833333287802,31.7458331924055" />
                   <mssgle:LineSegment
-                    End="-49,48.458333045451" />
+                    End="-49.833333287802,47.991666384811" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2472,30 +2474,30 @@ where [refTable].[TrackId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="147.25,362.62499873278">
+          TopLeft="146.466666712198,361.35833207214">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="65.5,67.083332811379"
+              EndConnector="66.233333287802,68.349999472019"
               Start="0,0"
-              End="65.5,59.583332811379">
+              End="66.233333287802,60.849999472019">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.5416664056895" />
+                    End="0,30.1749997360095" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,29.5416664056895"
-                    Point2="0,33.5416664056895"
-                    Point3="4,33.5416664056895" />
+                    Point1="0,30.1749997360095"
+                    Point2="0,34.1749997360095"
+                    Point3="4,34.1749997360095" />
                   <mssgle:LineSegment
-                    End="61.5,33.5416664056895" />
+                    End="62.233333287802,34.1749997360095" />
                   <mssgle:CubicBezierSegment
-                    Point1="61.5,33.5416664056895"
-                    Point2="65.5,33.5416664056895"
-                    Point3="65.5,37.5416664056895" />
+                    Point1="62.233333287802,34.1749997360095"
+                    Point2="66.233333287802,34.1749997360095"
+                    Point3="66.233333287802,38.1749997360095" />
                   <mssgle:LineSegment
-                    End="65.5,59.583332811379" />
+                    End="66.233333287802,60.849999472019" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2513,85 +2515,29 @@ where [refTable].[TrackId] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="166.5,42"
-          Id="Package\Insert into track_DWH\lookup in artist dim"
-          TopLeft="430.142857142857,368.952379165897" />
-        <NodeLayout
-          Size="164,42"
-          Id="Package\Insert into track_DWH\lookup in date dim"
-          TopLeft="486.928571428571,568.559522523471" />
-        <NodeLayout
-          Size="153.5,42"
+          Size="153.6,41.6"
           Id="Package\Insert into track_DWH\OLE DB Source"
           TopLeft="414.384615384615,61" />
         <NodeLayout
-          Size="187,42"
-          Id="Package\Insert into track_DWH\lookup in customer dim"
-          TopLeft="398.642857142857,288.327379141683" />
+          Size="166.4,41.6"
+          Id="Package\Insert into track_DWH\lookup in artist dim"
+          TopLeft="431.809523718461,370.685712487177" />
         <NodeLayout
-          Size="170.5,42"
+          Size="164,41.6"
+          Id="Package\Insert into track_DWH\lookup in date dim"
+          TopLeft="432.76190772144,561.626189238351" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Insert into track_DWH\OLE DB Destination"
+          TopLeft="503.571428571429,641.071428571429" />
+        <NodeLayout
+          Size="170.4,41.6"
           Id="Package\Insert into track_DWH\lookup in genre dim"
           TopLeft="413.5,213.54761767009" />
-        <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[Lookup Match Output1]"
-          TopLeft="492.142857142857,330.327379141683">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="21.2499999999999,38.625000024214"
-              Start="0,0"
-              End="21.2499999999999,31.125000024214">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15.312500012107" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.312500012107"
-                    Point2="0,19.312500012107"
-                    Point3="4,19.312500012107" />
-                  <mssgle:LineSegment
-                    End="17.2499999999999,19.312500012107" />
-                  <mssgle:CubicBezierSegment
-                    Point1="17.2499999999999,19.312500012107"
-                    Point2="21.2499999999999,19.312500012107"
-                    Point3="21.2499999999999,23.312500012107" />
-                  <mssgle:LineSegment
-                    End="21.2499999999999,31.125000024214" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-37.56638671875,24.312500012107,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[Lookup Match Output]"
-          TopLeft="495.446428571429,255.54761767009">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,32.7797614715934"
-              Start="0,0"
-              End="0,25.2797614715934">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,25.2797614715934" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,6.83519323579671,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\Insert into track_DWH\lookup in customer dim"
+          TopLeft="399.476190430659,287.460712481043" />
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
           TopLeft="494.942307692308,103">
@@ -2614,60 +2560,120 @@ where [refTable].[TrackId] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="157,42"
-          Id="Package\Insert into track_DWH\Data Conversion"
-          TopLeft="442.857142857143,472.857142857143" />
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
-          TopLeft="517.375,410.952379165897">
+          TopLeft="514.76190772144,603.226189238351">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,61.9047636912455"
+              EndConnector="75.2095208499886,37.845239333078"
               Start="0,0"
-              End="0,54.4047636912455">
+              End="75.2095208499886,30.345239333078">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,54.4047636912455" />
+                    End="0,14.922619666539" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.922619666539"
+                    Point2="0,18.922619666539"
+                    Point3="4,18.922619666539" />
+                  <mssgle:LineSegment
+                    End="71.2095208499886,18.922619666539" />
+                  <mssgle:CubicBezierSegment
+                    Point1="71.2095208499886,18.922619666539"
+                    Point2="75.2095208499886,18.922619666539"
+                    Point3="75.2095208499886,22.922619666539" />
+                  <mssgle:LineSegment
+                    End="75.2095208499886,30.345239333078" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,21.3976943456227,96.3827734375,11.609375"
+              BoundingBox="-19.4552786375057,23.922619666539,114.120078125,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[Data Conversion Output]"
-          TopLeft="521.357142857143,514.857142857143">
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output1]"
+          TopLeft="493.076190430659,329.060712481043">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="47.5714285714284,53.7023796663284"
+              EndConnector="21.9333332878019,41.6250000061338"
               Start="0,0"
-              End="47.5714285714284,46.2023796663284">
+              End="21.9333332878019,34.1250000061338">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.8511898331642" />
+                    End="0,16.8125000030669" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,22.8511898331642"
-                    Point2="0,26.8511898331642"
-                    Point3="4,26.8511898331642" />
+                    Point1="0,16.8125000030669"
+                    Point2="0,20.8125000030669"
+                    Point3="4,20.8125000030669" />
                   <mssgle:LineSegment
-                    End="43.5714285714284,26.8511898331642" />
+                    End="17.9333332878019,20.8125000030669" />
                   <mssgle:CubicBezierSegment
-                    Point1="43.5714285714284,26.8511898331642"
-                    Point2="47.5714285714284,26.8511898331642"
-                    Point3="47.5714285714284,30.8511898331642" />
+                    Point1="17.9333332878019,20.8125000030669"
+                    Point2="21.9333332878019,20.8125000030669"
+                    Point3="21.9333332878019,24.8125000030669" />
                   <mssgle:LineSegment
-                    End="47.5714285714284,46.2023796663284" />
+                    End="21.9333332878019,34.1250000061338" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-37.224720074849,25.8125000030669,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output]"
+          TopLeft="495.888095215329,255.14761767009">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.3130948109531"
+              Start="0,0"
+              End="0,24.8130948109531">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.8130948109531" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,6.60185990547653,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156.8,42.4"
+          Id="Package\Insert into track_DWH\Data Conversion"
+          TopLeft="432.023810115717,461.590476268823" />
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Data Conversion Output]"
+          TopLeft="512.592858918579,503.990476268823">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.6357129695278"
+              Start="0,0"
+              End="0,50.1357129695278">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.1357129695278" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2676,49 +2682,46 @@ where [refTable].[TrackId] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="173,42"
-          Id="Package\Insert into track_DWH\OLE DB Destination"
-          TopLeft="503.571428571429,641.071428571429" />
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
-          TopLeft="568.928571428571,610.559522523471">
+          TopLeft="512.716666917089,412.285712487177">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="21.1428571428572,30.5119060479573"
+              EndConnector="0,49.3047637816463"
               Start="0,0"
-              End="21.1428571428572,23.0119060479573">
+              End="0,41.8047637816463">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,11.2559530239786" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11.2559530239786"
-                    Point2="0,15.2559530239786"
-                    Point3="4,15.2559530239786" />
-                  <mssgle:LineSegment
-                    End="17.1428571428572,15.2559530239786" />
-                  <mssgle:CubicBezierSegment
-                    Point1="17.1428571428572,15.2559530239786"
-                    Point2="21.1428571428572,15.2559530239786"
-                    Point3="21.1428571428572,19.2559530239786" />
-                  <mssgle:LineSegment
-                    End="21.1428571428572,23.0119060479573" />
+                    End="0,41.8047637816463" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-37.6199581473214,20.2559530239786,96.3827734375,11.609375"
+              BoundingBox="-57.0600390625,12.9023818908232,114.120078125,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into track_DWH\lookup in artist dim">
     <Properties>
@@ -2767,19 +2770,6 @@ where [refTable].[TrackId] = ?</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into track_DWH\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into track_DWH\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2843,155 +2833,61 @@ where [refTable].[TrackId] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="96,42"
-          Id="Package\insert into track_STG\asd"
-          TopLeft="366.5,372.666664815611" />
-        <NodeLayout
-          Size="173,42"
-          Id="Package\insert into track_STG\OLE DB Destination"
-          TopLeft="278.5,555.083331552231" />
-        <NodeLayout
-          Size="154.5,42"
-          Id="Package\insert into track_STG\Derived Column"
-          TopLeft="331.5,483.083331423087" />
-        <NodeLayout
-          Size="153.5,42"
-          Id="Package\insert into track_STG\OLE DB Source"
-          TopLeft="390,52.2083331584517" />
-        <NodeLayout
-          Size="96,42"
+          Size="96,41.6"
           Id="Package\insert into track_STG\test"
           TopLeft="321,171.708332480449" />
         <NodeLayout
-          Size="114,42"
+          Size="96,41.6"
+          Id="Package\insert into track_STG\asd"
+          TopLeft="365.785714296358,374.809521926537" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\insert into track_STG\OLE DB Destination"
+          TopLeft="278.5,555.083331552231" />
+        <NodeLayout
+          Size="154.4,41.6"
+          Id="Package\insert into track_STG\Derived Column"
+          TopLeft="331.5,483.083331423087" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\insert into track_STG\OLE DB Source"
+          TopLeft="391.428571407284,53.6369045657358" />
+        <NodeLayout
+          Size="113.6,41.6"
           Id="Package\insert into track_STG\idk why"
           TopLeft="338.5,277.333331955804" />
         <EdgeLayout
-          Id="Package\insert into track_STG.Paths[Lookup Match Output]"
-          TopLeft="395.5,319.333331955804">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="19,53.333332859807"
-              Start="0,0"
-              End="19,45.833332859807">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.6666664299035" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.6666664299035"
-                    Point2="0,26.6666664299035"
-                    Point3="4,26.6666664299035" />
-                  <mssgle:LineSegment
-                    End="15,26.6666664299035" />
-                  <mssgle:CubicBezierSegment
-                    Point1="15,26.6666664299035"
-                    Point2="19,26.6666664299035"
-                    Point3="19,30.6666664299035" />
-                  <mssgle:LineSegment
-                    End="19,45.833332859807" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-38.69138671875,31.6666664299035,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\insert into track_STG.Paths[Derived Column Output]"
-          TopLeft="408.75,525.083331423087">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-43.75,30.0000001291437"
-              Start="0,0"
-              End="-43.75,22.5000001291437">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,11.0000000645719" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11.0000000645719"
-                    Point2="0,15.0000000645719"
-                    Point3="-4,15.0000000645719" />
-                  <mssgle:LineSegment
-                    End="-39.75,15.0000000645719" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-39.75,15.0000000645719"
-                    Point2="-43.75,15.0000000645719"
-                    Point3="-43.75,19.0000000645719" />
-                  <mssgle:LineSegment
-                    End="-43.75,22.5000001291437" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\insert into track_STG.Paths[OLE DB Source Output]"
-          TopLeft="466.75,94.2083331584517">
+          TopLeft="468.228571407284,95.2369045657358">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-97.75,77.4999993219974"
+              EndConnector="-99.228571407284,76.4714279147132"
               Start="0,0"
-              End="-97.75,69.9999993219974">
+              End="-99.228571407284,68.9714279147132">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,34.7499996609987" />
+                    End="0,34.2357139573566" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,34.7499996609987"
-                    Point2="0,38.7499996609987"
-                    Point3="-4,38.7499996609987" />
+                    Point1="0,34.2357139573566"
+                    Point2="0,38.2357139573566"
+                    Point3="-4,38.2357139573566" />
                   <mssgle:LineSegment
-                    End="-93.75,38.7499996609987" />
+                    End="-95.228571407284,38.2357139573566" />
                   <mssgle:CubicBezierSegment
-                    Point1="-93.75,38.7499996609987"
-                    Point2="-97.75,38.7499996609987"
-                    Point3="-97.75,42.7499996609987" />
+                    Point1="-95.228571407284,38.2357139573566"
+                    Point2="-99.228571407284,38.2357139573566"
+                    Point3="-99.228571407284,42.2357139573566" />
                   <mssgle:LineSegment
-                    End="-97.75,69.9999993219974" />
+                    End="-99.228571407284,68.9714279147132" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\insert into track_STG.Paths[Lookup Match Output1]"
-          TopLeft="411.625,414.666664815611">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,68.416666607476"
-              Start="0,0"
-              End="0,60.916666607476">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,60.916666607476" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,24.653645803738,96.3827734375,11.609375"
-              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3030,9 +2926,126 @@ where [refTable].[TrackId] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Lookup Match Output1]"
+          TopLeft="411.242857148179,416.409521926537">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.6738094965499"
+              Start="0,0"
+              End="0,59.1738094965499">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.1738094965499" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,23.7822172482749,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Lookup Match Output]"
+          TopLeft="395.3,318.933331955804">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.485714296358,55.876189970733"
+              Start="0,0"
+              End="18.485714296358,48.376189970733">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.9380949853665" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.9380949853665"
+                    Point2="0,27.9380949853665"
+                    Point3="4,27.9380949853665" />
+                  <mssgle:LineSegment
+                    End="14.485714296358,27.9380949853665" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.485714296358,27.9380949853665"
+                    Point2="18.485714296358,27.9380949853665"
+                    Point3="18.485714296358,31.9380949853665" />
+                  <mssgle:LineSegment
+                    End="18.485714296358,48.376189970733" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-38.948529570571,32.9380949853665,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\insert into track_STG.Paths[Derived Column Output]"
+          TopLeft="408.75,525.083331423087">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.75,30.0000001291437"
+              Start="0,0"
+              End="-43.75,22.5000001291437">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.0000000645719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.0000000645719"
+                    Point2="0,15.0000000645719"
+                    Point3="-4,15.0000000645719" />
+                  <mssgle:LineSegment
+                    End="-39.75,15.0000000645719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.75,15.0000000645719"
+                    Point2="-43.75,15.0000000645719"
+                    Point3="-43.75,19.0000000645719" />
+                  <mssgle:LineSegment
+                    End="-43.75,22.5000001291437" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\test">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[InvoiceLine]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\insert into track_STG\asd">
     <Properties>
@@ -3079,29 +3092,6 @@ where [refTable].[TrackId] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\insert into track_STG\test">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[InvoiceLine]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
