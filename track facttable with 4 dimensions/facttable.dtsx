@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="facttable"
   DTS:PackageType="5"
-  DTS:VersionBuild="82"
-  DTS:VersionGUID="{1EA7CD88-E449-4F61-827C-3B225F44C484}">
+  DTS:VersionBuild="83"
+  DTS:VersionGUID="{8338FAB6-D896-4577-82FF-AAEE2154B675}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -914,6 +914,12 @@ where [refTable].[src_id] = ?</property>
                       cachedName="GenreId"
                       externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genreid]"
                       lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[quantity]"
+                      cachedDataType="i4"
+                      cachedName="quantity"
+                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -945,6 +951,10 @@ where [refTable].[src_id] = ?</property>
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[genreid]"
                       dataType="i4"
                       name="genreid" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1312,7 +1322,7 @@ where [refTable].[AlbumId] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\insert into track_STG\293:invalid};</property>
+                  name="ParameterMap">#{Package\insert into track_STG\189:invalid};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -2553,10 +2563,6 @@ where [refTable].[TrackId] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="152,41.6"
-          Id="Package\Insert into track_DWH\OLE DB Source"
-          TopLeft="414.384615384615,61" />
-        <NodeLayout
           Size="164.8,41.6"
           Id="Package\Insert into track_DWH\lookup in artist dim"
           TopLeft="401.809524165496,325.685713157729" />
@@ -2569,6 +2575,10 @@ where [refTable].[TrackId] = ?</property>
           Id="Package\Insert into track_DWH\OLE DB Destination"
           TopLeft="390.57143025526,590.071429331388" />
         <NodeLayout
+          Size="152,41.6"
+          Id="Package\Insert into track_DWH\OLE DB Source"
+          TopLeft="414.384615384615,61" />
+        <NodeLayout
           Size="168.8,41.6"
           Id="Package\Insert into track_DWH\lookup in genre dim"
           TopLeft="402.500000163913,147.547618653567" />
@@ -2580,6 +2590,30 @@ where [refTable].[TrackId] = ?</property>
           Size="156.8,42.4"
           Id="Package\Insert into track_DWH\Data Conversion"
           TopLeft="401.023810577653,415.590476954276" />
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
+          TopLeft="481.816667371574,367.285713157729">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.3047637965471"
+              Start="0,0"
+              End="0,40.8047637965471">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.8047637965471" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,14.5976943982735,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
           TopLeft="475.566669278923,546.226190087717">
@@ -2648,54 +2682,8 @@ where [refTable].[TrackId] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,13.6018598011684,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,13.6018598011683,96.3827734375,11.609375"
               RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[Lookup Match Output3]"
-          TopLeft="481.816667371574,367.285713157729">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,48.3047637965471"
-              Start="0,0"
-              End="0,40.8047637965471">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40.8047637965471" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,14.5976943982735,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
-          TopLeft="488.642307774264,102.6">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44.9476186535666"
-              Start="0,0"
-              End="0,37.4476186535666">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,37.4476186535666" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2720,22 +2708,31 @@ where [refTable].[TrackId] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
+          TopLeft="488.642307774264,102.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.9476186535666"
+              Start="0,0"
+              End="0,37.4476186535666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.4476186535666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert into track_DWH\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into track_DWH\lookup in artist dim">
     <Properties>
@@ -2765,7 +2762,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2784,6 +2781,19 @@ where [refTable].[TrackId] = ?</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert into track_DWH\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into track_DWH\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2848,10 +2858,6 @@ where [refTable].[TrackId] = ?</property>
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="96,41.6"
-          Id="Package\insert into track_STG\test"
-          TopLeft="321,171.708332480449" />
-        <NodeLayout
-          Size="96,41.6"
           Id="Package\insert into track_STG\asd"
           TopLeft="365.785714296358,374.809521926537" />
         <NodeLayout
@@ -2859,13 +2865,17 @@ where [refTable].[TrackId] = ?</property>
           Id="Package\insert into track_STG\OLE DB Destination"
           TopLeft="278.5,555.083331552231" />
         <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\insert into track_STG\OLE DB Source"
+          TopLeft="391.428571407284,53.6369045657358" />
+        <NodeLayout
           Size="154.4,41.6"
           Id="Package\insert into track_STG\Derived Column"
           TopLeft="331.5,483.083331423087" />
         <NodeLayout
-          Size="153.6,41.6"
-          Id="Package\insert into track_STG\OLE DB Source"
-          TopLeft="391.428571407284,53.6369045657358" />
+          Size="96,41.6"
+          Id="Package\insert into track_STG\test"
+          TopLeft="321,171.708332480449" />
         <NodeLayout
           Size="113.6,41.6"
           Id="Package\insert into track_STG\idk why"
@@ -2901,7 +2911,9 @@ where [refTable].[TrackId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3031,35 +3043,14 @@ where [refTable].[TrackId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\insert into track_STG\test">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[InvoiceLine]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\insert into track_STG\asd">
     <Properties>
@@ -3106,6 +3097,29 @@ where [refTable].[TrackId] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\insert into track_STG\test">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[InvoiceLine]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
