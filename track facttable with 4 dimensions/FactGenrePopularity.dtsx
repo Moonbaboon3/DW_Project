@@ -1,0 +1,3304 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/9/2025 1:02:20 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MSI"
+  DTS:CreatorName="MSI\moe static"
+  DTS:DTSID="{E840FA4C-E676-4BAF-88BE-C97B74746905}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="8192"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="104"
+  DTS:VersionGUID="{E055C161-755B-4030-A812-5CCEA74AF689}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2A78505E-F464-4E46-B32E-CDBC29D0F6D4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="TotalPlaylistEntries">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Calculate total number of tracks"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B31C5BC9-8688-443B-B1E9-2AE05873364A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Calculate total number of tracks"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5F0C53C4-054A-40C4-9FF9-442691B40D13}"
+          SQLTask:SqlStatementSource="SELECT SUM(TracksInPlaylists) AS TotalPlaylistEntries&#xA;FROM (&#xA;    SELECT COUNT(PlaylistId) AS TracksInPlaylists&#xA;    FROM PlaylistTrack&#xA;    GROUP BY TrackId  -- Count each track only once&#xA;) AS GenreCounts"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::TotalPlaylistEntries" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to FactTable"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C05E46E7-0E96-4729-9269-19DCB399E14F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to FactTable"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load to FactTable\Check updated records"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Check updated records"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input].Columns[Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Tracks_inPlaylist"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input].Columns[Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input].Columns[Existing_Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Existing_Tracks_inPlaylist"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Tracks_inPlaylist]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input].Columns[Existing_Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Existing_Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Playlist_Penetration]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Output].Columns[IsChanged]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Output].Columns[IsChanged]"
+                      name="IsChanged"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]} != #{Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Tracks_inPlaylist]}) || ([ABS](#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]} - #{Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Playlist_Penetration]}) &gt; 0.01) ? 1 : 0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(Tracks_inPlaylist != Existing_Tracks_inPlaylist) || (ABS(Playlist_Penetration - Existing_Playlist_Penetration) &gt; 0.01) ? 1 : 0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\Filter Updated records"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Filter Updated records"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input].Columns[IsChanged]"
+                      cachedDataType="i4"
+                      cachedName="IsChanged"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\Filter Updated records.Outputs[ChangedRecords]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="ChangedRecords"
+                  synchronousInputId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]} == 1</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">IsChanged == 1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Filter Updated records.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\First Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="First Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[FactGenrePopularity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[FactGenrePopularity]) [refTable]
+where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]};#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to FactTable\First Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">GenreKey</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">DateKey</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\First Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\First Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\First Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\First Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\First Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\First Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\First Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\Load FactGenrePopularity"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Load FactGenrePopularity"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Stg_FactGenrePopularity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to FactTable\Load FactGenrePopularity.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[GenreKey]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]"
+                      name="GenreKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Tracks_inPlaylist]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]"
+                      name="Tracks_inPlaylist"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Num_of_UniquePlaylists]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Playlist_Penetration]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[GenreKey]"
+                      dataType="i4"
+                      name="GenreKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      name="Tracks_inPlaylist" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      name="Num_of_UniquePlaylists" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[Playlist_Penetration]"
+                      dataType="numeric"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[GenreKey]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[GenreKey]"
+                      name="GenreKey" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Tracks_inPlaylist]"
+                      name="Tracks_inPlaylist" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Playlist_Penetration]"
+                      dataType="numeric"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[Playlist_Penetration]"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup Stg_FactGenrePopularity"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Stg_FactGenrePopularity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Stg_FactGenrePopularity]) [refTable]
+where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]};#{Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">GenreKey</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">DateKey</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Tracks_inPlaylist]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Tracks_inPlaylist]"
+                      name="Existing_Tracks_inPlaylist"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Tracks_inPlaylist</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Playlist_Penetration]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Playlist_Penetration]"
+                      name="Existing_Playlist_Penetration"
+                      precision="6"
+                      scale="3"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Playlist_Penetration</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\New record flag"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="New record flag"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\New record flag.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\New record flag.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load to FactTable\New record flag.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\New record flag.Outputs[Derived Column Output].Columns[IsChanged]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to FactTable\New record flag.Outputs[Derived Column Output].Columns[IsChanged]"
+                      name="IsChanged"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">1</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">1</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to FactTable\New record flag.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load to FactTable\New record flag.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\New record flag.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\New record flag.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\New record flag.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\New record flag.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactGenrePopularity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to FactTable\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[GenreKey]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[DateKey]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Tracks_inPlaylist"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Tracks_inPlaylist]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Tracks_inPlaylist]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Num_of_UniquePlaylists]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Num_of_UniquePlaylists]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Playlist_Penetration]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Playlist_Penetration]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AvgPlaylistPerGenre]"
+                      cachedDataType="numeric"
+                      cachedName="AvgPlaylistPerGenre"
+                      cachedPrecision="5"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
+                      dataType="i4"
+                      name="GenreKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      name="Tracks_inPlaylist" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      name="Num_of_UniquePlaylists" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Playlist_Penetration]"
+                      dataType="numeric"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to FactTable\Union All"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union All"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[GenreKey]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[DateKey]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Tracks_inPlaylist"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Tracks_inPlaylist]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Num_of_UniquePlaylists]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Playlist_Penetration]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[AvgPlaylistPerGenre]"
+                      cachedDataType="numeric"
+                      cachedName="AvgPlaylistPerGenre"
+                      cachedPrecision="5"
+                      cachedScale="2"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[Existing_Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Existing_Tracks_inPlaylist"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Tracks_inPlaylist]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Tracks_inPlaylist]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[Existing_Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Existing_Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      lineageId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output].Columns[Existing_Playlist_Penetration]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Playlist_Penetration]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[IsChanged]"
+                      cachedDataType="i4"
+                      cachedName="IsChanged"
+                      lineageId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Output].Columns[IsChanged]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[GenreKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[GenreKey]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[DateKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[DateKey]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[Tracks_inPlaylist]"
+                      cachedDataType="i4"
+                      cachedName="Tracks_inPlaylist"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Tracks_inPlaylist]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Tracks_inPlaylist]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Num_of_UniquePlaylists]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[Playlist_Penetration]"
+                      cachedDataType="numeric"
+                      cachedName="Playlist_Penetration"
+                      cachedPrecision="6"
+                      cachedScale="3"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[Playlist_Penetration]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Playlist_Penetration]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[AvgPlaylistPerGenre]"
+                      cachedDataType="numeric"
+                      cachedName="AvgPlaylistPerGenre"
+                      cachedPrecision="5"
+                      cachedScale="2"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[IsChanged]"
+                      cachedDataType="i4"
+                      cachedName="IsChanged"
+                      lineageId="Package\Load to FactTable\New record flag.Outputs[Derived Column Output].Columns[IsChanged]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Load to FactTable\Union All.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[GenreKey]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[GenreKey]"
+                      name="GenreKey" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Tracks_inPlaylist]"
+                      name="Tracks_inPlaylist" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Playlist_Penetration]"
+                      dataType="numeric"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Playlist_Penetration]"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Tracks_inPlaylist]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Tracks_inPlaylist]"
+                      name="Existing_Tracks_inPlaylist" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Playlist_Penetration]"
+                      dataType="numeric"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[Existing_Playlist_Penetration]"
+                      name="Existing_Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]"
+                      name="IsChanged" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load to FactTable.Paths[ChangedRecords]"
+              endId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="ChangedRecords"
+              startId="Package\Load to FactTable\Filter Updated records.Outputs[ChangedRecords]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Derived Column Output]"
+              endId="Package\Load to FactTable\Union All.Inputs[Union All Input 1]"
+              name="Derived Column Output"
+              startId="Package\Load to FactTable\Check updated records.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Derived Column Output1]"
+              endId="Package\Load to FactTable\Union All.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Load to FactTable\New record flag.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Lookup Match Output]"
+              endId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Load to FactTable\First Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Lookup Match Output1]"
+              endId="Package\Load to FactTable\Check updated records.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\Load to FactTable\Lookup Stg_FactGenrePopularity.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Lookup No Match Output]"
+              endId="Package\Load to FactTable\New record flag.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\Load to FactTable\First Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[OLE DB Source Output]"
+              endId="Package\Load to FactTable\First Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Load to FactTable.Paths[Union All Output 1]"
+              endId="Package\Load to FactTable\Filter Updated records.Inputs[Conditional Split Input]"
+              name="Union All Output 1"
+              startId="Package\Load to FactTable\Union All.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Stagin Area"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{359EF5FD-A563-4005-B227-D50C9F17A23F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Stagin Area"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Stagin Area\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input].Columns[New_DateKey]"
+                      cachedDataType="i4"
+                      cachedName="New_DateKey"
+                      lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Conditional Split.Outputs[Date_Exists]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Date_Exists"
+                  synchronousInputId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">![ISNULL](#{Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]}) &amp;&amp; #{Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]} &gt; 0</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!ISNULL(New_DateKey) &amp;&amp; New_DateKey &gt; 0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input].Columns[SnapshotDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="SnapshotDate"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]"
+                      name="Copy of SnapshotDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[TracksInPlaylists]"
+                      cachedDataType="i4"
+                      cachedName="TracksInPlaylists"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[Copy of SnapshotDate]"
+                      cachedDataType="dbDate"
+                      cachedName="Copy of SnapshotDate"
+                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[Playlist_Penetration_D]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[Playlist_Penetration_D]"
+                      name="Playlist_Penetration_D"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::TotalPlaylistEntries] == 0 ? NULL(DT_R8) : #{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]} * 100.0 / @[User::TotalPlaylistEntries]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::TotalPlaylistEntries] == 0 ? NULL(DT_R8) : TracksInPlaylists * 100.0 / @[User::TotalPlaylistEntries]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[AvgPlaylistPerGenre_D]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[AvgPlaylistPerGenre_D]"
+                      name="AvgPlaylistPerGenre_D"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]} == 0 ? NULL(DT_R8) : (DT_R8)#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]} / (DT_R8)#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Num_of_UniquePlaylists == 0 ? NULL(DT_R8) : (DT_R8)TracksInPlaylists / (DT_R8)Num_of_UniquePlaylists</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)([YEAR](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}) * 10000 + [MONTH](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}) * 100 + [DAY](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)(YEAR([Copy of SnapshotDate]) * 10000 + MONTH([Copy of SnapshotDate]) * 100 + DAY([Copy of SnapshotDate]))</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT src_id, GenreKey, name FROM genre_DWH</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT src_id, GenreKey, name FROM genre_DWH) [refTable]
+where [refTable].[src_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="src_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="name" dataType="DT_STR" length="120" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Stagin Area\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Lookup.Inputs[Lookup Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">src_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Stagin Area\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[GenreKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[GenreKey]"
+                      name="GenreKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">GenreKey</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="120"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">name</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Stagin Area\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Stagin Area\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Stg_FactGenrePopularity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ROWS_PER_BATCH = 10000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Stagin Area\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Num_of_UniquePlaylists]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Playlist_Penetration_D]"
+                      cachedDataType="r8"
+                      cachedName="Playlist_Penetration_D"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Playlist_Penetration]"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[Playlist_Penetration_D]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AvgPlaylistPerGenre_D]"
+                      cachedDataType="r8"
+                      cachedName="AvgPlaylistPerGenre_D"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[AvgPlaylistPerGenre_D]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TracksInPlaylists]"
+                      cachedDataType="i4"
+                      cachedName="TracksInPlaylists"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Tracks_inPlaylist]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New_DateKey]"
+                      cachedDataType="i4"
+                      cachedName="New_DateKey"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
+                      dataType="i4"
+                      name="GenreKey" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Tracks_inPlaylist]"
+                      dataType="i4"
+                      name="Tracks_inPlaylist" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      name="Num_of_UniquePlaylists" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Playlist_Penetration]"
+                      dataType="numeric"
+                      name="Playlist_Penetration"
+                      precision="6"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    t.GenreId,
+    COUNT(DISTINCT t.TrackId) AS TotalTracks,
+    COUNT(pt.PlaylistId) AS TracksInPlaylists,
+    COUNT(DISTINCT pt.PlaylistId) AS Num_of_UniquePlaylists,
+    CAST(GETDATE() AS DATE) AS SnapshotDate,
+    CASE 
+        WHEN COUNT(DISTINCT pt.PlaylistId) = 0 THEN NULL
+        ELSE CAST(
+            CAST(COUNT(pt.PlaylistId) AS DECIMAL(10,2)) / 
+            CAST(COUNT(DISTINCT pt.PlaylistId) AS DECIMAL(10,2))
+            AS DECIMAL(5,2))
+    END AS AvgPlaylistPerGenre
+FROM 
+    PlaylistTrack pt
+JOIN 
+    Track t ON pt.TrackId = t.TrackId
+GROUP BY 
+    t.GenreId</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Stagin Area\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalTracks]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalTracks]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalTracks]"
+                      name="TotalTracks"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SnapshotDate]"
+                      length="10"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]"
+                      name="SnapshotDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
+                      name="AvgPlaylistPerGenre"
+                      precision="13"
+                      scale="8"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TracksInPlaylists]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]"
+                      name="TracksInPlaylists"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Num_of_UniquePlaylists]"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalTracks]"
+                      dataType="i4"
+                      name="TotalTracks" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SnapshotDate]"
+                      dataType="dbDate"
+                      name="SnapshotDate" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TracksInPlaylists]"
+                      dataType="i4"
+                      name="TracksInPlaylists" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      name="Num_of_UniquePlaylists" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
+                      name="TotalTracks" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
+                      name="SnapshotDate" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TracksInPlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TracksInPlaylists]"
+                      name="TracksInPlaylists" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
+                      dataType="numeric"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
+                      name="AvgPlaylistPerGenre"
+                      precision="5"
+                      scale="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Verify DateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Verify DateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DateKey FROM Date_Dim</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DateKey FROM Date_Dim WHERE DateKey = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[DateKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Stagin Area\Verify DateKey.Connections[OleDbConnection]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      lineageId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output].Columns[DateKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">DateKey</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]"
+                      name="New_DateKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DateKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Stagin Area.Paths[Data Conversion Output]"
+              endId="Package\Stagin Area\Lookup.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Date_Exists]"
+              endId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Date_Exists"
+              startId="Package\Stagin Area\Conditional Split.Outputs[Date_Exists]" />
+            <path
+              refId="Package\Stagin Area.Paths[Derived Column Output]"
+              endId="Package\Stagin Area\Verify DateKey.Inputs[Lookup Input]"
+              name="Derived Column Output"
+              startId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Lookup Match Output]"
+              endId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Lookup Match Output1]"
+              endId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]"
+              name="Lookup Match Output"
+              startId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[OLE DB Source Output]"
+              endId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3035857D-B56B-4C33-BAEA-B74BD7E3BB8F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
+          SQLTask:SqlStatementSource="&#xA;TRUNCATE TABLE Stg_FactGenrePopularity;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{243ECFC1-6B75-4564-8B17-90AC846E906A}"
+      DTS:From="Package\Truncate Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Calculate total number of tracks" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{10685067-BD13-44CC-AB32-1753AE8AB785}"
+      DTS:From="Package\Stagin Area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load to FactTable" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{039F80AC-E293-4E54-96E1-C9BEF778621E}"
+      DTS:From="Package\Calculate total number of tracks"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Stagin Area" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Calculate total number of tracks"
+          TopLeft="255.833319355217,153.399998933276" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Load to FactTable"
+          TopLeft="283.333317852683,318.933331115511" />
+        <NodeLayout
+          Size="132.8,41.6"
+          Id="Package\Stagin Area"
+          TopLeft="296.666650457515,241.799998318553" />
+        <NodeLayout
+          Size="157.6,41.6"
+          Id="Package\Truncate Staging"
+          TopLeft="288.333317579495,77.1333327969577" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="367.483318467356,118.733332796958">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.6666661363178"
+              Start="0,0"
+              End="0,27.1666661363178">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.1666661363178" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="363.799984155099,283.399998318553">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.5333327969578"
+              Start="0,0"
+              End="0,28.0333327969578">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.0333327969578" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="365.449984906366,194.999998933276">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.799999385277"
+              Start="0,0"
+              End="0,39.299999385277">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.299999385277" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load to FactTable">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="180.8,41.6"
+          Id="Package\Load to FactTable\Filter Updated records"
+          TopLeft="419.166643764411,472.26666418367" />
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\Load to FactTable\New record flag"
+          TopLeft="542.333325516847,294.799995565812" />
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\Load to FactTable\Load FactGenrePopularity"
+          TopLeft="388.999994203448,59.9999991059304" />
+        <NodeLayout
+          Size="135.2,41.6"
+          Id="Package\Load to FactTable\First Lookup"
+          TopLeft="444.166642398471,127.999999349117" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Load to FactTable\OLE DB Destination"
+          TopLeft="423.333310203421,610.066664671832" />
+        <NodeLayout
+          Size="120,41.6"
+          Id="Package\Load to FactTable\Union All"
+          TopLeft="446.666642261877,384.06666420175" />
+        <NodeLayout
+          Size="185.6,41.6"
+          Id="Package\Load to FactTable\Check updated records"
+          TopLeft="291.499999530613,275.066663076216" />
+        <NodeLayout
+          Size="232,41.6"
+          Id="Package\Load to FactTable\Lookup Stg_FactGenrePopularity"
+          TopLeft="251.833335508074,195.533330495424" />
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[OLE DB Source Output]"
+          TopLeft="488.999994203448,101.59999910593">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22.766648195023,26.4000002431868"
+              Start="0,0"
+              End="22.766648195023,18.9000002431868">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.20000012159341" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.20000012159341"
+                    Point2="0,13.2000001215934"
+                    Point3="4,13.2000001215934" />
+                  <mssgle:LineSegment
+                    End="18.766648195023,13.2000001215934" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.766648195023,13.2000001215934"
+                    Point2="22.766648195023,13.2000001215934"
+                    Point3="22.766648195023,17.2000001215934" />
+                  <mssgle:LineSegment
+                    End="22.766648195023,18.9000002431868" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Derived Column Output1]"
+          TopLeft="617.933325516847,336.399995565812">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-92.6000165883032,47.6666686359375"
+              Start="0,0"
+              End="-92.6000165883032,40.1666686359375">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.223685376542" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.223685376542"
+                    Point2="0,28.223685376542"
+                    Point3="-4,28.223685376542" />
+                  <mssgle:LineSegment
+                    End="-88.6000165883032,28.223685376542" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-88.6000165883032,28.223685376542"
+                    Point2="-92.6000165883032,28.223685376542"
+                    Point3="-92.6000165883032,32.223685376542" />
+                  <mssgle:LineSegment
+                    End="-92.6000165883032,40.1666686359375" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Derived Column Output]"
+          TopLeft="384.299999530613,316.666663076216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="122.366642731264,67.4000011255341"
+              Start="0,0"
+              End="122.366642731264,59.9000011255341">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.700000562767" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.700000562767"
+                    Point2="0,33.700000562767"
+                    Point3="4,33.700000562767" />
+                  <mssgle:LineSegment
+                    End="118.366642731264,33.700000562767" />
+                  <mssgle:CubicBezierSegment
+                    Point1="118.366642731264,33.700000562767"
+                    Point2="122.366642731264,33.700000562767"
+                    Point3="122.366642731264,37.700000562767" />
+                  <mssgle:LineSegment
+                    End="122.366642731264,59.9000011255341" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[ChangedRecords]"
+          TopLeft="509.249976983916,513.86666418367">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96.200000488162"
+              Start="0,0"
+              End="0,88.700000488162">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.700000488162" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-37.66509765625,38.518457275331,75.3301953125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Union All Output 1]"
+          TopLeft="508.116643013144,425.66666420175">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.5999999819198"
+              Start="0,0"
+              End="0,39.0999999819198">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.0999999819198" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup Match Output]"
+          TopLeft="511.766642398471,169.599999349117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-143.933306890397,25.9333311463067"
+              Start="0,0"
+              End="-143.933306890397,18.4333311463067">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.96666557315335" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.96666557315335"
+                    Point2="0,12.9666655731533"
+                    Point3="-4,12.9666655731533" />
+                  <mssgle:LineSegment
+                    End="-139.933306890397,12.9666655731533" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-139.933306890397,12.9666655731533"
+                    Point2="-143.933306890397,12.9666655731533"
+                    Point3="-143.933306890397,16.9666655731533" />
+                  <mssgle:LineSegment
+                    End="-143.933306890397,18.4333311463067" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-120.158040163948,17.9666655731533,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup Match Output1]"
+          TopLeft="367.833335508074,237.133330495424">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16.4666640225387,37.9333325807923"
+              Start="0,0"
+              End="16.4666640225387,30.4333325807923">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.9666662903961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.9666662903961"
+                    Point2="0,18.9666662903961"
+                    Point3="4,18.9666662903961" />
+                  <mssgle:LineSegment
+                    End="12.4666640225387,18.9666662903961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.4666640225387,18.9666662903961"
+                    Point2="16.4666640225387,18.9666662903961"
+                    Point3="16.4666640225387,22.9666662903961" />
+                  <mssgle:LineSegment
+                    End="16.4666640225387,30.4333325807923" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-39.9580547074806,23.9666662903961,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup No Match Output]"
+          TopLeft="532.966642398471,169.599999349117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="84.9666831183761,125.199996216695"
+              Start="0,0"
+              End="84.9666831183761,117.699996216695">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9585949513566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46.9585949513566"
+                    Point2="0,50.9585949513566"
+                    Point3="4,50.9585949513566" />
+                  <mssgle:LineSegment
+                    End="80.9666831183761,50.9585949513566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="80.9666831183761,50.9585949513566"
+                    Point2="84.9666831183761,50.9585949513566"
+                    Point3="84.9666831183761,54.9585949513566" />
+                  <mssgle:LineSegment
+                    End="84.9666831183761,117.699996216695" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-13.323045159562,55.9585949513566,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to FactTable\Load FactGenrePopularity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to FactTable\First Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[FactGenrePopularity]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to FactTable\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to FactTable\Lookup Stg_FactGenrePopularity">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Stg_FactGenrePopularity]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Stagin Area">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Stagin Area\Data Conversion"
+          TopLeft="439.999980330468,120.466665828957" />
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\Stagin Area\OLE DB Source"
+          TopLeft="217.333316650656,66.5999992348751" />
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\Stagin Area\Verify DateKey"
+          TopLeft="213.499983804922,297.999999222359" />
+        <NodeLayout
+          Size="112.8,41.6"
+          Id="Package\Stagin Area\Lookup"
+          TopLeft="225.999982923269,173.133332399593" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Stagin Area\Derived Column"
+          TopLeft="490.999979570509,237.399998818041" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Stagin Area\Conditional Split"
+          TopLeft="483.166646387014,332.533332790799" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Stagin Area\OLE DB Destination"
+          TopLeft="221.499983884394,412.199998682539" />
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[OLE DB Source Output]"
+          TopLeft="362.133316650656,87.3999992348751">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="77.8666636798119,53.8666665940819"
+              Start="0,0"
+              End="70.3666636798119,53.8666665940819">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="34.933331839906,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34.933331839906,0"
+                    Point2="38.933331839906,0"
+                    Point3="38.933331839906,4" />
+                  <mssgle:LineSegment
+                    End="38.933331839906,49.8666665940819" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38.933331839906,49.8666665940819"
+                    Point2="38.933331839906,53.8666665940819"
+                    Point3="42.933331839906,53.8666665940819" />
+                  <mssgle:LineSegment
+                    End="70.3666636798119,53.8666665940819" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Lookup Match Output1]"
+          TopLeft="361.499983804922,324.399999222359">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="121.666662582092,28.9333335684398"
+              Start="0,0"
+              End="114.166662582092,28.9333335684398">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47.3703686457722,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.3703686457722,0"
+                    Point2="51.3703686457722,0"
+                    Point3="51.3703686457722,4" />
+                  <mssgle:LineSegment
+                    End="51.3703686457722,24.9333335684398" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51.3703686457722,24.9333335684398"
+                    Point2="51.3703686457722,28.9333335684398"
+                    Point3="55.3703686457722,28.9333335684398" />
+                  <mssgle:LineSegment
+                    End="114.166662582092,28.9333335684398" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.17898192702219,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Lookup Match Output]"
+          TopLeft="282.399982923269,214.733332399593">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="284.99999664724,22.666666418447"
+              Start="0,0"
+              End="284.99999664724,15.166666418447">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.33333320922351" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.33333320922351"
+                    Point2="0,11.3333332092235"
+                    Point3="4,11.3333332092235" />
+                  <mssgle:LineSegment
+                    End="280.99999664724,11.3333332092235" />
+                  <mssgle:CubicBezierSegment
+                    Point1="280.99999664724,11.3333332092235"
+                    Point2="284.99999664724,11.3333332092235"
+                    Point3="284.99999664724,15.3333332092235" />
+                  <mssgle:LineSegment
+                    End="284.99999664724,15.166666418447" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="94.30861160487,16.3333332092235,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Derived Column Output]"
+          TopLeft="490.999979570509,258.199998818041">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-129.499995765587,60.6000004043185"
+              Start="0,0"
+              End="-121.999995765587,60.6000004043185">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-60.7499978827934,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-60.7499978827934,0"
+                    Point2="-64.7499978827934,0"
+                    Point3="-64.7499978827934,4" />
+                  <mssgle:LineSegment
+                    End="-64.7499978827934,56.6000004043185" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-64.7499978827934,56.6000004043185"
+                    Point2="-64.7499978827934,60.6000004043185"
+                    Point3="-68.7499978827934,60.6000004043185" />
+                  <mssgle:LineSegment
+                    End="-121.999995765587,60.6000004043185" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Date_Exists]"
+          TopLeft="559.966646387014,374.133332790799">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-252.86666250262,38.0666658917405"
+              Start="0,0"
+              End="-252.86666250262,30.5666658917405">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.0333329458703" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.0333329458703"
+                    Point2="0,19.0333329458703"
+                    Point3="-4,19.0333329458703" />
+                  <mssgle:LineSegment
+                    End="-248.86666250262,19.0333329458703" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-248.86666250262,19.0333329458703"
+                    Point2="-252.86666250262,19.0333329458703"
+                    Point3="-252.86666250262,23.0333329458703" />
+                  <mssgle:LineSegment
+                    End="-252.86666250262,30.5666658917405" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-152.57090937631,24.0333329458703,52.27515625,10.7841796875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Data Conversion Output]"
+          TopLeft="439.999980330468,146.866665828957">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-101.199997407199,47.0666665706365"
+              Start="0,0"
+              End="-93.6999974071993,47.0666665706365">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-38.7288877941508,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.7288877941508,0"
+                    Point2="-42.7288877941508,0"
+                    Point3="-42.7288877941508,4" />
+                  <mssgle:LineSegment
+                    End="-42.7288877941508,43.0666665706365" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.7288877941508,43.0666665706365"
+                    Point2="-42.7288877941508,47.0666665706365"
+                    Point3="-46.7288877941508,47.0666665706365" />
+                  <mssgle:LineSegment
+                    End="-93.6999974071993,47.0666665706365" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\Verify DateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">true</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
