@@ -1,27 +1,29 @@
 CREATE TABLE FactGenrePopularity(
 GenreKey INT NOT NULL,
 DateKey INT NOT NULL,     
-PlaylistId INT NULL,
+PlaylistId INT NOT NULL,
 Tracks_inPlaylist INT NOT NULL,
 Num_of_UniquePlaylists INT NOT NULL,
 Playlist_Penetration DECIMAL(6,3),
-AvgPlaylistPerGenre DECIMAL(5,2) 
+AvgPlaylistPerGenre DECIMAL(5,2) ,
+PRIMARY KEY (GenreKey, PlaylistId) 
 )
+
+
 
 CREATE TABLE Stg_FactGenrePopularity(
 GenreKey INT NOT NULL,
 DateKey INT NOT NULL,   
-PlaylistId INT NULL,
+PlaylistId INT NOT NULL,
 Tracks_inPlaylist INT NOT NULL,
 Num_of_UniquePlaylists INT NOT NULL,
 Playlist_Penetration DECIMAL(6,3),
-AvgPlaylistPerGenre DECIMAL(5,2) 
+AvgPlaylistPerGenre DECIMAL(5,2) ,
+PRIMARY KEY (GenreKey, PlaylistId) 
 
 )
 
-ALTER TABLE FactGenrePopularity
-ADD 
-PlaylistId INT NULL;    
+
 
 
 
