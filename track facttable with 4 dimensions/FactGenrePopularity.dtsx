@@ -11,8 +11,8 @@
   DTS:LocaleID="8192"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="104"
-  DTS:VersionGUID="{E055C161-755B-4030-A812-5CCEA74AF689}">
+  DTS:VersionBuild="131"
+  DTS:VersionGUID="{6A011D73-B03D-47E3-B4DB-AF5297AE20D9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
@@ -303,7 +303,7 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;referenceColumn name="PlaylistId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -527,6 +527,15 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       precision="5"
                       scale="2"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[PlaylistId]"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[PlaylistId]"
+                      name="PlaylistId"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -558,6 +567,10 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       name="AvgPlaylistPerGenre"
                       precision="5"
                       scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].ExternalColumns[PlaylistId]"
+                      dataType="i4"
+                      name="PlaylistId" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -599,6 +612,11 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       name="AvgPlaylistPerGenre"
                       precision="5"
                       scale="2" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[PlaylistId]"
+                      name="PlaylistId" />
                     <outputColumn
                       refId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -668,7 +686,7 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GenreKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Tracks_inPlaylist" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Num_of_UniquePlaylists" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Playlist_Penetration" dataType="DT_NUMERIC" length="0" precision="6" scale="3" codePage="0"/&gt;&lt;referenceColumn name="AvgPlaylistPerGenre" dataType="DT_NUMERIC" length="0" precision="5" scale="2" codePage="0"/&gt;&lt;referenceColumn name="PlaylistId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -990,6 +1008,12 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       cachedScale="2"
                       externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
                       lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[AvgPlaylistPerGenre]" />
+                    <inputColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      externalMetadataColumnId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PlaylistId]"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[PlaylistId]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1021,6 +1045,10 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       name="AvgPlaylistPerGenre"
                       precision="5"
                       scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to FactTable\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PlaylistId]"
+                      dataType="i4"
+                      name="PlaylistId" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1184,6 +1212,19 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                           name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]}</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 1].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[PlaylistId]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[PlaylistId]}</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1287,6 +1328,19 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                           name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]}</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\Load to FactTable\Union All.Inputs[Union All Input 2].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      lineageId="Package\Load to FactTable\Load FactGenrePopularity.Outputs[OLE DB Source Output].Columns[PlaylistId]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[PlaylistId]}</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1354,6 +1408,11 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       dataType="i4"
                       lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[IsChanged]"
                       name="IsChanged" />
+                    <outputColumn
+                      refId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Load to FactTable\Union All.Outputs[Union All Output 1].Columns[PlaylistId]"
+                      name="PlaylistId" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -1419,6 +1478,160 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
         <pipeline
           version="1">
           <components>
+            <component
+              refId="Package\Stagin Area\Aggregate"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Aggregate"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Aggregate.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Aggregate.Inputs[Aggregate Input 1].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Aggregate.Inputs[Aggregate Input 1].Columns[TracksIn_Playlists]"
+                      cachedDataType="i4"
+                      cachedName="TracksIn_Playlists"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[TracksIn_Playlists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Aggregate.Inputs[Aggregate Input 1].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistId]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[GenreId]"
+                      name="GenreId">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[GenreId]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[TracksIn_Playlists]"
+                      dataType="i8"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[TracksIn_Playlists]"
+                      name="TracksIn_Playlists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[TracksIn_Playlists]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">4</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[PlaylistId]"
+                      name="PlaylistId">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistId]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
             <component
               refId="Package\Stagin Area\Conditional Split"
               componentClassID="Microsoft.ConditionalSplit"
@@ -1601,17 +1814,17 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                       refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[TracksInPlaylists]"
                       cachedDataType="i4"
                       cachedName="TracksInPlaylists"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]" />
                     <inputColumn
                       refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[Num_of_UniquePlaylists]"
                       cachedDataType="i4"
                       cachedName="Num_of_UniquePlaylists"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]" />
                     <inputColumn
                       refId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input].Columns[Copy of SnapshotDate]"
                       cachedDataType="dbDate"
                       cachedName="Copy of SnapshotDate"
-                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1637,7 +1850,7 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">@[User::TotalPlaylistEntries] == 0 ? NULL(DT_R8) : #{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]} * 100.0 / @[User::TotalPlaylistEntries]</property>
+                          name="Expression">@[User::TotalPlaylistEntries] == 0 ? NULL(DT_R8) : #{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]} * 100.0 / @[User::TotalPlaylistEntries]</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1659,7 +1872,7 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]} == 0 ? NULL(DT_R8) : (DT_R8)#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]} / (DT_R8)#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]}</property>
+                          name="Expression">#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]} == 0 ? NULL(DT_R8) : (DT_R8)#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]} / (DT_R8)#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1681,7 +1894,7 @@ where [refTable].[GenreKey] = ? and [refTable].[DateKey] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">(DT_I4)([YEAR](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}) * 10000 + [MONTH](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}) * 100 + [DAY](#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}))</property>
+                          name="Expression">(DT_I4)([YEAR](#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]}) * 10000 + [MONTH](#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]}) * 100 + [DAY](#{Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1893,6 +2106,215 @@ where [refTable].[src_id] = ?</property>
               </outputs>
             </component>
             <component
+              refId="Package\Stagin Area\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[TracksInPlaylists]"
+                      cachedDataType="i4"
+                      cachedName="TracksInPlaylists"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[TracksInPlaylists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[SnapshotDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="SnapshotDate"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[SnapshotDate]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[Copy of SnapshotDate]"
+                      cachedDataType="dbDate"
+                      cachedName="Copy of SnapshotDate"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Copy of SnapshotDate]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreKey]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Num_of_UniquePlaylists]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[GenreId]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input].Columns[TracksIn_Playlists]"
+                      cachedDataType="i8"
+                      cachedName="TracksIn_Playlists"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[TracksIn_Playlists]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[PlaylistId]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[GenreId]"
+                      name="GenreId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[GenreId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]"
+                      name="TracksInPlaylists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[TracksInPlaylists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[SnapshotDate]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[SnapshotDate]"
+                      name="SnapshotDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[SnapshotDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Copy of SnapshotDate]"
+                      name="Copy of SnapshotDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[Copy of SnapshotDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[GenreKey]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[GenreKey]"
+                      name="GenreKey">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[GenreKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input].Columns[Num_of_UniquePlaylists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksIn_Playlists]"
+                      dataType="i8"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksIn_Playlists]"
+                      name="TracksIn_Playlists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input].Columns[TracksIn_Playlists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[PlaylistId]"
+                      name="PlaylistId">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input].Columns[PlaylistId]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Stagin Area\OLE DB Destination"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
@@ -1969,7 +2391,7 @@ where [refTable].[src_id] = ?</property>
                       cachedDataType="i4"
                       cachedName="Num_of_UniquePlaylists"
                       externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Num_of_UniquePlaylists]"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[Num_of_UniquePlaylists]" />
                     <inputColumn
                       refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Playlist_Penetration_D]"
                       cachedDataType="r8"
@@ -1986,20 +2408,27 @@ where [refTable].[src_id] = ?</property>
                       refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreId]"
                       cachedDataType="i4"
                       cachedName="GenreId"
+                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GenreKey]"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[GenreId]" />
                     <inputColumn
                       refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TracksInPlaylists]"
                       cachedDataType="i4"
                       cachedName="TracksInPlaylists"
                       externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Tracks_inPlaylist]"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]" />
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[TracksInPlaylists]" />
                     <inputColumn
                       refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New_DateKey]"
                       cachedDataType="i4"
                       cachedName="New_DateKey"
                       externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
                       lineageId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output].Columns[New_DateKey]" />
+                    <inputColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PlaylistId]"
+                      lineageId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output].Columns[PlaylistId]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2031,6 +2460,10 @@ where [refTable].[src_id] = ?</property>
                       name="AvgPlaylistPerGenre"
                       precision="5"
                       scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PlaylistId]"
+                      dataType="i4"
+                      name="PlaylistId" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2089,20 +2522,10 @@ where [refTable].[src_id] = ?</property>
     COUNT(DISTINCT t.TrackId) AS TotalTracks,
     COUNT(pt.PlaylistId) AS TracksInPlaylists,
     COUNT(DISTINCT pt.PlaylistId) AS Num_of_UniquePlaylists,
-    CAST(GETDATE() AS DATE) AS SnapshotDate,
-    CASE 
-        WHEN COUNT(DISTINCT pt.PlaylistId) = 0 THEN NULL
-        ELSE CAST(
-            CAST(COUNT(pt.PlaylistId) AS DECIMAL(10,2)) / 
-            CAST(COUNT(DISTINCT pt.PlaylistId) AS DECIMAL(10,2))
-            AS DECIMAL(5,2))
-    END AS AvgPlaylistPerGenre
-FROM 
-    PlaylistTrack pt
-JOIN 
-    Track t ON pt.TrackId = t.TrackId
-GROUP BY 
-    t.GenreId</property>
+    CAST(GETDATE() AS DATE) AS SnapshotDate
+FROM PlaylistTrack pt
+JOIN Track t ON pt.TrackId = t.TrackId
+GROUP BY t.GenreId</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -2167,17 +2590,6 @@ GROUP BY
                       name="SnapshotDate"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
-                      dataType="numeric"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
-                      name="AvgPlaylistPerGenre"
-                      precision="13"
-                      scale="8"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]"
                       dataType="i4"
                       errorOrTruncationOperation="Conversion"
@@ -2211,12 +2623,6 @@ GROUP BY
                       dataType="dbDate"
                       name="SnapshotDate" />
                     <externalMetadataColumn
-                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
-                      dataType="numeric"
-                      name="AvgPlaylistPerGenre"
-                      precision="5"
-                      scale="2" />
-                    <externalMetadataColumn
                       refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TracksInPlaylists]"
                       dataType="i4"
                       name="TracksInPlaylists" />
@@ -2237,16 +2643,6 @@ GROUP BY
                       lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[GenreId]"
                       name="GenreId" />
                     <outputColumn
-                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
-                      dataType="i4"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
-                      name="TotalTracks" />
-                    <outputColumn
-                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
-                      dataType="dbDate"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
-                      name="SnapshotDate" />
-                    <outputColumn
                       refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
                       lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
@@ -2259,6 +2655,16 @@ GROUP BY
                       name="ErrorColumn"
                       specialFlags="2" />
                     <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalTracks]"
+                      name="TotalTracks" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
+                      name="SnapshotDate" />
+                    <outputColumn
                       refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TracksInPlaylists]"
                       dataType="i4"
                       lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TracksInPlaylists]"
@@ -2268,13 +2674,576 @@ GROUP BY
                       dataType="i4"
                       lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Num_of_UniquePlaylists]"
                       name="Num_of_UniquePlaylists" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\OLE DB Source 1"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source 1"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    t.GenreId,
+    pt.PlaylistId,
+    COUNT(*) AS TracksIn_Playlists,
+    ROW_NUMBER() OVER (PARTITION BY t.GenreId ORDER BY COUNT(*) DESC) AS PlaylistRank
+FROM PlaylistTrack pt
+JOIN Track t ON pt.TrackId = t.TrackId
+GROUP BY t.GenreId, pt.PlaylistId</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Stagin Area\OLE DB Source 1.Connections[OleDbConnection]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
                     <outputColumn
-                      refId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
-                      dataType="numeric"
-                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvgPlaylistPerGenre]"
-                      name="AvgPlaylistPerGenre"
-                      precision="5"
-                      scale="2" />
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[GenreId]"
+                      name="GenreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[PlaylistId]"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistId]"
+                      name="PlaylistId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistRank]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[PlaylistRank]"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[PlaylistRank]"
+                      name="PlaylistRank"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[TracksIn_Playlists]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[TracksIn_Playlists]"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[TracksIn_Playlists]"
+                      name="TracksIn_Playlists"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[GenreId]"
+                      dataType="i4"
+                      name="GenreId" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[PlaylistId]"
+                      dataType="i4"
+                      name="PlaylistId" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[PlaylistRank]"
+                      dataType="i8"
+                      name="PlaylistRank" />
+                    <externalMetadataColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output].ExternalColumns[TracksIn_Playlists]"
+                      dataType="i4"
+                      name="TracksIn_Playlists" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[GenreId]"
+                      name="GenreId" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[PlaylistId]"
+                      name="PlaylistId" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[TracksIn_Playlists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[TracksIn_Playlists]"
+                      name="TracksIn_Playlists" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[PlaylistRank]"
+                      dataType="i8"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[PlaylistRank]"
+                      name="PlaylistRank" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort.Inputs[Sort Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort.Inputs[Sort Input].Columns[TracksIn_Playlists]"
+                      cachedDataType="i8"
+                      cachedName="TracksIn_Playlists"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[TracksIn_Playlists]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort.Inputs[Sort Input].Columns[PlaylistId]"
+                      cachedDataType="i4"
+                      cachedName="PlaylistId"
+                      lineageId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[PlaylistId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[GenreId]"
+                      name="GenreId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[GenreId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[TracksIn_Playlists]"
+                      dataType="i8"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[TracksIn_Playlists]"
+                      name="TracksIn_Playlists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[TracksIn_Playlists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[PlaylistId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort.Outputs[Sort Output].Columns[PlaylistId]"
+                      name="PlaylistId">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1].Columns[PlaylistId]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Stagin Area\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Stagin Area\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[GenreId]"
+                      cachedDataType="i4"
+                      cachedName="GenreId"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[TotalTracks]"
+                      cachedDataType="i4"
+                      cachedName="TotalTracks"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalTracks]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[SnapshotDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="SnapshotDate"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[TracksInPlaylists]"
+                      cachedDataType="i4"
+                      cachedName="TracksInPlaylists"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[Num_of_UniquePlaylists]"
+                      cachedDataType="i4"
+                      cachedName="Num_of_UniquePlaylists"
+                      lineageId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[Copy of SnapshotDate]"
+                      cachedDataType="dbDate"
+                      cachedName="Copy of SnapshotDate"
+                      lineageId="Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[GenreKey]"
+                      cachedDataType="i4"
+                      cachedName="GenreKey"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[GenreKey]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Stagin Area\Sort 1.Inputs[Sort Input].Columns[name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="name"
+                      lineageId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[name]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Stagin Area\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreId]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreId]"
+                      name="GenreId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[GenreId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[TotalTracks]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[TotalTracks]"
+                      name="TotalTracks">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalTracks]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[SnapshotDate]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[SnapshotDate]"
+                      name="SnapshotDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[TracksInPlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[TracksInPlaylists]"
+                      name="TracksInPlaylists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Num_of_UniquePlaylists]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Num_of_UniquePlaylists]"
+                      name="Num_of_UniquePlaylists">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output].Columns[Num_of_UniquePlaylists]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Copy of SnapshotDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[Copy of SnapshotDate]"
+                      name="Copy of SnapshotDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of SnapshotDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreKey]"
+                      dataType="i4"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[GenreKey]"
+                      name="GenreKey">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[GenreKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="120"
+                      lineageId="Package\Stagin Area\Sort 1.Outputs[Sort Output].Columns[name]"
+                      name="name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Stagin Area\Lookup.Outputs[Lookup Match Output].Columns[name]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -2439,6 +3408,11 @@ GROUP BY
           </components>
           <paths>
             <path
+              refId="Package\Stagin Area.Paths[Aggregate Output 1]"
+              endId="Package\Stagin Area\Sort.Inputs[Sort Input]"
+              name="Aggregate Output 1"
+              startId="Package\Stagin Area\Aggregate.Outputs[Aggregate Output 1]" />
+            <path
               refId="Package\Stagin Area.Paths[Data Conversion Output]"
               endId="Package\Stagin Area\Lookup.Inputs[Lookup Input]"
               name="Data Conversion Output"
@@ -2455,19 +3429,39 @@ GROUP BY
               startId="Package\Stagin Area\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\Stagin Area.Paths[Lookup Match Output]"
-              endId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]"
-              name="Lookup Match Output"
-              startId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Stagin Area.Paths[Lookup Match Output1]"
               endId="Package\Stagin Area\Conditional Split.Inputs[Conditional Split Input]"
               name="Lookup Match Output"
               startId="Package\Stagin Area\Verify DateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Lookup Match Output1]"
+              endId="Package\Stagin Area\Sort 1.Inputs[Sort Input]"
+              name="Lookup Match Output"
+              startId="Package\Stagin Area\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Merge Join Output]"
+              endId="Package\Stagin Area\Derived Column.Inputs[Derived Column Input]"
+              name="Merge Join Output"
+              startId="Package\Stagin Area\Merge Join.Outputs[Merge Join Output]" />
             <path
               refId="Package\Stagin Area.Paths[OLE DB Source Output]"
               endId="Package\Stagin Area\Data Conversion.Inputs[Data Conversion Input]"
               name="OLE DB Source Output"
               startId="Package\Stagin Area\OLE DB Source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[OLE DB Source Output1]"
+              endId="Package\Stagin Area\Aggregate.Inputs[Aggregate Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\Stagin Area\OLE DB Source 1.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Sort Output]"
+              endId="Package\Stagin Area\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Stagin Area\Sort 1.Outputs[Sort Output]" />
+            <path
+              refId="Package\Stagin Area.Paths[Sort Output1]"
+              endId="Package\Stagin Area\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Stagin Area\Sort.Outputs[Sort Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -2623,33 +3617,33 @@ GROUP BY
           Id="Package\Load to FactTable\Filter Updated records"
           TopLeft="419.166643764411,472.26666418367" />
         <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Load to FactTable\OLE DB Destination"
+          TopLeft="423.333310203421,610.066664671832" />
+        <NodeLayout
           Size="151.2,41.6"
           Id="Package\Load to FactTable\New record flag"
           TopLeft="542.333325516847,294.799995565812" />
-        <NodeLayout
-          Size="200,41.6"
-          Id="Package\Load to FactTable\Load FactGenrePopularity"
-          TopLeft="388.999994203448,59.9999991059304" />
         <NodeLayout
           Size="135.2,41.6"
           Id="Package\Load to FactTable\First Lookup"
           TopLeft="444.166642398471,127.999999349117" />
         <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Load to FactTable\OLE DB Destination"
-          TopLeft="423.333310203421,610.066664671832" />
-        <NodeLayout
           Size="120,41.6"
           Id="Package\Load to FactTable\Union All"
           TopLeft="446.666642261877,384.06666420175" />
         <NodeLayout
-          Size="185.6,41.6"
-          Id="Package\Load to FactTable\Check updated records"
-          TopLeft="291.499999530613,275.066663076216" />
-        <NodeLayout
           Size="232,41.6"
           Id="Package\Load to FactTable\Lookup Stg_FactGenrePopularity"
           TopLeft="251.833335508074,195.533330495424" />
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\Load to FactTable\Load FactGenrePopularity"
+          TopLeft="388.999994203448,59.9999991059304" />
+        <NodeLayout
+          Size="185.6,41.6"
+          Id="Package\Load to FactTable\Check updated records"
+          TopLeft="291.499999530613,275.066663076216" />
         <EdgeLayout
           Id="Package\Load to FactTable.Paths[OLE DB Source Output]"
           TopLeft="488.999994203448,101.59999910593">
@@ -2682,6 +3676,114 @@ GROUP BY
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup No Match Output]"
+          TopLeft="532.966642398471,169.599999349117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="84.9666831183761,125.199996216695"
+              Start="0,0"
+              End="84.9666831183761,117.699996216695">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9585949513566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46.9585949513566"
+                    Point2="0,50.9585949513566"
+                    Point3="4,50.9585949513566" />
+                  <mssgle:LineSegment
+                    End="80.9666831183761,50.9585949513566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="80.9666831183761,50.9585949513566"
+                    Point2="84.9666831183761,50.9585949513566"
+                    Point3="84.9666831183761,54.9585949513566" />
+                  <mssgle:LineSegment
+                    End="84.9666831183761,117.699996216695" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-13.3230451595619,55.9585949513566,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup Match Output1]"
+          TopLeft="367.833335508074,237.133330495424">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16.4666640225387,37.9333325807923"
+              Start="0,0"
+              End="16.4666640225387,30.4333325807923">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.9666662903961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.9666662903961"
+                    Point2="0,18.9666662903961"
+                    Point3="4,18.9666662903961" />
+                  <mssgle:LineSegment
+                    End="12.4666640225387,18.9666662903961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.4666640225387,18.9666662903961"
+                    Point2="16.4666640225387,18.9666662903961"
+                    Point3="16.4666640225387,22.9666662903961" />
+                  <mssgle:LineSegment
+                    End="16.4666640225387,30.4333325807923" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-39.9580547074807,23.9666662903961,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to FactTable.Paths[Lookup Match Output]"
+          TopLeft="511.766642398471,169.599999349117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-143.933306890397,25.9333311463067"
+              Start="0,0"
+              End="-143.933306890397,18.4333311463067">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.96666557315335" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.96666557315335"
+                    Point2="0,12.9666655731533"
+                    Point3="-4,12.9666655731533" />
+                  <mssgle:LineSegment
+                    End="-139.933306890397,12.9666655731533" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-139.933306890397,12.9666655731533"
+                    Point2="-143.933306890397,12.9666655731533"
+                    Point3="-143.933306890397,16.9666655731533" />
+                  <mssgle:LineSegment
+                    End="-143.933306890397,18.4333311463067" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-120.158040163948,17.9666655731533,96.3827734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2798,119 +3900,11 @@ GROUP BY
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load to FactTable.Paths[Lookup Match Output]"
-          TopLeft="511.766642398471,169.599999349117">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-143.933306890397,25.9333311463067"
-              Start="0,0"
-              End="-143.933306890397,18.4333311463067">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,8.96666557315335" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,8.96666557315335"
-                    Point2="0,12.9666655731533"
-                    Point3="-4,12.9666655731533" />
-                  <mssgle:LineSegment
-                    End="-139.933306890397,12.9666655731533" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-139.933306890397,12.9666655731533"
-                    Point2="-143.933306890397,12.9666655731533"
-                    Point3="-143.933306890397,16.9666655731533" />
-                  <mssgle:LineSegment
-                    End="-143.933306890397,18.4333311463067" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-120.158040163948,17.9666655731533,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load to FactTable.Paths[Lookup Match Output1]"
-          TopLeft="367.833335508074,237.133330495424">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="16.4666640225387,37.9333325807923"
-              Start="0,0"
-              End="16.4666640225387,30.4333325807923">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,14.9666662903961" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.9666662903961"
-                    Point2="0,18.9666662903961"
-                    Point3="4,18.9666662903961" />
-                  <mssgle:LineSegment
-                    End="12.4666640225387,18.9666662903961" />
-                  <mssgle:CubicBezierSegment
-                    Point1="12.4666640225387,18.9666662903961"
-                    Point2="16.4666640225387,18.9666662903961"
-                    Point3="16.4666640225387,22.9666662903961" />
-                  <mssgle:LineSegment
-                    End="16.4666640225387,30.4333325807923" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-39.9580547074806,23.9666662903961,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load to FactTable.Paths[Lookup No Match Output]"
-          TopLeft="532.966642398471,169.599999349117">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="84.9666831183761,125.199996216695"
-              Start="0,0"
-              End="84.9666831183761,117.699996216695">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9585949513566" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,46.9585949513566"
-                    Point2="0,50.9585949513566"
-                    Point3="4,50.9585949513566" />
-                  <mssgle:LineSegment
-                    End="80.9666831183761,50.9585949513566" />
-                  <mssgle:CubicBezierSegment
-                    Point1="80.9666831183761,50.9585949513566"
-                    Point2="84.9666831183761,50.9585949513566"
-                    Point3="84.9666831183761,54.9585949513566" />
-                  <mssgle:LineSegment
-                    End="84.9666831183761,117.699996216695" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-13.323045159562,55.9585949513566,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load to FactTable\Load FactGenrePopularity">
+    design-time-name="Package\Load to FactTable\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2938,23 +3932,10 @@ GROUP BY
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load to FactTable\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -2981,222 +3962,239 @@ GROUP BY
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to FactTable\Load FactGenrePopularity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Stagin Area">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\Stagin Area\Sort 1"
+          TopLeft="266.666652096643,258.599999403357" />
         <NodeLayout
           Size="156,41.6"
           Id="Package\Stagin Area\Data Conversion"
-          TopLeft="439.999980330468,120.466665828957" />
-        <NodeLayout
-          Size="144.8,41.6"
-          Id="Package\Stagin Area\OLE DB Source"
-          TopLeft="217.333316650656,66.5999992348751" />
-        <NodeLayout
-          Size="148,41.6"
-          Id="Package\Stagin Area\Verify DateKey"
-          TopLeft="213.499983804922,297.999999222359" />
-        <NodeLayout
-          Size="112.8,41.6"
-          Id="Package\Stagin Area\Lookup"
-          TopLeft="225.999982923269,173.133332399593" />
-        <NodeLayout
-          Size="152.8,41.6"
-          Id="Package\Stagin Area\Derived Column"
-          TopLeft="490.999979570509,237.399998818041" />
-        <NodeLayout
-          Size="153.6,41.6"
-          Id="Package\Stagin Area\Conditional Split"
-          TopLeft="483.166646387014,332.533332790799" />
+          TopLeft="457.49997937431,120.466665828957" />
         <NodeLayout
           Size="171.2,41.6"
           Id="Package\Stagin Area\OLE DB Destination"
-          TopLeft="221.499983884394,412.199998682539" />
+          TopLeft="282.33331389394,649.999997796616" />
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\Stagin Area\OLE DB Source"
+          TopLeft="393.999973664682,37.133332773116" />
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\Stagin Area\Verify DateKey"
+          TopLeft="192.666651609872,430.599998300276" />
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\Stagin Area\OLE DB Source 1"
+          TopLeft="44.9999975413085,58.799999746879" />
+        <NodeLayout
+          Size="112.8,41.6"
+          Id="Package\Stagin Area\Lookup"
+          TopLeft="243.499981967111,173.133332399593" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Stagin Area\Derived Column"
+          TopLeft="510.999978477757,329.266664845878" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Stagin Area\Conditional Split"
+          TopLeft="416.499983362853,439.399998692076" />
         <EdgeLayout
           Id="Package\Stagin Area.Paths[OLE DB Source Output]"
-          TopLeft="362.133316650656,87.3999992348751">
+          TopLeft="466.399973664682,78.733332773116">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="77.8666636798119,53.8666665940819"
+              EndConnector="69.1000057096282,41.733333055841"
               Start="0,0"
-              End="70.3666636798119,53.8666665940819">
+              End="69.1000057096282,34.233333055841">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="34.933331839906,0" />
+                    End="0,16.8666665279205" />
                   <mssgle:CubicBezierSegment
-                    Point1="34.933331839906,0"
-                    Point2="38.933331839906,0"
-                    Point3="38.933331839906,4" />
+                    Point1="0,16.8666665279205"
+                    Point2="0,20.8666665279205"
+                    Point3="4,20.8666665279205" />
                   <mssgle:LineSegment
-                    End="38.933331839906,49.8666665940819" />
+                    End="65.1000057096282,20.8666665279205" />
                   <mssgle:CubicBezierSegment
-                    Point1="38.933331839906,49.8666665940819"
-                    Point2="38.933331839906,53.8666665940819"
-                    Point3="42.933331839906,53.8666665940819" />
+                    Point1="65.1000057096282,20.8666665279205"
+                    Point2="69.1000057096282,20.8666665279205"
+                    Point3="69.1000057096282,24.8666665279205" />
                   <mssgle:LineSegment
-                    End="70.3666636798119,53.8666665940819" />
+                    End="69.1000057096282,34.233333055841" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Stagin Area.Paths[Lookup Match Output1]"
-          TopLeft="361.499983804922,324.399999222359">
+          TopLeft="299.899981967111,214.733332399593">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="121.666662582092,28.9333335684398"
+              EndConnector="19.9666701295322,43.866667003764"
               Start="0,0"
-              End="114.166662582092,28.9333335684398">
+              End="19.9666701295322,36.366667003764">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="47.3703686457722,0" />
+                    End="0,17.933333501882" />
                   <mssgle:CubicBezierSegment
-                    Point1="47.3703686457722,0"
-                    Point2="51.3703686457722,0"
-                    Point3="51.3703686457722,4" />
+                    Point1="0,17.933333501882"
+                    Point2="0,21.933333501882"
+                    Point3="4,21.933333501882" />
                   <mssgle:LineSegment
-                    End="51.3703686457722,24.9333335684398" />
+                    End="15.9666701295322,21.933333501882" />
                   <mssgle:CubicBezierSegment
-                    Point1="51.3703686457722,24.9333335684398"
-                    Point2="51.3703686457722,28.9333335684398"
-                    Point3="55.3703686457722,28.9333335684398" />
+                    Point1="15.9666701295322,21.933333501882"
+                    Point2="19.9666701295322,21.933333501882"
+                    Point3="19.9666701295322,25.933333501882" />
                   <mssgle:LineSegment
-                    End="114.166662582092,28.9333335684398" />
+                    End="19.9666701295322,36.366667003764" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="3.17898192702219,-17.609375,96.3827734375,11.609375"
+              BoundingBox="-38.2080516539839,26.933333501882,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Stagin Area.Paths[Lookup Match Output]"
-          TopLeft="282.399982923269,214.733332399593">
+          TopLeft="340.666651609872,451.399998300276">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="284.99999664724,22.666666418447"
+              EndConnector="75.8333317529812,8.80000039180027"
               Start="0,0"
-              End="284.99999664724,15.166666418447">
+              End="68.3333317529812,8.80000039180027">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,7.33333320922351" />
+                    End="33.9166658764906,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,7.33333320922351"
-                    Point2="0,11.3333332092235"
-                    Point3="4,11.3333332092235" />
+                    Point1="33.9166658764906,0"
+                    Point2="37.9166658764906,0"
+                    Point3="37.9166658764906,4" />
                   <mssgle:LineSegment
-                    End="280.99999664724,11.3333332092235" />
+                    End="37.9166658764906,4.80000039180027" />
                   <mssgle:CubicBezierSegment
-                    Point1="280.99999664724,11.3333332092235"
-                    Point2="284.99999664724,11.3333332092235"
-                    Point3="284.99999664724,15.3333332092235" />
+                    Point1="37.9166658764906,4.80000039180027"
+                    Point2="37.9166658764906,8.80000039180027"
+                    Point3="41.9166658764906,8.80000039180027" />
                   <mssgle:LineSegment
-                    End="284.99999664724,15.166666418447" />
+                    End="68.3333317529812,8.80000039180027" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="94.30861160487,16.3333332092235,96.3827734375,11.609375"
+              BoundingBox="-10.2747208422594,-17.609375,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Stagin Area.Paths[Derived Column Output]"
-          TopLeft="490.999979570509,258.199998818041">
+          TopLeft="587.399978477757,370.866664845878">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-129.499995765587,60.6000004043185"
+              EndConnector="-320.733326867885,59.7333334543973"
               Start="0,0"
-              End="-121.999995765587,60.6000004043185">
+              End="-320.733326867885,52.2333334543973">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-60.7499978827934,0" />
+                    End="0,25.8666667271986" />
                   <mssgle:CubicBezierSegment
-                    Point1="-60.7499978827934,0"
-                    Point2="-64.7499978827934,0"
-                    Point3="-64.7499978827934,4" />
+                    Point1="0,25.8666667271986"
+                    Point2="0,29.8666667271986"
+                    Point3="-4,29.8666667271986" />
                   <mssgle:LineSegment
-                    End="-64.7499978827934,56.6000004043185" />
+                    End="-316.733326867885,29.8666667271986" />
                   <mssgle:CubicBezierSegment
-                    Point1="-64.7499978827934,56.6000004043185"
-                    Point2="-64.7499978827934,60.6000004043185"
-                    Point3="-68.7499978827934,60.6000004043185" />
+                    Point1="-316.733326867885,29.8666667271986"
+                    Point2="-320.733326867885,29.8666667271986"
+                    Point3="-320.733326867885,33.8666667271986" />
                   <mssgle:LineSegment
-                    End="-121.999995765587,60.6000004043185" />
+                    End="-320.733326867885,52.2333334543973" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Stagin Area.Paths[Date_Exists]"
-          TopLeft="559.966646387014,374.133332790799">
+          TopLeft="493.299983362853,480.999998692076">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-252.86666250262,38.0666658917405"
+              EndConnector="-125.366669468913,168.99999910454"
               Start="0,0"
-              End="-252.86666250262,30.5666658917405">
+              End="-125.366669468913,161.49999910454">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.0333329458703" />
+                    End="0,80.4999995522699" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15.0333329458703"
-                    Point2="0,19.0333329458703"
-                    Point3="-4,19.0333329458703" />
+                    Point1="0,80.4999995522699"
+                    Point2="0,84.4999995522699"
+                    Point3="-4,84.4999995522699" />
                   <mssgle:LineSegment
-                    End="-248.86666250262,19.0333329458703" />
+                    End="-121.366669468913,84.4999995522699" />
                   <mssgle:CubicBezierSegment
-                    Point1="-248.86666250262,19.0333329458703"
-                    Point2="-252.86666250262,19.0333329458703"
-                    Point3="-252.86666250262,23.0333329458703" />
+                    Point1="-121.366669468913,84.4999995522699"
+                    Point2="-125.366669468913,84.4999995522699"
+                    Point3="-125.366669468913,88.4999995522699" />
                   <mssgle:LineSegment
-                    End="-252.86666250262,30.5666658917405" />
+                    End="-125.366669468913,161.49999910454" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-152.57090937631,24.0333329458703,52.27515625,10.7841796875"
+              BoundingBox="-88.8209128594565,89.4999995522699,52.27515625,10.7841796875"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Stagin Area.Paths[Data Conversion Output]"
-          TopLeft="439.999980330468,146.866665828957">
+          TopLeft="457.49997937431,146.866665828957">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -3225,14 +4223,201 @@ GROUP BY
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\Stagin Area\Aggregate"
+          TopLeft="32.4999982242784,132.266665847037" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Stagin Area\Merge Join"
+          TopLeft="178.33332358963,309.666664707992" />
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Sort Output]"
+          TopLeft="266.666652096643,279.399999403357">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-23.5333285070132,30.2666653046348"
+              Start="0,0"
+              End="-23.5333285070132,22.7666653046348">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-19.5333285070132,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-19.5333285070132,0"
+                    Point2="-23.5333285070132,0"
+                    Point3="-23.5333285070132,4" />
+                  <mssgle:LineSegment
+                    End="-23.5333285070132,22.7666653046348" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="97.6,41.6"
+          Id="Package\Stagin Area\Sort"
+          TopLeft="95.8333280972311,224.733331965274" />
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[OLE DB Source Output1]"
+          TopLeft="125.399997541309,100.399999746879">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-29.6999993170301,31.8666661001575"
+              Start="0,0"
+              End="-29.6999993170301,24.3666661001575">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.9333330500788" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.9333330500788"
+                    Point2="0,15.9333330500788"
+                    Point3="-4,15.9333330500788" />
+                  <mssgle:LineSegment
+                    End="-25.6999993170301,15.9333330500788" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-25.6999993170301,15.9333330500788"
+                    Point2="-29.6999993170301,15.9333330500788"
+                    Point3="-29.6999993170301,19.9333330500788" />
+                  <mssgle:LineSegment
+                    End="-29.6999993170301,24.3666661001575" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Aggregate Output 1]"
+          TopLeft="95.6999982242784,173.866665847037">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="48.9333298729527,50.8666661182378"
+              Start="0,0"
+              End="48.9333298729527,43.3666661182378">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.4333330591189" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.4333330591189"
+                    Point2="0,25.4333330591189"
+                    Point3="4,25.4333330591189" />
+                  <mssgle:LineSegment
+                    End="44.9333298729527,25.4333330591189" />
+                  <mssgle:CubicBezierSegment
+                    Point1="44.9333298729527,25.4333330591189"
+                    Point2="48.9333298729527,25.4333330591189"
+                    Point3="48.9333298729527,29.4333330591189" />
+                  <mssgle:LineSegment
+                    End="48.9333298729527,43.3666661182378" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Sort Output1]"
+          TopLeft="144.633328097231,266.333331965274">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="78.2333288257322,43.3333327427175"
+              Start="0,0"
+              End="78.2333288257322,35.8333327427175">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.6829264792204" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.6829264792204"
+                    Point2="0,25.6829264792204"
+                    Point3="4,25.6829264792204" />
+                  <mssgle:LineSegment
+                    End="74.2333288257322,25.6829264792204" />
+                  <mssgle:CubicBezierSegment
+                    Point1="74.2333288257322,25.6829264792204"
+                    Point2="78.2333288257322,25.6829264792204"
+                    Point3="78.2333288257322,29.6829264792204" />
+                  <mssgle:LineSegment
+                    End="78.2333288257322,35.8333327427175" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stagin Area.Paths[Merge Join Output]"
+          TopLeft="307.93332358963,330.466664707992">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="203.066654888127,19.6000001378861"
+              Start="0,0"
+              End="195.566654888127,19.6000001378861">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="97.5333274440636,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="97.5333274440636,0"
+                    Point2="101.533327444064,0"
+                    Point3="101.533327444064,4" />
+                  <mssgle:LineSegment
+                    End="101.533327444064,15.6000001378861" />
+                  <mssgle:CubicBezierSegment
+                    Point1="101.533327444064,15.6000001378861"
+                    Point2="101.533327444064,19.6000001378861"
+                    Point3="105.533327444064,19.6000001378861" />
+                  <mssgle:LineSegment
+                    End="195.566654888127,19.6000001378861" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Stagin Area\OLE DB Source">
     <Properties>
@@ -3265,6 +4450,14 @@ GROUP BY
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Stagin Area\OLE DB Source 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Stagin Area\Lookup">
     <Properties>
       <Property>
@@ -3284,19 +4477,6 @@ GROUP BY
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Stagin Area\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

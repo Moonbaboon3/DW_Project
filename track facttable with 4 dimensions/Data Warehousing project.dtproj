@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">MSI</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJV0pZk5SSUy+Pv0VstSHVAAAAAACAAAAAAAQZgAAAAEAACAAAACRoCL+WtU1vwVfe0pI5zUj/6cE2nvjk0mZLxHz/J72owAAAAAOgAAAAAIAACAAAAA8wx5Cd3Qvp4BYZLXFPSsuDupdVGeJpJXnJQlq3KSxPJAAAACT9GnUsCv3SQR5vVb2gLHKfWKN3ctoG9p+VDIB2WPVGcdQEQ9ywbvDNxRbf7ntcadMbjCjP5dgFwLu6B5bMz3FSFT5UEMPFl/LvupccuVbX0au7pKPw1NCUTFHzBdN/V7JPINsyJ/kqajygDPQLOvv43/zN7HMMO8Atk0AKsCzp2SSP4F6BztbiOf+ZhKD4HdAAAAAyiSIG3zRLKswSy4M92nexIMxWzV2XVKev/b0HhEfqb8dujn2lPj8vRYZHBO54KG05//kEHPhndJNF/jaF2yLWg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJV0pZk5SSUy+Pv0VstSHVAAAAAACAAAAAAAQZgAAAAEAACAAAABf/tsoIZjuh2Yhsl+Eg6MinPW4SZ8+zgb2MQHsQ6WHaAAAAAAOgAAAAAIAACAAAAD6Hoiv1LcUegLXrL8YsWJJZyzDU5dIRHjdk6RRdFMFLJAAAACjv5TI0Oo4+YNpSuEXT3sV5CG34BM748E4fW+O1vIuKaJuKXE5/m0HukElOF7aGQb4kVBFbU6EhySwXezetC32wSXbWGaQjDkal3ki6cw/oN8/gpBMZFUD3W9U69Rv7aHKI3Adl7z0Xw7w3alfDniv5fkg3nA53GaZeYN74xIxAJtMduClFufENLPlx3TTOy9AAAAAN9clkv6tWACZLZCDRQL7Wu5s+and9SFbE6wOlGrKjDS+M07Y0AEa5GlAnu4rv0QH9/rjwkduEVqWA8Mzuzpr+A==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -59,21 +59,6 @@
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-              </SSIS:Properties>
-            </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Chinook.ConnectionString">
-              <SSIS:Properties>
-                <SSIS:Property SSIS:Name="ID">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="CreationName">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="Description">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{5F0C53C4-054A-40C4-9FF9-442691B40D13}Chinook;</SSIS:Property>
-                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
             <SSIS:Parameter SSIS:Name="CM.Chinook.ConnectRetryCount">
@@ -132,7 +117,6 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Chinook</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
@@ -176,7 +160,6 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">MSI\SQLEXPRESS</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
@@ -207,21 +190,6 @@
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-              </SSIS:Properties>
-            </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Chinook_STG_DWH.ConnectionString">
-              <SSIS:Properties>
-                <SSIS:Property SSIS:Name="ID">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="CreationName">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="Description">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{600ABC59-4DB1-4987-96FE-AD069D252786}Chinook_STG_DWH;</SSIS:Property>
-                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
             <SSIS:Parameter SSIS:Name="CM.Chinook_STG_DWH.ConnectRetryCount">
@@ -2205,10 +2173,10 @@
                 <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">87</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">106</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{2BE622FA-5FD8-404B-9C8F-8427E8F48C1F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F73F3E82-36E3-4E40-931E-DC0CA82406A7}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
