@@ -3,10 +3,12 @@
   DTS:ObjectName="Chinook_STG_DWH"
   DTS:DTSID="{600ABC59-4DB1-4987-96FE-AD069D252786}"
   DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
   <DTS:ObjectData>
     <DTS:ConnectionManager
       DTS:ConnectRetryCount="1"
       DTS:ConnectRetryInterval="5"
-      DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{600ABC59-4DB1-4987-96FE-AD069D252786}Chinook_STG_DWH;" />
+      DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
   </DTS:ObjectData>
 </DTS:ConnectionManager>
