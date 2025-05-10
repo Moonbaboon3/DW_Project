@@ -3,6 +3,8 @@
   DTS:ObjectName="Chinook_STG_DWH"
   DTS:DTSID="{600ABC59-4DB1-4987-96FE-AD069D252786}"
   DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
   <DTS:ObjectData>
     <DTS:ConnectionManager
       DTS:ConnectRetryCount="1"
