@@ -1,25 +1,25 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="5/9/2025 1:02:20 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="MSI"
   DTS:CreatorName="MSI\moe static"
-  DTS:DTSID="{E840FA4C-E676-4BAF-88BE-C97B74746905}"
+  DTS:DTSID="{24694F47-CDB8-43C8-9EE0-72BD0031C2A5}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5685.0"
   DTS:LocaleID="8192"
-  DTS:ObjectName="Package1"
+  DTS:ObjectName="FactGenrePopularity"
   DTS:PackageType="5"
-  DTS:VersionBuild="82"
-  DTS:VersionGUID="{13B958A3-F82E-4FC7-AF32-AA97DA706956}">
+  DTS:VersionBuild="86"
+  DTS:VersionGUID="{AC70691A-EE59-4644-A910-B6F64A205374}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}"
+      DTS:DTSID="{53735665-C34D-4577-805D-266CD0A49423}"
       DTS:ObjectName="localhost.Chinook">
       <DTS:PropertyExpression
         DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
@@ -27,13 +27,13 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-facttable-{F84DE9C8-A3EE-494B-B6A8-D486403F61AD}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+      DTS:DTSID="{1F6114A8-DD15-44AC-9841-6D8B28AC4FCF}"
       DTS:ObjectName="localhost.Chinook_STG_DWH">
       <DTS:PropertyExpression
         DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
@@ -41,14 +41,14 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-facttable-{BBA9327B-6BF6-4416-BC32-3E1A2278FE46}MSI\SQLEXPRESS.DW_Project;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{2A78505E-F464-4E46-B32E-CDBC29D0F6D4}"
+      DTS:DTSID="{CFA88C36-2E5F-4B1D-B2E8-E99373B5C83F}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="TotalPlaylistEntries">
@@ -61,7 +61,7 @@
       DTS:refId="Package\Calculate total number of tracks"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{B31C5BC9-8688-443B-B1E9-2AE05873364A}"
+      DTS:DTSID="{8C032FFB-2066-4FAB-859D-CA17E0C6BEE8}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Calculate total number of tracks"
@@ -70,7 +70,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}"
+          SQLTask:Connection="{53735665-C34D-4577-805D-266CD0A49423}"
           SQLTask:SqlStatementSource="SELECT SUM(TracksInPlaylists) AS TotalPlaylistEntries&#xA;FROM (&#xA;    SELECT COUNT(PlaylistId) AS TracksInPlaylists&#xA;    FROM PlaylistTrack&#xA;    GROUP BY TrackId  -- Count each track only once&#xA;) AS GenreCounts"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -83,7 +83,7 @@
       DTS:refId="Package\Data Flow Task"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{359EF5FD-A563-4005-B227-D50C9F17A23F}"
+      DTS:DTSID="{316422F8-7117-4486-8D41-E0710DB8C311}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Data Flow Task"
@@ -196,8 +196,7 @@
                   <inputColumns>
                     <inputColumn
                       refId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input].Columns[SnapshotDate]"
-                      cachedDataType="wstr"
-                      cachedLength="10"
+                      cachedDataType="dbDate"
                       cachedName="SnapshotDate"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]" />
                   </inputColumns>
@@ -625,8 +624,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -697,8 +696,8 @@ where [refTable].[src_id] = ?</property>
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Playlist_Penetration]"
                       dataType="numeric"
                       name="Playlist_Penetration"
-                      precision="5"
-                      scale="2" />
+                      precision="6"
+                      scale="3" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvgPlaylistPerGenre]"
                       dataType="numeric"
@@ -802,8 +801,8 @@ GROUP BY
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -832,11 +831,10 @@ GROUP BY
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]"
-                      dataType="wstr"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SnapshotDate]"
-                      length="10"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SnapshotDate]"
                       name="SnapshotDate"
                       truncationRowDisposition="FailComponent" />
@@ -848,8 +846,8 @@ GROUP BY
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvgPlaylistPerGenre]"
                       name="AvgPlaylistPerGenre"
-                      precision="13"
-                      scale="8"
+                      precision="5"
+                      scale="2"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[TracksInPlaylists]"
@@ -882,8 +880,7 @@ GROUP BY
                       name="TotalTracks" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SnapshotDate]"
-                      dataType="wstr"
-                      length="10"
+                      dataType="dbDate"
                       name="SnapshotDate" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvgPlaylistPerGenre]"
@@ -918,8 +915,7 @@ GROUP BY
                       name="TotalTracks" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
-                      dataType="wstr"
-                      length="10"
+                      dataType="dbDate"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SnapshotDate]"
                       name="SnapshotDate" />
                     <outputColumn
@@ -1152,7 +1148,7 @@ GROUP BY
       DTS:refId="Package\Merge Fact Table"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{A297E3C5-F142-45BD-9C89-67404913FC42}"
+      DTS:DTSID="{80F3EEDE-9806-4CDD-A8D7-2410D2B3B422}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Merge Fact Table"
@@ -1161,7 +1157,7 @@ GROUP BY
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:Connection="{1F6114A8-DD15-44AC-9841-6D8B28AC4FCF}"
           SQLTask:SqlStatementSource="MERGE INTO FactGenrePopularity AS target&#xA;USING Stg_FactGenrePopularity AS source&#xA;ON target.GenreKey = source.GenreKey &#xA;   AND target.DateKey = source.DateKey&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET &#xA;        target.Tracks_inPlaylist = source.Tracks_inPlaylist,&#xA;        target.Num_of_UniquePlaylists = source.Num_of_UniquePlaylists,&#xA;        target.Playlist_Penetration = source.Playlist_Penetration,&#xA;        target.AvgPlaylistPerGenre = source.AvgPlaylistPerGenre&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT (GenreKey, DateKey, Tracks_inPlaylist, Num_of_UniquePlaylists, &#xA;            Playlist_Penetration, AvgPlaylistPerGenre)&#xA;    VALUES (source.GenreKey, source.DateKey, source.Tracks_inPlaylist, &#xA;            source.Num_of_UniquePlaylists, source.Playlist_Penetration, &#xA;            source.AvgPlaylistPerGenre);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1169,7 +1165,7 @@ GROUP BY
       DTS:refId="Package\Truncate Staging"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{3035857D-B56B-4C33-BAEA-B74BD7E3BB8F}"
+      DTS:DTSID="{C8C8AA43-49DC-473F-ACC6-9FBC5057F203}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate Staging"
@@ -1178,7 +1174,7 @@ GROUP BY
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:Connection="{1F6114A8-DD15-44AC-9841-6D8B28AC4FCF}"
           SQLTask:SqlStatementSource="TRUNCATE TABLE FactGenrePopularity;&#xA;TRUNCATE TABLE Stg_FactGenrePopularity;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1187,7 +1183,7 @@ GROUP BY
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{243ECFC1-6B75-4564-8B17-90AC846E906A}"
+      DTS:DTSID="{E97864B1-4CB7-4A03-B493-82F441CC4AC6}"
       DTS:From="Package\Truncate Staging"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -1195,7 +1191,7 @@ GROUP BY
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{2B049552-EBBA-41D4-B814-7D652B9C1BA8}"
+      DTS:DTSID="{A00900E1-5AD5-4F74-B304-C5919C865456}"
       DTS:From="Package\Data Flow Task"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -1203,7 +1199,7 @@ GROUP BY
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{039F80AC-E293-4E54-96E1-C9BEF778621E}"
+      DTS:DTSID="{E94678E9-79C6-41DD-8C06-CD5CA7353C97}"
       DTS:From="Package\Calculate total number of tracks"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
@@ -1222,6 +1218,10 @@ GROUP BY
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="224,41.6"
+          Id="Package\Calculate total number of tracks"
+          TopLeft="255.833319355217,153.399998933276" />
+        <NodeLayout
           Size="150.4,41.6"
           Id="Package\Data Flow Task"
           TopLeft="296.666650457515,241.799998318553" />
@@ -1233,32 +1233,6 @@ GROUP BY
           Size="157.6,41.6"
           Id="Package\Truncate Staging"
           TopLeft="288.333317579495,77.1333327969577" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="370.933317306307,283.399998318553">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,45.9333327246377"
-              Start="0,0"
-              End="0,38.4333327246377">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.4333327246377" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="224,41.6"
-          Id="Package\Calculate total number of tracks"
-          TopLeft="255.833319355217,153.399998933276" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="367.483318467356,118.733332796958">
@@ -1273,6 +1247,28 @@ GROUP BY
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,27.1666661363178" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="370.933317306307,283.399998318553">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.9333327246377"
+              Start="0,0"
+              End="0,38.4333327246377">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.4333327246377" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1312,10 +1308,6 @@ GROUP BY
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Data Flow Task\OLE DB Destination"
-          TopLeft="322.499982379377,525.199996998708" />
-        <NodeLayout
           Size="156,41.6"
           Id="Package\Data Flow Task\Data Conversion"
           TopLeft="329.999981969596,120.466665828957" />
@@ -1339,6 +1331,10 @@ GROUP BY
           Size="153.6,41.6"
           Id="Package\Data Flow Task\Conditional Split"
           TopLeft="329.166648681793,442.533331151671" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\OLE DB Destination"
+          TopLeft="322.499982379377,525.199996998708" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
           TopLeft="409.366648408606,70.1999998011192">
@@ -1362,25 +1358,27 @@ GROUP BY
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Data Conversion Output]"
-          TopLeft="404.699981559814,162.066665828957">
+          Id="Package\Data Flow Task.Paths[Lookup Match Output1]"
+          TopLeft="403.733315393992,413.599998119673">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,45.0666660639971"
+              EndConnector="0,28.9333330319979"
               Start="0,0"
-              End="0,37.5666660639971">
+              End="0,21.4333330319979">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,37.5666660639971" />
+                    End="0,21.4333330319979" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,4.91197901599895,96.3827734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1430,30 +1428,6 @@ GROUP BY
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Lookup Match Output1]"
-          TopLeft="403.733315393992,413.599998119673">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,28.9333330319979"
-              Start="0,0"
-              End="0,21.4333330319979">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.4333330319979" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,4.91197901599895,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Data Flow Task.Paths[Date_Exists]"
           TopLeft="407.033315530585,484.133331151671">
           <EdgeLayout.Curve>
@@ -1477,22 +1451,31 @@ GROUP BY
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Data Conversion Output]"
+          TopLeft="404.699981559814,162.066665828957">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.0666660639971"
+              Start="0,0"
+              End="0,37.5666660639971">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5666660639971" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Data Flow Task\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Data Flow Task\OLE DB Source">
     <Properties>
@@ -1530,7 +1513,7 @@ GROUP BY
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1540,10 +1523,23 @@ GROUP BY
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
