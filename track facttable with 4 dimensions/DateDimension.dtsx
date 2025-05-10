@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/10/2025 4:54:36 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LAPTOP-OMER"
+  DTS:CreatorName="LAPTOP-OMER\Omer"
+  DTS:DTSID="{E64A3C1B-2AE5-4DCD-924F-8A28475FD0C5}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="3081"
+  DTS:ObjectName="DateDimension"
+  DTS:PackageType="5"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{D646D238-F970-4EAD-B4BF-0CA9F96B6AE9}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E39702EC-4B10-4F0A-A9E4-CA98D7DCA197}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastDate">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/1800</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Add Dates"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{99114E8F-C102-4973-9F74-5D819CA46979}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Add Dates"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
+          SQLTask:SqlStatementSource="DECLARE @LastDate DATE;&#xA;DECLARE @CurrentDate DATE = GETDATE();&#xA;DECLARE @NextDate DATE;&#xA;SET @LastDate = (SELECT MAX([Date]) FROM Date_Dim);&#xA;SET @NextDate = DATEADD(DAY, 1, @LastDate);&#xA;WHILE @NextDate &lt;= @CurrentDate&#xA;BEGIN&#xA;    DECLARE @DateKey INT = YEAR(@NextDate) * 10000 + MONTH(@NextDate) * 100 + DAY(@NextDate);&#xA;    DECLARE @DaySuffix CHAR(2) = &#xA;        CASE&#xA;            WHEN DAY(@NextDate) IN (1, 21, 31) THEN 'st'&#xA;            WHEN DAY(@NextDate) IN (2, 22) THEN 'nd'&#xA;            WHEN DAY(@NextDate) IN (3, 23) THEN 'rd'&#xA;            ELSE 'th'&#xA;        END;&#xA;&#xA;    DECLARE @IsWeekend BIT = &#xA;        CASE &#xA;            WHEN DATENAME(WEEKDAY, @NextDate) IN ('Saturday', 'Sunday') THEN 1&#xA;            ELSE 0&#xA;        END;&#xA;&#xA;    INSERT INTO Date_Dim ([DateKey], [Date], [Day], [DaySuffix], [Weekday], [WeekDayName],&#xA;                          [WeekDayName_Short], [WeekDayName_FirstLetter], [DOWInMonth], [DayOfYear],&#xA;                          [WeekOfMonth], [WeekOfYear], [Month], [MonthName], [MonthName_Short], &#xA;                          [MonthName_FirstLetter], [Quarter], [QuarterName], [Year], [MMYYYY], &#xA;                          [MonthYear], [IsWeekend], [IsHoliday])&#xA;    VALUES (&#xA;        @DateKey,&#xA;        @NextDate,&#xA;        DAY(@NextDate),&#xA;        @DaySuffix,&#xA;        DATEPART(WEEKDAY, @NextDate),&#xA;        DATENAME(WEEKDAY, @NextDate),&#xA;        LEFT(DATENAME(WEEKDAY, @NextDate), 3),&#xA;        LEFT(DATENAME(WEEKDAY, @NextDate), 1),&#xA;        DAY(@NextDate),&#xA;        DATEPART(DAYOFYEAR, @NextDate),&#xA;        DATEPART(WEEK, @NextDate) - DATEPART(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, @NextDate), 0)) + 1,&#xA;        DATEPART(WEEK, @NextDate),&#xA;        MONTH(@NextDate),&#xA;        DATENAME(MONTH, @NextDate),&#xA;        LEFT(DATENAME(MONTH, @NextDate), 3),&#xA;        LEFT(DATENAME(MONTH, @NextDate), 1),&#xA;        DATEPART(QUARTER, @NextDate),&#xA;        CASE &#xA;            WHEN DATEPART(QUARTER, @NextDate) = 1 THEN 'First'&#xA;            WHEN DATEPART(QUARTER, @NextDate) = 2 THEN 'Second'&#xA;            WHEN DATEPART(QUARTER, @NextDate) = 3 THEN 'Third'&#xA;            WHEN DATEPART(QUARTER, @NextDate) = 4 THEN 'Fourth'&#xA;        END,&#xA;        YEAR(@NextDate),&#xA;        RIGHT('0' + CAST(MONTH(@NextDate) AS VARCHAR(2)), 2) + CAST(YEAR(@NextDate) AS VARCHAR(4)),&#xA;        CAST(YEAR(@NextDate) AS VARCHAR(4)) + LEFT(DATENAME(MONTH, @NextDate), 3),&#xA;        @IsWeekend,&#xA;        0&#xA;    );&#xA;&#xA;    SET @NextDate = DATEADD(DAY, 1, @NextDate);&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="127.2,41.6"
+          Id="Package\Add Dates"
+          TopLeft="361.666646906072,114.399999204477" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

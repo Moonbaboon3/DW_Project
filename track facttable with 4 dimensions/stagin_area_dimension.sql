@@ -23,9 +23,9 @@ CREATE TABLE Customer_STG (
 create table config(Name varchar(120),last_extract datetime) 
 create table artist_STG(ArtistId int primary key,Name varchar(120),created_date datetime)
 create table genre_STG(GenreId int primary key,Name varchar(120),created_date datetime)
-create table tracks_STG(TrackId int,Track_invoiceline int,GenreId int,AlbumId int,ArtistId int,customerId int,unitprice int)
+create table tracks_STG(TrackId int,invoicedate datetime,GenreId int,AlbumId int,ArtistId int,customerId int,unitprice int,quantity int)
 
-insert into config values ('customer','1950/1/1'),('genre','1950/1/1'),('artist','1950/1/1'),('tracks','1950/1/1'),('Employee','1950/1/1')
+insert into config values ('customer','1950/1/1'),('genre','1950/1/1'),('artist','1950/1/1'),('tracks','1950/1/1'),('Employee','1950/1/1'),('Customer_Acquisition', '1950/1/1')
 
 create table Employee_STG(
 	EmployeeID int Not NUll,

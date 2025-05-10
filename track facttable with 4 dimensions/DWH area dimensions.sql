@@ -153,6 +153,7 @@ datekey int references Date_Dim(DateKey),
 customerkey int references Customer_DWH(customerKey),
 artistkey int references artist_DWH(ArtistKey),
 unitprice int,
+quantity int,
 invoicedate datetime)
 
 create table Employee_DWH(
