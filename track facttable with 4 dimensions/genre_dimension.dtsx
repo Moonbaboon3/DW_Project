@@ -11,40 +11,10 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="genre_dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="21"
-  DTS:VersionGUID="{3F576B9E-96F6-455D-9D54-276C4D5F75C9}">
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{506261B5-A7AA-457B-96F4-59B2034F1AAC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{9288D11B-CCE2-4DE9-91C5-A33ABD19C9F5}"
-      DTS:ObjectName="localhost.Chinook">
-      <DTS:PropertyExpression
-        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
-      DTS:ObjectName="localhost.Chinook_STG_DWH">
-      <DTS:PropertyExpression
-        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -70,7 +40,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="select last_extract from config where name ='genre'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -152,8 +122,8 @@
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\genre_DWH.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -293,8 +263,8 @@
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\genre_STG.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -417,8 +387,8 @@
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\insert updated record into dwh.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -576,8 +546,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\look for updated or inserted records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -717,8 +687,8 @@ where [refTable].[Name] = ? and [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\look for updated records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -835,8 +805,8 @@ where src_id !=? or Name!=?</property>
               <connections>
                 <connection
                   refId="Package\Insert into genre_DWH\update old records and is active.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1204,8 +1174,8 @@ where src_id !=? or Name!=?</property>
               <connections>
                 <connection
                   refId="Package\Insert into genre_STG\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1333,8 +1303,8 @@ where src_id !=? or Name!=?</property>
               <connections>
                 <connection
                   refId="Package\Insert into genre_STG\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1443,7 +1413,7 @@ where src_id !=? or Name!=?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="truncate table genre_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1460,7 +1430,7 @@ where src_id !=? or Name!=?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='genre'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1698,40 +1668,40 @@ where src_id !=? or Name!=?</property>
         <NodeLayout
           Size="244,41.6"
           Id="Package\Insert into genre_DWH\look for updated or inserted records"
-          TopLeft="334.666666666667,120" />
+          TopLeft="271.333336793714,123.46666664256" />
         <EdgeLayout
           Id="Package\Insert into genre_DWH.Paths[Lookup No Match Output1]"
-          TopLeft="417.333333333333,162">
+          TopLeft="393.333336793714,165.06666664256">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-15.7499999999999,240"
+              EndConnector="8.3999965396186,236.93333335744"
               Start="0,0"
-              End="-15.7499999999999,232.5">
+              End="8.3999965396186,229.43333335744">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,92.9381107491856" />
+                    End="0,114.46666667872" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,92.9381107491856"
-                    Point2="0,96.9381107491856"
-                    Point3="-4,96.9381107491856" />
+                    Point1="0,114.46666667872"
+                    Point2="0,118.46666667872"
+                    Point3="4,118.46666667872" />
                   <mssgle:LineSegment
-                    End="-11.7499999999999,96.9381107491856" />
+                    End="4.3999965396186,118.46666667872" />
                   <mssgle:CubicBezierSegment
-                    Point1="-11.7499999999999,96.9381107491856"
-                    Point2="-15.7499999999999,96.9381107491856"
-                    Point3="-15.7499999999999,100.938110749186" />
+                    Point1="4.3999965396186,118.46666667872"
+                    Point2="8.3999965396186,118.46666667872"
+                    Point3="8.3999965396186,122.46666667872" />
                   <mssgle:LineSegment
-                    End="-15.7499999999999,232.5" />
+                    End="8.3999965396186,229.43333335744" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-63.6813867187499,101.938110749186,111.6127734375,11.609375"
+              BoundingBox="-51.6063884489407,123.46666667872,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -1773,66 +1743,60 @@ where src_id !=? or Name!=?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert into genre_DWH.Paths[Lookup Match Output]"
-          TopLeft="496,162">
+          TopLeft="515.333336793714,144.26666664256">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="103.384615384615,23.333333333333"
+              EndConnector="84.0512785909007,41.0666666907731"
               Start="0,0"
-              End="103.384615384615,15.833333333333">
+              End="84.0512785909007,33.5666666907731">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,5.42453854505958" />
+                    End="80.0512785909007,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,5.42453854505958"
-                    Point2="0,9.42453854505958"
-                    Point3="4,9.42453854505958" />
+                    Point1="80.0512785909007,0"
+                    Point2="84.0512785909007,0"
+                    Point3="84.0512785909007,4" />
                   <mssgle:LineSegment
-                    End="99.384615384615,9.42453854505958" />
-                  <mssgle:CubicBezierSegment
-                    Point1="99.384615384615,9.42453854505958"
-                    Point2="103.384615384615,9.42453854505958"
-                    Point3="103.384615384615,13.4245385450596" />
-                  <mssgle:LineSegment
-                    End="103.384615384615,15.833333333333" />
+                    End="84.0512785909007,33.5666666907731" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="3.50092097355751,14.4245385450596,96.3827734375,11.609375"
+              BoundingBox="35.8598918721507,-17.609375,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert into genre_DWH.Paths[OLE DB Source Output]"
-          TopLeft="337.5,56">
+          TopLeft="337.4,55.6">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="119.166666666667,64"
+              EndConnector="55.9333367937144,67.8666666425599"
               Start="0,0"
-              End="119.166666666667,56.5">
+              End="55.9333367937144,60.3666666425599">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28" />
+                    End="0,29.93333332128" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,28"
-                    Point2="0,32"
-                    Point3="4,32" />
+                    Point1="0,29.93333332128"
+                    Point2="0,33.93333332128"
+                    Point3="4,33.93333332128" />
                   <mssgle:LineSegment
-                    End="115.166666666667,32" />
+                    End="51.9333367937144,33.93333332128" />
                   <mssgle:CubicBezierSegment
-                    Point1="115.166666666667,32"
-                    Point2="119.166666666667,32"
-                    Point3="119.166666666667,36" />
+                    Point1="51.9333367937144,33.93333332128"
+                    Point2="55.9333367937144,33.93333332128"
+                    Point3="55.9333367937144,37.93333332128" />
                   <mssgle:LineSegment
-                    End="119.166666666667,56.5" />
+                    End="55.9333367937144,60.3666666425599" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1897,7 +1861,7 @@ where src_id !=? or Name!=?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1907,7 +1871,7 @@ where src_id !=? or Name!=?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1933,7 +1897,7 @@ where src_id !=? or Name!=?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1943,7 +1907,7 @@ where src_id !=? or Name!=?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

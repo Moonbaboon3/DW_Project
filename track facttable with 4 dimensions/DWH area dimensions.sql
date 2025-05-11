@@ -176,3 +176,22 @@ CREATE TABLE Fact_Customer_Acquisition_DWH (
 	DateKey  int references Date_Dim(DateKey),         
 	PRIMARY KEY (CustomerKey, EmployeeKey, DateKey)
 	);
+
+
+
+CREATE TABLE FactGenrePopularity(
+GenreKey INT NOT NULL,
+DateKey INT NOT NULL,     
+PlaylistId INT NOT NULL,
+Tracks_inPlaylist INT NOT NULL,
+Num_of_UniquePlaylists INT NOT NULL,
+Playlist_Penetration DECIMAL(6,3),
+AvgPlaylistPerGenre DECIMAL(5,2) ,
+PRIMARY KEY (GenreKey, PlaylistId) 
+)
+
+
+
+
+
+

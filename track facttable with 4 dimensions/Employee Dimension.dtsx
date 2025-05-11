@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Employee Dimension"
   DTS:PackageType="5"
-  DTS:VersionBuild="54"
-  DTS:VersionGUID="{E85D9BBC-A653-47ED-864E-4FB892C42FE4}">
+  DTS:VersionBuild="60"
+  DTS:VersionGUID="{A65002FD-2CD3-4FB5-BCC9-0A54C47CC6F1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-genre_dimension-{555B1ACC-CFE4-4A00-B3A7-E9F81CD94CB8};Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{5F0C53C4-054A-40C4-9FF9-442691B40D13}Chinook;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -41,7 +41,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-N0V8QQPA;Initial Catalog=DW_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-artist dimension-{1A6CF949-7E05-4FB9-A866-DA454FC8C248};Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=DW_Project;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{600ABC59-4DB1-4987-96FE-AD069D252786}Chinook_STG_DWH;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -70,7 +70,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="select last_extract from config where name ='Employee'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -1349,8 +1349,8 @@ where src_EmployeeID !=? </property>
               <connections>
                 <connection
                   refId="Package\Insert into Employee_STG\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1532,8 +1532,8 @@ where src_EmployeeID !=? </property>
               <connections>
                 <connection
                   refId="Package\Insert into Employee_STG\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1764,7 +1764,7 @@ where src_EmployeeID !=? </property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="truncate table Employee_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1781,7 +1781,7 @@ where src_EmployeeID !=? </property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7BF58242-DE4A-4FFC-B382-DA366D633178}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='Employee'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2087,9 +2087,7 @@ where src_EmployeeID !=? </property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2123,9 +2121,7 @@ where src_EmployeeID !=? </property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2274,40 +2270,6 @@ where src_EmployeeID !=? </property>
           Id="Package\Insert into Employee_STG\OLE DB Destination"
           TopLeft="293,393.666664783325" />
         <EdgeLayout
-          Id="Package\Insert into Employee_STG.Paths[Derived Column Output]"
-          TopLeft="379.25,206.124999184782">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="43.75,64.708332803308"
-              Start="0,0"
-              End="43.75,57.208332803308">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.354166401654" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,28.354166401654"
-                    Point2="0,32.354166401654"
-                    Point3="4,32.354166401654" />
-                  <mssgle:LineSegment
-                    End="39.75,32.354166401654" />
-                  <mssgle:CubicBezierSegment
-                    Point1="39.75,32.354166401654"
-                    Point2="43.75,32.354166401654"
-                    Point3="43.75,36.354166401654" />
-                  <mssgle:LineSegment
-                    End="43.75,57.208332803308" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Insert into Employee_STG.Paths[Data Conversion Output]"
           TopLeft="423,312.83333198809">
           <EdgeLayout.Curve>
@@ -2367,6 +2329,40 @@ where src_EmployeeID !=? </property>
                     Point3="-15,46.395833001058" />
                   <mssgle:LineSegment
                     End="-15,77.291666002116" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into Employee_STG.Paths[Derived Column Output]"
+          TopLeft="379.25,206.124999184782">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.75,64.708332803308"
+              Start="0,0"
+              End="43.75,57.208332803308">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.354166401654" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.354166401654"
+                    Point2="0,32.354166401654"
+                    Point3="4,32.354166401654" />
+                  <mssgle:LineSegment
+                    End="39.75,32.354166401654" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.75,32.354166401654"
+                    Point2="43.75,32.354166401654"
+                    Point3="43.75,36.354166401654" />
+                  <mssgle:LineSegment
+                    End="43.75,57.208332803308" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

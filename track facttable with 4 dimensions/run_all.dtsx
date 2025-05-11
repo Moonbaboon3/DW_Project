@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="21"
-  DTS:VersionGUID="{882CAA8F-9EE0-406C-9C8C-3C2B33C4AAE9}">
+  DTS:VersionBuild="23"
+  DTS:VersionGUID="{BD547E49-E1A4-4993-8871-C9A22B0A06C1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,17 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{5F0C53C4-054A-40C4-9FF9-442691B40D13}Chinook;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MSI\SQLEXPRESS.Chinook]"
+      DTS:CreationName="ADO"
+      DTS:DTSID="{EFC63809-AAE1-4AAB-8D94-B96C3262A211}"
+      DTS:ObjectName="MSI\SQLEXPRESS.Chinook">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=Chinook;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{EFC63809-AAE1-4AAB-8D94-B96C3262A211}MSI\SQLEXPRESS.Chinook;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -267,6 +277,10 @@
           Id="Package\load into dwh"
           TopLeft="749.848479666192,103.439394103562" />
         <NodeLayout
+          Size="184.8,41.6"
+          Id="Package\Sequence Container\Execute Package Task"
+          TopLeft="65.1333164867435,349.266664165589" />
+        <NodeLayout
           Size="168.8,41.6"
           Id="Package\Sequence Container\get artist dimension"
           TopLeft="70.4545473420257,165.074240723835" />
@@ -360,10 +374,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="184.8,41.6"
-          Id="Package\Sequence Container\Execute Package Task"
-          TopLeft="65.1333164867435,349.266664165589" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
           TopLeft="158.84999002864,322.46666420175">

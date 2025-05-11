@@ -11,40 +11,10 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="facttable"
   DTS:PackageType="5"
-  DTS:VersionBuild="96"
-  DTS:VersionGUID="{BE044932-40DA-4A88-A24A-339D97151820}">
+  DTS:VersionBuild="107"
+  DTS:VersionGUID="{4EBB1B3C-70C0-4A59-936C-6BF26DEF918A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost.Chinook]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{B5AF3F21-CA0E-4D83-9E23-9FD1BE6EDB7B}"
-      DTS:ObjectName="localhost.Chinook">
-      <DTS:PropertyExpression
-        DTS:Name="ConnectionString">@[$Project::Conn_string_Chinook]</DTS:PropertyExpression>
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
-      DTS:ObjectName="localhost.Chinook_STG_DWH">
-      <DTS:PropertyExpression
-        DTS:Name="ConnectionString">@[$Project::Conn_string_DW_Project]</DTS:PropertyExpression>
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook_STG_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -70,7 +40,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="select last_extract from config where name ='tracks'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -204,7 +174,7 @@ where [refTable].[Date] = ?</property>
                   dataType="System.Int32"
                   description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
                   name="NoMatchBehavior"
-                  typeConverter="LookupNoMatchBehavior">0</property>
+                  typeConverter="LookupNoMatchBehavior">1</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
@@ -238,8 +208,8 @@ where [refTable].[Date] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\Lookup.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -272,7 +242,6 @@ where [refTable].[Date] = ?</property>
                 <output
                   refId="Package\Insert into track_DWH\Lookup.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
-                  errorRowDisposition="FailComponent"
                   exclusionGroup="1"
                   name="Lookup Match Output"
                   synchronousInputId="Package\Insert into track_DWH\Lookup.Inputs[Lookup Input]">
@@ -396,8 +365,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\lookup in artist dim.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -554,8 +523,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\lookup in customer dim.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -712,8 +681,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\lookup in genre dim.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -859,8 +828,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -908,12 +877,6 @@ where [refTable].[src_id] = ?</property>
                       cachedName="DateKey"
                       externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[datekey]"
                       lineageId="Package\Insert into track_DWH\Lookup.Outputs[Lookup Match Output].Columns[DateKey]" />
-                    <inputColumn
-                      refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[quantity]"
-                      cachedDataType="i4"
-                      cachedName="quantity"
-                      externalMetadataColumnId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
-                      lineageId="Package\Insert into track_DWH\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]" />
                     <inputColumn
                       refId="Package\Insert into track_DWH\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GenreKey]"
                       cachedDataType="i4"
@@ -1034,8 +997,8 @@ where [refTable].[src_id] = ?</property>
               <connections>
                 <connection
                   refId="Package\Insert into track_DWH\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1322,7 +1285,7 @@ where [refTable].[AlbumId] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\insert into track_STG\256:invalid};</property>
+                  name="ParameterMap">#{Package\insert into track_STG\OLE DB Source.Outputs[OLE DB Source Output].Columns[AlbumId]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1335,8 +1298,8 @@ where [refTable].[AlbumId] = ?</property>
               <connections>
                 <connection
                   refId="Package\insert into track_STG\asd.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1566,8 +1529,8 @@ where [refTable].[InvoiceId] = ?</property>
               <connections>
                 <connection
                   refId="Package\insert into track_STG\idk why.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1727,8 +1690,8 @@ where [refTable].[InvoiceId] = ?</property>
               <connections>
                 <connection
                   refId="Package\insert into track_STG\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook_STG_DWH]"
+                  connectionManagerID="{600ABC59-4DB1-4987-96FE-AD069D252786}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook_STG_DWH]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1778,18 +1741,6 @@ where [refTable].[InvoiceId] = ?</property>
                       cachedName="ArtistId"
                       externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ArtistId]"
                       lineageId="Package\insert into track_STG\asd.Outputs[Lookup Match Output].Columns[ArtistId]" />
-                    <inputColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InvoiceDate]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="InvoiceDate"
-                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[invoicedate]"
-                      lineageId="Package\insert into track_STG\idk why.Outputs[Lookup Match Output].Columns[InvoiceDate]" />
-                    <inputColumn
-                      refId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quantity]"
-                      cachedDataType="i4"
-                      cachedName="Quantity"
-                      externalMetadataColumnId="Package\insert into track_STG\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
-                      lineageId="Package\insert into track_STG\test.Outputs[Lookup Match Output].Columns[Quantity]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1904,8 +1855,8 @@ where [refTable].[InvoiceId] = ?</property>
               <connections>
                 <connection
                   refId="Package\insert into track_STG\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2185,8 +2136,8 @@ where [refTable].[TrackId] = ?</property>
               <connections>
                 <connection
                   refId="Package\insert into track_STG\test.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.Chinook]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.Chinook]"
+                  connectionManagerID="{5F0C53C4-054A-40C4-9FF9-442691B40D13}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Chinook]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -2347,7 +2298,7 @@ where [refTable].[TrackId] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="truncate table tracks_STG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2364,7 +2315,7 @@ where [refTable].[TrackId] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{5CFCF2AB-DCB7-4E3E-9166-B79933BF7E08}"
+          SQLTask:Connection="{600ABC59-4DB1-4987-96FE-AD069D252786}"
           SQLTask:SqlStatementSource="update config set last_extract = GETDATE() where name='tracks'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2652,7 +2603,7 @@ where [refTable].[TrackId] = ?</property>
         <NodeLayout
           Size="156.8,42.4"
           Id="Package\Insert into track_DWH\Data Conversion"
-          TopLeft="401.023810577653,415.590476954276" />
+          TopLeft="406.857143592267,428.590476863876" />
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[Lookup Match Output1]"
           TopLeft="486.04285732788,277.060713255903">
@@ -2702,28 +2653,6 @@ where [refTable].[TrackId] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert into track_DWH.Paths[Data Conversion Output]"
-          TopLeft="476.245227239329,457.990476954276">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,43.8095216535581"
-              Start="0,0"
-              End="0,36.3095216535581">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.3095216535581" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[OLE DB Source Output]"
           TopLeft="488.642307774264,102.6">
           <EdgeLayout.Curve>
@@ -2751,14 +2680,14 @@ where [refTable].[TrackId] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,46.671430723554"
+              EndConnector="0,46.6714307235541"
               Start="0,0"
-              End="0,39.171430723554">
+              End="0,39.1714307235541">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39.171430723554" />
+                    End="0,39.1714307235541" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2771,26 +2700,60 @@ where [refTable].[TrackId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert into track_DWH.Paths[Lookup Match Output2]"
-          TopLeft="481.816667371574,367.285713157729">
+          TopLeft="484.733333878882,367.285713157729">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48.3047637965471"
+              EndConnector="0,61.3047637061466"
               Start="0,0"
-              End="0,40.8047637965471">
+              End="0,53.8047637061466">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.8047637965471" />
+                    End="0,53.8047637061466" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,14.5976943982735,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,21.0976943530733,96.3827734375,11.609375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert into track_DWH.Paths[Data Conversion Output]"
+          TopLeft="485.257143592267,470.990476863876">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.1904996912622,30.8095217439583"
+              Start="0,0"
+              End="-12.1904996912622,23.3095217439583">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.4047608719792" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.4047608719792"
+                    Point2="0,15.4047608719792"
+                    Point3="-4,15.4047608719792" />
+                  <mssgle:LineSegment
+                    End="-8.19049969126218,15.4047608719792" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.19049969126218,15.4047608719792"
+                    Point2="-12.1904996912622,15.4047608719792"
+                    Point3="-12.1904996912622,19.4047608719792" />
+                  <mssgle:LineSegment
+                    End="-12.1904996912622,23.3095217439583" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -2812,7 +2775,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2825,7 +2788,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2835,7 +2798,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2874,7 +2837,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2884,7 +2847,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2897,7 +2860,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2907,7 +2870,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2974,9 +2937,7 @@ where [refTable].[TrackId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3106,9 +3067,7 @@ where [refTable].[TrackId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -3120,7 +3079,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3130,7 +3089,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3169,7 +3128,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3179,7 +3138,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3192,7 +3151,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3202,7 +3161,7 @@ where [refTable].[TrackId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
